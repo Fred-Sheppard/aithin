@@ -1,3 +1,3 @@
-# Aithin: Another Take on Ogham Tranliteration
+# Aithin: Another Take on Ogham Transliteration
 
 > Aithin (Gaeilge): To recognise or identify
