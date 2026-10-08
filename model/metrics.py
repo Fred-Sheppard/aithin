@@ -51,6 +51,10 @@ class Metrics:
         y_pred = np.argmax(y_pred_probs, axis=1)
         y_true = np.argmax(self.y_test, axis=1)
 
+        # Each image represents one Ogham letter, so CER is the fraction of images whose predicted letter differs from the reference letter
+        character_error_rate = np.mean(y_pred != y_true)
+        print(f"Character Error Rate (CER): {character_error_rate:.4f} ({character_error_rate * 100:.2f}%)")
+
         # Confusion Matrix
         cm = confusion_matrix(y_true, y_pred)
         plt.figure(figsize=(8, 6))
