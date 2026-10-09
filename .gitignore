@@ -178,3 +178,4 @@ cython_debug/
 
 output
 *.h5
+models/

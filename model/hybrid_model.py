@@ -10,7 +10,6 @@ import pandas as pd
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import load_model
 from tensorflow.keras.models import Model, load_model
@@ -22,7 +21,23 @@ import tensorflow as tf
 import cv2
 import json
 import glob
-from PIL import Image
+from PIL import Image, ImageOps
+
+
+def load_image(image_path):
+    """Grayscale image, upright per its EXIF orientation, with transparency composited onto white."""
+    img = ImageOps.exif_transpose(Image.open(image_path))
+    if img.mode in ("RGBA", "LA", "PA") or (img.mode == "P" and "transparency" in img.info):
+        img = img.convert("RGBA")
+        img = Image.alpha_composite(Image.new("RGBA", img.size, (255, 255, 255, 255)), img)
+    return img.convert("L")
+
+
+def preprocess(image, target_size=(128, 128)):
+    """Model input for a grayscale PIL image: float32 array shaped (height, width, 1) in [0, 1]."""
+    height, width = target_size
+    image = image.resize((width, height), resample=Image.NEAREST)
+    return (np.asarray(image, dtype=np.float32) / 255.0)[..., np.newaxis]
 
 def train_hybrid_model(model_name, csv_path=os.getcwd() + "/output/labels.csv", image_dir=os.getcwd() + "/output/temp-letters-dir"):
     # Load the CSV file
@@ -42,8 +57,7 @@ def train_hybrid_model(model_name, csv_path=os.getcwd() + "/output/labels.csv", 
     for _, row in df.iterrows():
         img_path = os.path.join(image_dir, f"{row['img_no']:05}.png")
         if os.path.exists(img_path):
-            img = load_img(img_path, color_mode="grayscale", target_size=(128, 128))
-            img = img_to_array(img) / 255.0  # Normalize pixel values to [0, 1]
+            img = preprocess(load_image(img_path))
             images.append(img)
             labels.append(row["label"])
 
@@ -156,8 +170,7 @@ def predict_image(model_path, image_path, label_to_letter=os.path.dirname(os.pat
         label_to_letter = {int(k): v for k, v in label_to_letter.items()}
 
     # Preprocess the image
-    img = load_img(image_path, color_mode="grayscale", target_size=(128, 128))
-    img = img_to_array(img) / 255.0
+    img = preprocess(load_image(image_path))
     img = np.expand_dims(img, axis=0)  # Add batch dimension
 
     # Make prediction
