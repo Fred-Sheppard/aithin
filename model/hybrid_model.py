@@ -10,9 +10,6 @@ import pandas as pd
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.models import load_model
 from tensorflow.keras.models import Model, load_model
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Dense, Dropout, Flatten, Reshape, LSTM, Bidirectional
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
@@ -22,7 +19,7 @@ import tensorflow as tf
 import cv2
 import json
 import glob
-from PIL import Image
+from image_preprocessing import preprocess_image
 
 def train_hybrid_model(model_name, csv_path=os.getcwd() + "/output/labels.csv", image_dir=os.getcwd() + "/output/temp-letters-dir"):
     # Load the CSV file
@@ -42,8 +39,7 @@ def train_hybrid_model(model_name, csv_path=os.getcwd() + "/output/labels.csv", 
     for _, row in df.iterrows():
         img_path = os.path.join(image_dir, f"{row['img_no']:05}.png")
         if os.path.exists(img_path):
-            img = load_img(img_path, color_mode="grayscale", target_size=(128, 128))
-            img = img_to_array(img) / 255.0  # Normalize pixel values to [0, 1]
+            img = preprocess_image(img_path, target_size=(128, 128))
             images.append(img)
             labels.append(row["label"])
 
@@ -156,8 +152,7 @@ def predict_image(model_path, image_path, label_to_letter=os.path.dirname(os.pat
         label_to_letter = {int(k): v for k, v in label_to_letter.items()}
 
     # Preprocess the image
-    img = load_img(image_path, color_mode="grayscale", target_size=(128, 128))
-    img = img_to_array(img) / 255.0
+    img = preprocess_image(image_path, target_size=(128, 128))
     img = np.expand_dims(img, axis=0)  # Add batch dimension
 
     # Make prediction
@@ -298,15 +293,8 @@ def visualize_ogham_attention(model_path, image_path, letter_classes=None, outpu
     model = load_model(model_path)
     
     # Load and preprocess the image
-    img = Image.open(image_path)
-    img = img.convert('L')  # Convert to grayscale if not already
-    
-    # Resize to match model input size
     input_shape = model.input_shape[1:3]  # (height, width)
-    img = img.resize(input_shape)
-    
-    # Convert to array and normalize
-    img_array = np.array(img) / 255.0
+    img_array = preprocess_image(image_path, target_size=input_shape)
     
     # Make prediction
     pred = model.predict(np.expand_dims(img_array, axis=0))
@@ -330,7 +318,7 @@ def visualize_ogham_attention(model_path, image_path, letter_classes=None, outpu
     fig, axes = plt.subplots(1, 2, figsize=(15, 5))
     
     # Original image
-    axes[0].imshow(img_array, cmap='gray')
+    axes[0].imshow(img_array[:, :, 0], cmap='gray')
     axes[0].set_title('Original Ogham Letter')
     axes[0].axis('off')
     
@@ -347,5 +335,4 @@ def visualize_ogham_attention(model_path, image_path, letter_classes=None, outpu
         print(f"Visualization saved to {output_path}")
     else:
         plt.show()
-    
     return superimposed_img
