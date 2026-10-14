@@ -1,7 +1,6 @@
 import pygame
 import sys
 import numpy as np
-from PIL import Image
 import os
 import json
 from hybrid_model import predict_image
@@ -40,13 +39,8 @@ def save_drawing():
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
     
-    temp_path = os.path.join(output_dir, "drawn_character.jpg")
+    temp_path = os.path.join(output_dir, "drawn_character.png")
     pygame.image.save(drawing_surface, temp_path)
-    
-    img = Image.open(temp_path).convert('L')
-    img = img.resize((128, 128))  # Resize to match hybrid model input size
-    img.save(temp_path)
-    
     return temp_path
 
 def main():

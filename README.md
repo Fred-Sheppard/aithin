@@ -10,7 +10,7 @@ Trained models are attached to the [models-v1 release](https://github.com/Fred-S
 
 ```bash
 pip install -r requirements.txt
-python model/evaluate.py --model models/original.h5
+python model/evaluate.py --model models/keras_preprocessing.h5
 ```
 
 This prints letter, direction (stroke group) and stroke-count accuracy for each set and in total. `--out results.json` also writes every prediction.

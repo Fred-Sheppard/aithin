@@ -3,11 +3,10 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import to_categorical
 from sklearn.metrics import classification_report, confusion_matrix
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from image_preprocessing import preprocess_image
 
 class Metrics:
     def __init__(self, model_path, csv_path, image_dir, img_size=(128, 128)):
@@ -32,8 +31,7 @@ class Metrics:
         for _, row in df.iterrows():
             img_path = os.path.join(self.image_dir, f"{row['img_no']:05}.png")
             if os.path.exists(img_path):
-                img = load_img(img_path, color_mode="grayscale", target_size=self.img_size)
-                img = img_to_array(img) / 255.0  # Normalize
+                img = preprocess_image(img_path, target_size=self.img_size)
                 images.append(img)
                 labels.append(row["label"])
 
