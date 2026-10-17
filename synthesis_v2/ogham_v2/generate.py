@@ -127,8 +127,11 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--val-n", type=int, default=50)
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--cache-modes", nargs="+", help="override the config's cache_modes")
     a = ap.parse_args()
     cfg = cfgmod.load(a.config)
+    if a.cache_modes:
+        cfg["cache_modes"] = a.cache_modes
     out = a.out if a.out.is_absolute() else ROOT / a.out
     shutil.rmtree(out, ignore_errors=True)
     t0 = time.time()

@@ -36,8 +36,7 @@ def ink_bbox(gray: np.ndarray):
     show-through at the crop edge) unless the character itself touches the border.
     """
     h, w = gray.shape
-    lo, hi = np.percentile(gray, [1, 99])
-    if hi - lo < 40:
+    if is_blank(gray):
         return None
     k = max(3, (min(h, w) // 200) * 2 + 1)
     blur = cv2.GaussianBlur(gray, (k, k), 0)
@@ -59,10 +58,14 @@ def ink_bbox(gray: np.ndarray):
     return int(x[sel].min()), int(y[sel].min()), int((x + cw)[sel].max()), int((y + ch)[sel].max())
 
 
-def is_blank(gray: np.ndarray, min_range: float = 40) -> bool:
-    """No ink: checked on the RAW image, before autocontrast (which would stretch paper noise into 'ink')."""
-    lo, hi = np.percentile(gray, [1, 99])
-    return hi - lo < min_range
+def is_blank(gray: np.ndarray, min_contrast: float = 40) -> bool:
+    """No ink: nothing (after a light blur) is >= min_contrast darker than the paper (median).
+
+    Checked on the RAW image, before autocontrast (which would stretch paper noise into 'ink') - DR-019.
+    Percentile-based checks fail when ink covers < 1% of the pixels (thin pen, loose crop) - DR-020.
+    """
+    g = cv2.GaussianBlur(np.asarray(gray, np.uint8), (3, 3), 0)
+    return float(np.median(g)) - float(g.min()) < min_contrast
 
 
 def canonical(img, size: int = SIZE, margin: float = 0.10, cutoff: float = 1.0) -> np.ndarray:

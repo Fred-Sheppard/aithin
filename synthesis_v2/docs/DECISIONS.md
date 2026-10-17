@@ -219,3 +219,16 @@ Every design choice in the synthesis-v2 investigation is recorded here.
 - **Verification:** canonical outputs for all 80 real images are byte-identical before and after the change, so no cached result changes. The blank page now maps to pure white, and the detector reports nothing.
 - **Note:** training runs that had already started (E0a-s0, E0b-s0) loaded the old code, so their *blank-control* values used the old behaviour. Their image predictions are unaffected.
 - **Status:** accepted (2026-10-17).
+
+## DR-020: Blank and ink detection uses contrast against the paper median, not percentiles
+- **Evidence:**
+  - Rebuilding the E1 datasets showed canonical caches differing from the originals.
+  - Both the original `ink_bbox` gate and the DR-019 `is_blank` used the 1st–99th percentile range. When ink covers less than about 1% of the pixels (thin ballpoint, few strokes, large canvas), both percentiles fall on paper.
+  - The old code then **skipped the crop** for 0.3% of E1c/E1d training images. The DR-019 code then **blanked** 0.5% of E1c images, though no training run used those caches.
+- **Decision:** `is_blank` = (median − min of a 3×3-blurred raw image) < 40. `ink_bbox` uses the same gate.
+- **Verification:**
+  - All 80 real images are byte-identical to the cached canonical inputs.
+  - The blank page still maps to pure white.
+  - Regenerated E1 datasets are 99.68–99.98% identical to the originals, and none are blank or uncropped.
+  - The corrected datasets replaced `data/e1*_n850_s0` before the E1a–E1d screening runs started. The E1a-prior screening run used the original cache, where only 0.03% of images differ, which is negligible.
+- **Status:** accepted (2026-10-17).
