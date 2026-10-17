@@ -1,0 +1,7 @@
+# E3b: E3a + simulated detector failures, rates centred on the proxy detector's measured E1c error statistics
+# (drop 3.4%/stroke, extra 0.09/glyph, jitter p90 0.026 stem lengths - tools/measure_detector_errors.py).
+base: e3a
+parent: E3a
+representation:
+  source: oracle_errors
+  errors: {drop: 0.03, split: 0.03, merge: 0.01, spurious: 0.10, jitter: 0.012, truncate: 0.03}

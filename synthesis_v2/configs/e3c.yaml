@@ -1,0 +1,5 @@
+# E3c: render-then-detect - every synthetic render goes through the proxy detector; labels carried through.
+# (Run here on E1-best renders; re-run on E2-best photos in Phase 3.)
+base: e3a
+parent: E3a
+representation: {source: detect, unattached: faint}

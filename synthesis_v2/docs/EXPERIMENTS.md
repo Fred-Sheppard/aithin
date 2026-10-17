@@ -106,10 +106,39 @@ None. This is the reference: legacy data with the legacy loader (keras `load_img
 
 ### Results
 <!-- results:E0a -->
+**Probe:** hybrid | **input:** legacy | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 7500 (best at 5500) | **train time:** 20.0 min/run
+
+| Metric (dev, pen-40) | E0a (n=1) |
+|---|---|
+| CER | 42.5% |
+| Accuracy | 57.5% |
+| Top-3 | 85.0% |
+| Macro-F1 | 0.492 |
+| Aicme acc | 77.5% |
+| Mean conf | 91.8% |
+| NLL | 2.701 |
+| ECE | 0.343 |
+| Synthetic val acc | 98.8% |
+| Synth→real gap (val acc − dev acc) | 41.3% |
+
+**Blank-page control:** H (0.79)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E0a | 60.0% | 25.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E0a | 0.0 | 6.0 | 3.0 | 8.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E0a/learning_curves.png) · [confusion](results/figures/E0a/confusion_dev.png) · [taxonomy](results/figures/E0a/taxonomy_dev.png)
 <!-- /results:E0a -->
 
 ### Decision
-_(pending)_
+**REFERENCE.**
+- Screening seed 0: dev CER 42.5% (NLL 2.70; aicme 77.5%; pen-1 60% vs pen-2 25% CER).
+- The legacy loader hurts most on the faint, loosely cropped pen-1 batch.
+- Seeds 1–2 are queued (screen1), and the card will be refreshed.
 
 ---
 
@@ -127,10 +156,51 @@ Canonical preprocessing applied to *both* the synthetic and the real images cuts
 
 ### Results
 <!-- results:E0b -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7000) | **train time:** 18.9 min/run
+
+| Metric (dev, pen-40) | E0b (n=1) | E0a (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 32.5% | 42.5% | -10.0 pt [-30.0, +10.0] |
+| Accuracy | 67.5% | 57.5% | +10.0 pt [-10.0, +30.0] |
+| Top-3 | 95.0% | 85.0% | +10.0 pt |
+| Macro-F1 | 0.636 | 0.492 | +0.144 |
+| Aicme acc | 90.0% | 77.5% | +12.5 pt |
+| Mean conf | 97.1% | 91.8% | +5.3 pt |
+| NLL | 2.519 | 2.701 | -0.183 [-1.720, +1.511] |
+| ECE | 0.296 | 0.343 | -0.047 |
+| Synthetic val acc | 98.9% | 98.8% | +0.1 pt |
+| Synth→real gap (val acc − dev acc) | 31.4% | 41.3% | -9.9 pt |
+
+**Blank-page control:** E (0.96)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E0b | 30.0% | 35.0% |
+| E0a | 60.0% | 25.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E0b | 3.0 | 0.0 | 1.0 | 9.0 | 0.0 |
+| E0a | 0.0 | 6.0 | 3.0 | 8.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E0b/learning_curves.png) · [confusion](results/figures/E0b/confusion_dev.png) · [taxonomy](results/figures/E0b/taxonomy_dev.png)
 <!-- /results:E0b -->
 
 ### Decision
-_(pending)_
+**ADOPTED (provisional, 1 seed; seeds 1–2 queued).**
+
+Canonical preprocessing improves on the legacy loader with the same legacy data:
+- CER 42.5% → 32.5% (−10 pt);
+- aicme 77.5% → 90%;
+- pen-1 CER 60% → 30%.
+
+The gain is smaller than the frozen-checkpoint study suggested. The remaining errors are a systematic **under-count by one stroke** on 4–5-stroke letters: N→S, S→F, Q→C, C→T, I→E, E→U (9 of 13 errors).
+
+Hypothesis:
+- Canonical normalises scale to the ink box.
+- The legacy generator places strokes 0.157 stem lengths apart; real pen strokes are 0.112 apart (median, DR-007 calibration).
+- So the model learns "wide" spacing, and five real strokes look like four legacy ones.
+- E1 tests this directly.
 
 ---
 
@@ -148,10 +218,46 @@ E0c ≈ E0b on dev CER. E0c is worse on the blank-page control, and may be worse
 
 ### Results
 <!-- results:E0c -->
+**Probe:** hybrid | **input:** autocontrast | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 6500 (best at 4500) | **train time:** 14.7 min/run
+
+| Metric (dev, pen-40) | E0c (n=1) | E0a (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 10.0% | 42.5% | -32.5 pt [-47.5, -20.0] |
+| Accuracy | 90.0% | 57.5% | +32.5 pt [+20.0, +47.5] |
+| Top-3 | 100.0% | 85.0% | +15.0 pt |
+| Macro-F1 | 0.893 | 0.492 | +0.401 |
+| Aicme acc | 100.0% | 77.5% | +22.5 pt |
+| Mean conf | 96.0% | 91.8% | +4.2 pt |
+| NLL | 0.436 | 2.701 | -2.265 [-3.427, -1.126] |
+| ECE | 0.094 | 0.343 | -0.249 |
+| Synthetic val acc | 98.6% | 98.8% | -0.2 pt |
+| Synth→real gap (val acc − dev acc) | 8.6% | 41.3% | -32.7 pt |
+
+**Blank-page control:** R (1.00)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E0c | 10.0% | 10.0% |
+| E0a | 60.0% | 25.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E0c | 0.0 | 0.0 | 0.0 | 4.0 | 0.0 |
+| E0a | 0.0 | 6.0 | 3.0 | 8.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E0c/learning_curves.png) · [confusion](results/figures/E0c/confusion_dev.png) · [taxonomy](results/figures/E0c/taxonomy_dev.png)
 <!-- /results:E0c -->
 
 ### Decision
-_(pending)_
+**FINDING; the preprocessing choice is deferred to a controlled test on E1-best data.**
+
+- With legacy data, the teammate's autocontrast + nearest squash beats canonical by a wide margin: CER 10.0% vs 32.5%, NLL 0.44 vs 2.52, and better at every check during training.
+- This mode keeps the legacy framing, so the legacy spacing mismatch never becomes visible. That is consistent with the E0b hypothesis.
+- It still maps a blank page to a 100%-confident "R".
+- Canonical stays the protocol input for the E1 chain, which keeps E1 runs comparable with E0b.
+- The decisive comparison is queued:
+  - **E1-best under canonical vs autocontrast** on the same images. The `_ac` caches were built in DR-020.
+  - Seeds 1–2 for E0b and E0c.
 
 ---
 
@@ -230,10 +336,50 @@ Correct, stem-anchored conventions raise **aicme accuracy** and lower dev CER ag
 
 ### Results
 <!-- results:E1a-prior -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_prior_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 5500 (best at 3500) | **train time:** 16.2 min/run
+
+| Metric (dev, pen-40) | E1a-prior (n=1) | E0b (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 5.0% | 32.5% | -27.5 pt [-42.5, -12.5] |
+| Accuracy | 95.0% | 67.5% | +27.5 pt [+12.5, +42.5] |
+| Top-3 | 100.0% | 95.0% | +5.0 pt |
+| Macro-F1 | 0.947 | 0.636 | +0.311 |
+| Aicme acc | 100.0% | 90.0% | +10.0 pt |
+| Mean conf | 99.5% | 97.1% | +2.4 pt |
+| NLL | 0.113 | 2.519 | -2.406 [-3.987, -1.040] |
+| ECE | 0.045 | 0.296 | -0.251 |
+| Synthetic val acc | 99.9% | 98.9% | +1.0 pt |
+| Synth→real gap (val acc − dev acc) | 4.9% | 31.4% | -26.5 pt |
+
+**Blank-page control:** A (0.75)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E1a-prior | 10.0% | 0.0% |
+| E0b | 30.0% | 35.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E1a-prior | 0.0 | 0.0 | 0.0 | 2.0 | 0.0 |
+| E0b | 3.0 | 0.0 | 1.0 | 9.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E1a-prior/learning_curves.png) · [confusion](results/figures/E1a-prior/confusion_dev.png) · [taxonomy](results/figures/E1a-prior/taxonomy_dev.png) · [contact sheet](results/figures/E1a-prior/contact_sheet.png)
 <!-- /results:E1a-prior -->
 
 ### Decision
-_(pending)_
+**ADOPTED (superiority, DR-004).** This is the core upgrade.
+
+Against E0b:
+- dev CER 32.5% → **5.0%**, Δ −27.5 pt with 95% CI [−42.5, −12.5];
+- NLL 2.52 → 0.11, Δ −2.41 with CI [−3.99, −1.04];
+- aicme 90% → 100%;
+- the synthetic→real gap shrinks from 31.4 to 4.9 points.
+
+The CIs exclude 0 even on a single seed.
+
+- All letter-group errors disappear. That was the primary hypothesis: correct, stem-anchored side and angle conventions.
+- Both remaining errors are off-by-one count errors on pen-1 vowels (E→U, O→A).
+- Seeds 1–2 are queued (screen2).
 
 ---
 
@@ -260,10 +406,44 @@ Ranges are set to cover the measured real [min, max] with a margin:
 
 ### Results
 <!-- results:E1a -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 5000 (best at 3000) | **train time:** 10.7 min/run
+
+| Metric (dev, pen-40) | E1a (n=1) | E1a-prior (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 7.5% | 5.0% | +2.5 pt [-0.0, +7.5] |
+| Accuracy | 92.5% | 95.0% | -2.5 pt [-7.5, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 0.922 | 0.947 | -0.025 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 99.0% | 99.5% | -0.5 pt |
+| NLL | 0.585 | 0.113 | +0.472 [+0.013, +1.004] |
+| ECE | 0.082 | 0.045 | +0.037 |
+| Synthetic val acc | 99.8% | 99.9% | -0.1 pt |
+| Synth→real gap (val acc − dev acc) | 7.3% | 4.9% | +2.4 pt |
+
+**Blank-page control:** B (0.95)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E1a | 15.0% | 0.0% |
+| E1a-prior | 10.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E1a | 0.0 | 0.0 | 0.0 | 3.0 | 0.0 |
+| E1a-prior | 0.0 | 0.0 | 0.0 | 2.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E1a/learning_curves.png) · [confusion](results/figures/E1a/confusion_dev.png) · [taxonomy](results/figures/E1a/taxonomy_dev.png) · [contact sheet](results/figures/E1a/contact_sheet.png)
 <!-- /results:E1a -->
 
 ### Decision
-_(pending)_
+**INCONCLUSIVE on screening (1 seed). The 3-seed confirmation is queued.**
+
+- Calibrating ranges to the real dev geometry did not help seed 0: CER 7.5% vs 5.0%, NLL 0.59 vs 0.11. The difference is one image, inside the seed noise.
+- It has the same error pattern as E1a-prior: pen-1 vowel under-counts (I→E, E→U, O→A).
+- Under DR-004, "inconclusive" keeps the simpler config, but here both configs are equally simple: they differ only in range values.
+- Provisional choice: the **calibrated (measured) ranges**, because they rest on evidence. The E1b–E1d chain was built on them.
+- If the 3-seed means show E1a-prior is better on both CER and NLL, the chain is re-based on the prior ranges and the decision is recorded here.
 
 ---
 
@@ -289,10 +469,46 @@ The first attempt (curvature 0.06, wave 0.012) was too strong; see DR-018.
 
 ### Results
 <!-- results:E1b -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1b_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 4500 (best at 2500) | **train time:** 9.9 min/run
+
+| Metric (dev, pen-40) | E1b (n=1) | E1a (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 7.5% | -7.5 pt [-15.0, -0.0] |
+| Accuracy | 100.0% | 92.5% | +7.5 pt [+0.0, +15.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 0.922 | +0.078 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 99.0% | +1.0 pt |
+| NLL | 0.000 | 0.585 | -0.585 [-1.263, -0.013] |
+| ECE | 0.000 | 0.082 | -0.081 |
+| Synthetic val acc | 99.8% | 99.8% | +0.0 pt |
+| Synth→real gap (val acc − dev acc) | -0.2% | 7.3% | -7.5 pt |
+
+**Blank-page control:** H (0.93)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E1b | 0.0% | 0.0% |
+| E1a | 15.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E1b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1a | 0.0 | 0.0 | 0.0 | 3.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E1b/learning_curves.png) · [confusion](results/figures/E1b/confusion_dev.png) · [taxonomy](results/figures/E1b/taxonomy_dev.png) · [contact sheet](results/figures/E1b/contact_sheet.png)
 <!-- /results:E1b -->
 
 ### Decision
-_(pending)_
+**ADOPTED (provisional, superiority, 1 seed; seeds 1–2 queued).**
+
+Against E1a:
+- dev CER 7.5% → **0.0%** (40/40);
+- NLL 0.585 → 0.0002.
+
+- The hand-drawn imperfection removed the pen-1 vowel under-counts.
+- After the DR-018 fixes, the imperfections stay label-preserving: detector decode on QA renders is 99%.
+- **Dev is now saturated (40/40).** From here on, dev differences are measured mainly through NLL and seed means.
 
 ---
 
@@ -314,10 +530,42 @@ Lower dev CER, and mainly fewer count errors. This experiment also matters for t
 
 ### Results
 <!-- results:E1c -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1c_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 8000) | **train time:** 18.4 min/run
+
+| Metric (dev, pen-40) | E1c (n=1) | E1b (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | +0.0 pt |
+| NLL | 0.000 | 0.000 | -0.000 [-0.000, -0.000] |
+| ECE | 0.000 | 0.000 | -0.000 |
+| Synthetic val acc | 100.0% | 99.8% | +0.2 pt |
+| Synth→real gap (val acc − dev acc) | 0.0% | -0.2% | +0.2 pt |
+
+**Blank-page control:** H (1.00)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E1c | 0.0% | 0.0% |
+| E1b | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E1c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E1c/learning_curves.png) · [confusion](results/figures/E1c/confusion_dev.png) · [taxonomy](results/figures/E1c/taxonomy_dev.png) · [contact sheet](results/figures/E1c/contact_sheet.png)
 <!-- /results:E1c -->
 
 ### Decision
-_(pending)_
+**ADOPTED (non-inferiority, DR-021; 1 seed; seeds 1–2 queued).**
+
+- Dev CER is 0.0% → 0.0% and NLL 0.0002 → <0.0001: non-inferior.
+- The run is also the most *stable* of the chain. Dev CER is 0 at every check from step 1,000 onwards, a trajectory mean of 0.006 against 0.047 for E1b.
+- The pen/marker model exists mainly to cover the marker medium, which only the test set contains. Its payoff is measured once, in the final marker-40 table.
 
 ---
 
@@ -337,7 +585,40 @@ Small or no change on dev, whose crops are clean. The value should show on harde
 
 ### Results
 <!-- results:E1d -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1d_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 6500 (best at 4500) | **train time:** 19.7 min/run
+
+| Metric (dev, pen-40) | E1d (n=1) | E1c (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | -0.0 pt |
+| NLL | 0.000 | 0.000 | +0.000 [+0.000, +0.000] |
+| ECE | 0.000 | 0.000 | +0.000 |
+| Synthetic val acc | 99.1% | 100.0% | -0.9 pt |
+| Synth→real gap (val acc − dev acc) | -0.9% | 0.0% | -0.9 pt |
+
+**Blank-page control:** H (0.46)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E1d | 0.0% | 0.0% |
+| E1c | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E1d | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E1d/learning_curves.png) · [confusion](results/figures/E1d/confusion_dev.png) · [taxonomy](results/figures/E1d/taxonomy_dev.png) · [contact sheet](results/figures/E1d/contact_sheet.png)
 <!-- /results:E1d -->
 
 ### Decision
-_(pending)_
+**ADOPTED (non-inferiority, DR-021; 1 seed; seeds 1–2 queued).**
+
+- Dev CER is 0.0% → 0.0% and NLL ≈ 0.0002: non-inferior.
+- Synthetic val accuracy falls to 99.1%, which is expected because these are hard cases by design. It is not an over-randomisation alarm, since real dev is unaffected.
+- The hard cases and distractors exist for detector crops and the detector track (E3). The proxy detector decodes only 91% of E1d renders, against 97.5–100% on real images, so E1d is a deliberate stress set.
+- **E1d is the provisional E1-best** and the base for Phase 2 (E3a–c) and Phase 3 (E2a–d).

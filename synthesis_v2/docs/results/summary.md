@@ -10,6 +10,15 @@
 | legacy-augmented-autocontrast | legacy-checkpoint | autocontrast | 1 | 35.0% | 65.0% | 82.5% | 0.61 | 87.5% | 93.1% | 3.25 |  | U (0.71) |  |
 | legacy-hybrid-canonical | legacy-checkpoint | canonical | 1 | 17.5% | 82.5% | 95.0% | 0.81 | 92.5% | 98.5% | 2.84 |  | H (0.45) |  |
 | legacy-augmented-canonical | legacy-checkpoint | canonical | 1 | 37.5% | 62.5% | 77.5% | 0.55 | 75.0% | 93.8% | 4.06 |  | B (0.88) |  |
+| E0a | hybrid | legacy | 1 | 42.5% | 57.5% | 85.0% | 0.49 | 77.5% | 91.8% | 2.70 | 98.8% | H (0.79) | REFERENCE |
+| E3-ref | rules | proxy-detector | 1 | 0.0% | 100.0% |  | 1.00 | 100.0% |  |  |  | none | FINDING |
+| E0b | hybrid | canonical | 1 | 32.5% | 67.5% | 95.0% | 0.64 | 90.0% | 97.0% | 2.52 | 98.9% | E (0.96) | ADOPTED (provisional) |
+| E0c | hybrid | autocontrast | 1 | 10.0% | 90.0% | 100.0% | 0.89 | 100.0% | 96.0% | 0.44 | 98.6% | R (1.00) | FINDING |
+| E1a-prior | hybrid | canonical | 1 | 5.0% | 95.0% | 100.0% | 0.95 | 100.0% | 99.5% | 0.11 | 99.9% | A (0.75) | ADOPTED |
+| E1a | hybrid | canonical | 1 | 7.5% | 92.5% | 100.0% | 0.92 | 100.0% | 99.0% | 0.59 | 99.8% | B (0.95) | INCONCLUSIVE (provisional keep) |
+| E1b | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 99.8% | H (0.93) | ADOPTED (provisional) |
+| E1c | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 100.0% | H (1.00) | ADOPTED (non-inferiority) |
+| E1d | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 99.1% | H (0.46) | ADOPTED (non-inferiority) |
 
 ## Test (marker-40): frozen winners only
 
@@ -21,3 +30,4 @@
 | legacy-augmented-autocontrast | legacy-checkpoint | autocontrast | 1 | 22.5% | 77.5% | 95.0% | 0.72 | 87.5% | 96.4% | 1.24 |  | U (0.71) |  |
 | legacy-hybrid-canonical | legacy-checkpoint | canonical | 1 | 47.5% | 52.5% | 90.0% | 0.47 | 100.0% | 97.9% | 6.89 |  | H (0.45) |  |
 | legacy-augmented-canonical | legacy-checkpoint | canonical | 1 | 25.0% | 75.0% | 92.5% | 0.70 | 87.5% | 96.2% | 1.80 |  | B (0.88) |  |
+| E3-ref | rules | proxy-detector | 1 | 2.5% | 97.5% |  | 0.97 | 100.0% |  |  |  | none | FINDING |

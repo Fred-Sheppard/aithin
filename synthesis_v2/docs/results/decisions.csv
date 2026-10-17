@@ -1,3 +1,11 @@
 exp_id,decision,note
 E0-ckpt,FINDING,"preprocessing alone +35..55 pt on frozen checkpoints; settle by retraining (E0a/b/c)"
 E3-ref,FINDING,"detector + rules: dev 100%, test 97.5% (frozen proxy v1)"
+E0a,REFERENCE,"screening s0 CER 42.5%"
+E0b,ADOPTED (provisional),"CER 42.5->32.5; systematic under-count by one stroke"
+E0c,FINDING,"autocontrast beats canonical on legacy data (10% vs 32.5%); controlled test on E1-best queued"
+E1a-prior,ADOPTED,"CER 32.5->5.0, CI [-42.5,-12.5]; group errors eliminated"
+E1a,INCONCLUSIVE (provisional keep),"7.5% vs 5.0% (1 image); calibrated ranges kept pending 3 seeds"
+E1b,ADOPTED (provisional),"CER 7.5->0.0, NLL 0.585->0.0002; dev saturated"
+E1c,ADOPTED (non-inferiority),"0->0; most stable trajectory"
+E1d,ADOPTED (non-inferiority),"0->0; provisional E1-best"

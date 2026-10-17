@@ -226,8 +226,46 @@ def summary():
     print("\n".join(out))
 
 
+def waterfall(exps, name):
+    """Overview figure: mean dev CER and NLL along an experiment chain, coloured by decision."""
+    decisions = {}
+    if DECISIONS_CSV.exists():
+        decisions = {r["exp_id"]: r["decision"] for r in csv.DictReader(open(DECISIONS_CSV))}
+    cer, nll, sd, ns = [], [], [], []
+    for e in exps:
+        rs = load_runs(e)
+        vals = [r["m"]["cer"] for r in rs]
+        cer.append(np.mean(vals))
+        sd.append(np.std(vals))
+        nll.append(np.mean([r["m"]["nll"] for r in rs]))
+        ns.append(len(rs))
+    colour = lambda d: "#2a9d55" if d.startswith("ADOPTED") else "#c44e52" if d.startswith("REJECTED") else "#8c8c8c"  # noqa: E731
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(13, 3.8))
+    x = np.arange(len(exps))
+    a1.bar(x, 100 * np.array(cer), yerr=100 * np.array(sd), color=[colour(decisions.get(e, "")) for e in exps], capsize=3)
+    for i, (c, n) in enumerate(zip(cer, ns)):
+        a1.text(i, 100 * c + 1.5, f"{100 * c:.1f}%\n(n={n})", ha="center", fontsize=8)
+    a1.scatter(x, 100 * np.array(cer), color=[colour(decisions.get(e, "")) for e in exps], zorder=3, s=25)
+    a1.set_ylim(0, max(5, 100 * max(cer)) * 1.3)
+    a1.set_xticks(x, exps, rotation=30, fontsize=8)
+    a1.set_ylabel("dev CER (%)")
+    a1.set_title("Dev CER along the chain (green = adopted, grey = reference / finding / inconclusive)", fontsize=9, pad=10)
+    a2.plot(x, nll, "o-")
+    a2.set_yscale("symlog", linthresh=0.01)
+    a2.set_xticks(x, exps, rotation=30, fontsize=8)
+    a2.set_ylabel("dev NLL (symlog)")
+    a2.set_title("Dev NLL", fontsize=9)
+    fig.tight_layout()
+    out = RESULTS / "figures" / "overview" / f"{name}.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=110)
+    print(out)
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--waterfall", nargs="+")
+    ap.add_argument("--name", default="waterfall")
     ap.add_argument("--exp")
     ap.add_argument("--parent")
     ap.add_argument("--probe", default="hybrid")
@@ -237,6 +275,8 @@ def main():
         card(a.exp, a.parent, a.probe)
     if a.summary:
         summary()
+    if a.waterfall:
+        waterfall(a.waterfall, a.name)
 
 
 if __name__ == "__main__":

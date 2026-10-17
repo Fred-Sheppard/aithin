@@ -1,0 +1,6 @@
+# E3a: probe input = canonical render of the EXACT (oracle) detector JSON of E1-best geometry (DR-008).
+# Real images go image -> proxy detector -> JSON -> the same canonical render.
+base: e1d
+parent: E1-best
+representation: {source: oracle, unattached: faint}
+cache_modes: [render]

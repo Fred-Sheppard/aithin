@@ -67,7 +67,61 @@ What this shows:
 - The legacy and v2 generators make 17k images in under a minute.
 
 ## Phase 1: stroke model (E1)
-_(to be written)_
+
+*Status 2026-10-17: screening complete (seed 0). 3-seed confirmations are queued, and the numbers below will be updated.*
+
+**What we built.** A parametric generator, `ogham_v2/geometry.py` + `pen.py`:
+- characters are trajectories in stem coordinates;
+- every sample passes a label-preserving validator: stroke count; side; crossing halves; diagonal vs across angle margin; spacing; no converging strokes;
+- a supersampled variable-width ballpoint/marker rasteriser;
+- exact "oracle" detector JSON for every sample.
+
+Property tests confirm that the oracle round-trips to the true letter in 100% of cases. Generation takes about 3 ms per image per core.
+
+**Calibration** (dev only, `tools/measure_real.py`). The proxy detector measured real pen geometry. The hand-set priors were off in five ways:
+- real vowel strokes are long: 0.64–0.91 of the stem;
+- across strokes deviate by up to 12°;
+- diagonals sit at 26–42°;
+- spacing is tighter: median 0.112;
+- stroke groups sit centred, with about 0.3 of stem overhang.
+
+*Figures:* `results/figures/E1/calibration_e1a_{initial,calibrated}.png`.
+
+**Results (dev, seed 0):**
+
+| Step | Change | Dev CER | Dev NLL | Decision |
+|---|---|---|---|---|
+| E0b | legacy generator + canonical preprocessing | 32.5% | 2.52 | reference |
+| **E1a-prior** | **parametric stroke model (priors)** | **5.0%** | 0.11 | **adopted**: −27.5 pt, CI [−42.5, −12.5] |
+| E1a | + ranges calibrated on dev | 7.5% | 0.59 | inconclusive (1 image); 3 seeds queued |
+| E1b | + hand-drawn imperfection | **0.0%** | 0.0002 | adopted (superiority) |
+| E1c | + ballpoint/marker pen model | 0.0% | <0.0001 | adopted (non-inferiority, DR-021) |
+| E1d | + hard cases and crop distractors | 0.0% | 0.0002 | adopted (non-inferiority, DR-021) |
+
+*Figure:* `results/figures/overview/waterfall_phase1.png`.
+
+**What moved the needle**
+1. **Correct geometry conventions (E1a-prior)** removed every letter-group error and shrank the synthetic→real gap from 31 to 5 points. This matches the report's claim that stroke-level synthesis is the core upgrade, and the baseline diagnosis that most errors were group errors.
+2. **Hand-drawn imperfection (E1b)** removed the last errors: vowel under-counts on the faint, loosely cropped pen-1 batch. The first attempt was too strong. Curved, non-parallel strokes converged and made counts ambiguous, which the detector exposed by decoding only 89.5% of renders correctly. The fix (DR-018) was a polyline-distance check in the validator plus softer bows.
+
+**What did not move it (yet)**
+- **Calibrating the ranges to 40 real images (E1a)** made no measurable difference on one seed. The broad priors already covered the real distribution. This fits the domain-randomisation view: cover the range rather than match it.
+
+**Surprises**
+1. **Legacy data with autocontrast preprocessing (E0c, 10%) beat legacy data with canonical (E0b, 32.5%).**
+   - Canonical normalises scale to the ink box.
+   - That exposes the legacy generator's too-wide stroke spacing (0.157 against a real 0.112).
+   - E0b's errors are almost all "one stroke too few".
+   - Controlled test queued: E1-best under both preprocessings.
+2. **Dev saturated at E1b (40/40).** From here, dev can only show regressions, so further modules are judged by non-inferiority on dev (DR-021, pre-registered before seeing E1b–E1d). The held-out marker-40 test, used once, shows whether they generalise.
+3. **Two preprocessing bugs** surfaced through the data checks rather than through accuracy:
+   - autocontrast before the blank check (DR-019);
+   - percentile-based ink detection failing below 1% ink coverage (DR-020).
+
+**Caveats**
+- Single seed.
+- 40 dev images, all pen.
+- The 95% CIs on a 40-image dev set are wide. Only the E0b→E1a-prior step is statistically decisive so far.
 
 ## Phase 2: representation fork (E3-ref, E3a, E3b)
 _(to be written)_
