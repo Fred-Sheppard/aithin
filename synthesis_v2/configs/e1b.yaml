@@ -1,0 +1,11 @@
+# E1b: E1a + hand-drawn imperfection in trajectory space (topology-preserving; validator still applies).
+base: e1a
+parent: E1a
+imperfection:
+  curvature: 0.035         # quadratic bow, fraction of stroke length (+-) [first try 0.06: too strong, see card]
+  stem_curvature: 0.02
+  wave: 0.008              # low-frequency waviness amplitude (fraction of length) [first try 0.012]
+  tremor: 0.003            # high-frequency tremor (fraction of length)
+  overshoot: [-0.02, 0.04] # side strokes: <0 stops short of the stem, >0 crosses it slightly (stem lengths)
+  p_hook: 0.15             # start/end hook per stroke
+  p_stem_gap: 0.15         # pen-lift gap in the stem (away from stroke anchors)

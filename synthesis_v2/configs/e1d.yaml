@@ -1,0 +1,11 @@
+# E1d: E1c + hard cases and distractors (detector-crop artefacts).
+base: e1c
+parent: E1c
+hard:
+  p: 0.25
+  kinds: [near_touching, short_strokes, steep_tilt, uneven_spacing]
+distractors:
+  p_stem_extension: 0.25   # stem continues past the crop edge (word context)
+  p_neighbour: 0.5         # ...with partial strokes of a neighbouring letter near the edge
+  p_stray: 0.3
+  max_stray: 2

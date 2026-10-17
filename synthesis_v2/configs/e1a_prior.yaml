@@ -1,0 +1,45 @@
+# E1a-prior: clean parametric geometry with HAND-SET PRIOR ranges (before calibration); with correct, stem-anchored side/angle conventions (DR-007).
+# No imperfection, constant legacy-like pen, no hard cases / distractors.
+parent: E0b
+geometry:
+  spacing: [0.08, 0.20]          # stroke spacing as a fraction of stem length
+  spacing_jitter: 0.20
+  max_group_span: 0.75
+  group_pos: [0.15, 0.85]        # where the stroke group sits along the stem (fraction of free stem)
+  length:                        # stroke length / stem length
+    side: [0.25, 0.70]
+    across: [0.30, 0.90]
+    diagonal: [0.40, 1.00]
+  length_jitter: 0.15
+  angle_sd: 4                    # side/across strokes: deviation from perpendicular (deg)
+  angle_max: 8
+  angle_per_stroke: 3
+  diagonal_angle: [22, 60]       # '\' slant from the stem-perpendicular (deg)
+  balance: [0.30, 0.70]          # fraction of a crossing stroke left of the stem
+  balance_jitter: 0.08
+  tilt_sd: 5                     # whole-character rotation (deg)
+  tilt_max: 12
+imperfection: null
+hard: null
+distractors: null
+pen:
+  mode: constant
+  width: [0.015, 0.025]          # fraction of stem length (legacy-like 4-6 px on a ~240 px stem)
+render:
+  stem_px: [170, 230]
+  margin: [0.05, 0.35]
+  aspect: [0.85, 1.9]            # canvas h/w like the real crops
+  supersample: 4
+validator:
+  max_overshoot: 0.05            # side strokes may cross the stem by at most this much
+  min_side_len: 0.12
+  side_max_angle: 20
+  min_half: 0.06                 # crossing strokes: minimum extent on each side of the stem
+  min_half_frac: 0.20
+  across_max_angle: 12
+  diag_min_angle: 22
+  diag_max_angle: 65
+  min_spacing: 0.04
+  min_spacing_w: 2.5             # x pen width
+cache_modes: [canonical]
+qa_per_class: 10

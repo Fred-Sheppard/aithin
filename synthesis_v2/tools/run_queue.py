@@ -3,6 +3,7 @@
   python tools/run_queue.py queues/<name>.yaml [--retry-failed]
 
 Queue YAML: a list of {name, venv: synth|train, cmd: "<command run from synthesis_v2/>"}.
+Touch runs/queue/<queue-name>/STOP to stop cleanly after the current job.
 State and logs: runs/queue/<queue-name>/{state.json, <job>.log}.
 """
 import argparse
@@ -29,6 +30,10 @@ def main():
     state_file = qdir / "state.json"
     state = json.loads(state_file.read_text()) if state_file.exists() else {}
     for job in jobs:
+        if (qdir / "STOP").exists():
+            print("STOP file found - exiting before the next job", flush=True)
+            (qdir / "STOP").unlink()
+            break
         name = job["name"]
         prev = state.get(name, {}).get("status")
         if prev == "done" or (prev == "failed" and not a.retry_failed):

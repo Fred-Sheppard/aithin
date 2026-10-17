@@ -1,0 +1,19 @@
+# E1a: clean parametric geometry with correct, stem-anchored side/angle conventions (DR-007),
+# ranges CALIBRATED on real dev (pen-40) via tools/measure_real.py (see docs/results/figures/E1/calibration_*.json):
+# each range covers the real [min, max] with a small margin (domain-randomisation principle: cover, don't match).
+base: e1a_prior
+geometry:
+  spacing: [0.055, 0.19]         # real 0.053-0.208, median 0.112 (prior 0.08-0.20)
+  max_group_span: 0.60           # real stem overhang >= ~0.2 at both ends (prior 0.75)
+  group_pos: [0.30, 0.80]        # real 0.34-0.92, p5-p95 0.44-0.66 (prior 0.15-0.85)
+  length:
+    side: [0.18, 0.68]           # real 0.18-0.67, median 0.39 (prior 0.25-0.70)
+    across: [0.55, 0.95]         # real 0.64-0.91, median 0.81 (prior 0.30-0.90)
+    diagonal: [0.40, 1.00]       # real 0.41-0.98 (unchanged)
+  angle_sd: 5                    # real across strokes deviate up to ~12 deg (prior sd 4, max 8)
+  angle_max: 13
+  diagonal_angle: [24, 48]       # real 26-42, median 38 (prior 22-60)
+  balance: [0.33, 0.67]          # real 0.34-0.64 (prior 0.30-0.70)
+  tilt_sd: 4                     # real -7..+5.5 (prior sd 5)
+validator:
+  across_max_angle: 15           # keeps an 7-9 deg margin to the diagonal minimum (22)

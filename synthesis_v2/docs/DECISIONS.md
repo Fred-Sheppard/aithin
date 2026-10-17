@@ -175,3 +175,47 @@ Every design choice in the synthesis-v2 investigation is recorded here.
 - **Context:** the teammate's `image-preprocessing-investigation` branch is a live candidate for the team's preprocessing. E0-ckpt shows it is very effective on dev, but it is unsafe on blank input.
 - **Decision:** retrain on legacy data under all three preprocessing modes (E0a legacy, E0b canonical, E0c autocontrast) and choose on dev, using the DR-004 rule. The blank-page control is reported for each.
 - **Status:** accepted (2026-10-17).
+
+## DR-017: Proxy line detector as a stand-in for the teammate's detector
+- **Context:** the teammate's detector code is not available yet. Calibration (Phase 1) and the representation fork (E3) both need a detector that emits their JSON schema.
+- **Decision:** `ogham_v2/detectors/proxy.py`. It runs these steps in order:
+  - autocontrast, then ink-bbox crop;
+  - Otsu threshold, then skeleton;
+  - stem = strongest near-vertical Hough line with a long supporting run;
+  - remove the stem band, then fit a PCA line to each remaining skeleton piece;
+  - pair collinear opposite-side pieces into "across" strokes.
+
+  Its output schema is identical to the teammate's. `detectors/teammate.py` is the adapter slot for the real detector.
+- **Tuning discipline:** two rounds of fixes were driven only by *dev* errors:
+  - a lower Hough threshold and a wider band for wavy stems;
+  - pieces parallel to the stem are dropped.
+
+  After that the detector was frozen as "proxy v1" and scored once on test (E3-ref). It must not be tuned against test.
+- **Validation:**
+  - 99–99.5% letter recovery on clean E1a renders, against a target of ≥98%;
+  - 100% on dev;
+  - 97.5% on test (frozen).
+- **Status:** accepted (2026-10-17).
+
+## DR-018: The label validator checks stroke convergence; the across/side rule is shared with the oracle
+- **Evidence:** generator QA, recorded on the E1b–E1d cards.
+  - The first E1b attempt had curvature 0.06 and wave 0.012, and the validator only checked anchor spacing on the stem.
+  - The proxy detector decoded only 89.5% (E1b), 80.5% (E1c) and 76.5% (E1d) of QA renders correctly, against 100% on real dev.
+  - Inspection showed curved, slightly non-parallel strokes *converging* at their far ends, which makes the stroke count genuinely ambiguous.
+  - Separately, a property test found that side strokes with a permitted overshoot were being labelled "across" in the oracle JSON.
+- **Decision:**
+  1. The validator rejects any pair of stroke polylines closer than max(0.035, 1.6 × pen width), measured anywhere along their length.
+  2. E1b imperfection is softened to curvature 0.035, wave 0.008 and stem curvature 0.02, which look like the real pen strokes.
+  3. A stroke counts as "across" only if its shorter half is at least max(0.055, 12% of the stroke). That threshold sits between the maximum side overshoot (0.05) and the minimum crossing half (0.06). The oracle and the proxy detector use the same rule.
+- **Result:** detector decode on QA renders rises to E1b 99.0%, E1c 97.5% and E1d 91.0%. Real data scores 97.5–100%, so synthetic data is no longer "harder than reality", apart from the deliberate E1d hard cases.
+- **Status:** accepted (2026-10-17).
+
+## DR-019: Blank-page check runs on the raw image, before autocontrast
+- **Evidence:**
+  - With autocontrast first, a blank page's sensor noise is stretched to full range and treated as ink.
+  - The proxy detector then "found" an N on the blank page.
+  - Canonical preprocessing turned the blank page into a noise crop.
+- **Decision:** `preprocess.is_blank` (1–99 percentile range < 40 on the raw grayscale) runs before autocontrast in canonical preprocessing and in the proxy detector.
+- **Verification:** canonical outputs for all 80 real images are byte-identical before and after the change, so no cached result changes. The blank page now maps to pure white, and the detector reports nothing.
+- **Note:** training runs that had already started (E0a-s0, E0b-s0) loaded the old code, so their *blank-control* values used the old behaviour. Their image predictions are unaffected.
+- **Status:** accepted (2026-10-17).

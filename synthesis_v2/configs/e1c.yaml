@@ -1,0 +1,12 @@
+# E1c: E1b + pen/ink model: 50/50 ballpoint vs marker (fixed, never tuned - DR-003 guard),
+# pressure taper, ink intensity and width variation. Ballpoint width calibrated on pen-40 (0.011-0.029 of
+# stem length); marker width is a PRIOR (test medium, never measured).
+base: e1b
+parent: E1b
+pen:
+  mode: mixture
+  p_marker: 0.5
+  ballpoint: {width: [0.008, 0.030], taper: [0.0, 0.5], intensity: [0.55, 1.0], width_wobble: 0.10}
+  marker:    {width: [0.030, 0.070], taper: [0.0, 0.2], intensity: [0.85, 1.0], width_wobble: 0.05}
+validator:
+  min_spacing_w: 1.7       # stroke centre spacing >= 1.7 x pen width (thick marker strokes sit close in real data)

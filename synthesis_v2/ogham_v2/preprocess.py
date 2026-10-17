@@ -59,8 +59,16 @@ def ink_bbox(gray: np.ndarray):
     return int(x[sel].min()), int(y[sel].min()), int((x + cw)[sel].max()), int((y + ch)[sel].max())
 
 
+def is_blank(gray: np.ndarray, min_range: float = 40) -> bool:
+    """No ink: checked on the RAW image, before autocontrast (which would stretch paper noise into 'ink')."""
+    lo, hi = np.percentile(gray, [1, 99])
+    return hi - lo < min_range
+
+
 def canonical(img, size: int = SIZE, margin: float = 0.10, cutoff: float = 1.0) -> np.ndarray:
     pil = _to_pil(img).convert("L")
+    if is_blank(np.asarray(pil)):
+        return np.full((size, size), 255, np.uint8)
     pil = ImageOps.autocontrast(pil, cutoff=cutoff)
     gray = np.asarray(pil, dtype=np.uint8)
     box = ink_bbox(gray)

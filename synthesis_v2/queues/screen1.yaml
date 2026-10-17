@@ -1,0 +1,14 @@
+# Screening order (plan: 1 seed per iteration first, confirmations after).
+- {name: E0b-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 0 --input canonical --batch 32"}
+- {name: E0c-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0c --parent E0a --seed 0 --input autocontrast --batch 32"}
+- {name: E1a-prior-s0, venv: train, cmd: "PY train/train.py --data data/e1a_prior_n850_s0 --exp E1a-prior --parent E0b --seed 0 --input canonical --batch 32"}
+- {name: E1a-s0, venv: train, cmd: "PY train/train.py --data data/e1a_n850_s0 --exp E1a --parent E0b --seed 0 --input canonical --batch 32"}
+- {name: E1b-s0, venv: train, cmd: "PY train/train.py --data data/e1b_n850_s0 --exp E1b --parent E1a --seed 0 --input canonical --batch 32"}
+- {name: E1c-s0, venv: train, cmd: "PY train/train.py --data data/e1c_n850_s0 --exp E1c --parent E1b --seed 0 --input canonical --batch 32"}
+- {name: E1d-s0, venv: train, cmd: "PY train/train.py --data data/e1d_n850_s0 --exp E1d --parent E1c --seed 0 --input canonical --batch 32"}
+- {name: E0b-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 1 --input canonical --batch 32"}
+- {name: E0b-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 2 --input canonical --batch 32"}
+- {name: E0a-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0a --seed 1 --input legacy --batch 32"}
+- {name: E0a-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0a --seed 2 --input legacy --batch 32"}
+- {name: E0c-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0c --parent E0a --seed 1 --input autocontrast --batch 32"}
+- {name: E0c-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0c --parent E0a --seed 2 --input autocontrast --batch 32"}
