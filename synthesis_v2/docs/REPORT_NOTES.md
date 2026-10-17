@@ -100,6 +100,14 @@ Property tests confirm that the oracle round-trips to the true letter in 100% of
 
 *Figure:* `results/figures/overview/waterfall_phase1.png`.
 
+**Robustness beyond the dev ceiling.** The dev-stress metric (DR-022) is supplementary: the same 40 real pen images under blur, low resolution, JPEG, rotation, low contrast and shadow. It keeps separating the steps after dev hits 40/40.
+
+| Run | E0a | E0b | E0c | E1a-prior | E1a | E1b | E1c | E1d |
+|---|---|---|---|---|---|---|---|---|
+| Dev-stress acc | 38.3% | 66.2% | 86.7% | 88.3% | 85.4% | 94.6% | 97.1% | **98.3%** |
+
+The shadow degradation improves most along the chain: 47% at E1a, 72% at E1b, 82% at E1c, 90% at E1d. This independently supports adopting E1c and E1d.
+
 **What moved the needle**
 1. **Correct geometry conventions (E1a-prior)** removed every letter-group error and shrank the synthetic→real gap from 31 to 5 points. This matches the report's claim that stroke-level synthesis is the core upgrade, and the baseline diagnosis that most errors were group errors.
 2. **Hand-drawn imperfection (E1b)** removed the last errors: vowel under-counts on the faint, loosely cropped pen-1 batch. The first attempt was too strong. Curved, non-parallel strokes converged and made counts ambiguous, which the detector exposed by decoding only 89.5% of renders correctly. The fix (DR-018) was a polyline-distance check in the validator plus softer bows.
