@@ -622,3 +622,195 @@ Small or no change on dev, whose crops are clean. The value should show on harde
 - Synthetic val accuracy falls to 99.1%, which is expected because these are hard cases by design. It is not an over-randomisation alarm, since real dev is unaffected.
 - The hard cases and distractors exist for detector crops and the detector track (E3). The proxy detector decodes only 91% of E1d renders, against 97.5–100% on real images, so E1d is a deliberate stress set.
 - **E1d is the provisional E1-best** and the base for Phase 2 (E3a–c) and Phase 3 (E2a–d).
+
+---
+
+## E1d-ac: E1-best data under autocontrast + nearest preprocessing (controlled preprocessing test)
+- Parent: E1d | Data: `data/e1d_n850_s0` (the same images, `cache_autocontrast`) | Input: `autocontrast`
+
+### Motivation
+E0c beat E0b by a wide margin with *legacy* data (CER 10% vs 32.5%). Our hypothesis is that canonical scale normalisation exposes the legacy generator's spacing mismatch. The question is whether autocontrast + nearest still wins once the data is right.
+
+### Hypothesis
+With the calibrated E1 generator, canonical ≤ autocontrast on dev: both should be near 0%. Canonical remains the safer choice because of the blank-page control and because it is scale-invariant. If autocontrast is better by more than 1 image or by NLL, DR-005 is revisited.
+
+### Change
+Preprocessing only. Train and dev use autocontrast + nearest squash instead of canonical.
+
+### Results
+<!-- results:E1d-ac -->
+<!-- /results:E1d-ac -->
+
+### Decision
+_(pending)_
+
+---
+
+## E3a: probe trained on canonical renders of exact (oracle) detector JSON
+- Parent: E1d | Config: `configs/e3a.yaml` | Data: `data/e3a_n850_s0` (`cache_render`) | Input: `render`. Real images go through the proxy detector v1, then JSON, then canonical render.
+
+### Motivation
+The plan's Phase 2 representation fork (DR-008): synthetic and real meet in the detector's representation, which discards pen, ink, paper and camera. Also, E3-ref (rules alone) already scores 100% on dev.
+
+### Hypothesis
+Dev CER ≈ 0% (non-inferior to E1d). The representation removes the appearance gap, but it adds a dependency on the detector. Because the training data assumes a perfect detector, E3a may be brittle to real detector errors.
+
+### Change
+The probe's input becomes `canonical_render(json)` (DR-008). Training JSON is the exact oracle geometry of E1d samples, with E1d distractors drawn faintly as unattached segments.
+
+### Results
+<!-- results:E3a -->
+<!-- /results:E3a -->
+
+### Decision
+_(pending)_
+
+---
+
+## E3b: E3a + simulated detector errors
+- Parent: E3a | Config: `configs/e3b.yaml`
+
+### Motivation
+A recogniser fed detector output must tolerate detector failures. The report (§9) has option 2: simulate the detector's typical failures, with rates measured on real data.
+
+### Hypothesis
+Non-inferior on dev, where the detector makes no letter-level errors. More robust where the detector fails, which on E1d renders it does 9% of the time. Measured through E3c-style evaluation and the final test.
+
+### Change
+- drop 3%/stroke;
+- split crossing strokes 3%;
+- merge 1%;
+- spurious segment 10%/glyph;
+- endpoint jitter 0.012;
+- stem truncation 3%.
+
+These rates are centred on the proxy detector's measured E1c errors (`tools/measure_detector_errors.py`).
+
+### Results
+<!-- results:E3b -->
+<!-- /results:E3b -->
+
+### Decision
+_(pending)_
+
+---
+
+## E3c: render-then-detect (the real detector on synthetic renders)
+- Parent: E3a | Config: `configs/e3c.yaml`
+
+### Motivation
+Report §9, option 3, the recommended end state: train on the detector's *actual* output for synthetic images, so the recogniser learns the true detector artefacts. Here the renders are E1d renders, with no appearance randomisation. It is re-run on E2-best photos later.
+
+### Hypothesis
+Of all the E3 variants, this is the closest to real detector output. Non-inferior on dev.
+
+### Change
+Every training sample goes from E1d render to proxy detector v1, then JSON, then canonical render.
+
+### Results
+<!-- results:E3c -->
+<!-- /results:E3c -->
+
+### Decision
+_(pending)_
+
+---
+
+## E2a: + paper and ink appearance
+- Parent: E1d | Config: `configs/e2a.yaml`
+
+### Motivation
+Report §3 (domain randomisation): the real images have off-white paper, a blue/purple ballpoint cast, show-through and scan grain.
+
+### Hypothesis
+Non-inferior on dev (DR-021: a coverage module). Dev is pen on near-white paper, and canonical autocontrast already removes most paper variation, so we expect little effect on dev. The value is robustness on unseen media and phone photos.
+
+### Change
+- procedural paper: base 228–255, tint, low-frequency tone, grain, fibres;
+- ruled/grid lines at 8%;
+- ink colours by pen kind;
+- ink bleed at 0.3;
+- low-ink streaks at 0.2.
+
+### Results
+<!-- results:E2a -->
+<!-- /results:E2a -->
+
+### Decision
+_(pending)_
+
+---
+
+## E2b: + lighting
+- Parent: E2a | Config: `configs/e2b.yaml`
+
+### Motivation
+Phone captures have illumination gradients, shadow bands (as in pen 00038), vignetting and white-balance shifts.
+
+### Hypothesis
+Non-inferior on dev.
+
+### Change
+- gradient up to 0.25;
+- shadow band at p=0.3, strength 0.05–0.35;
+- vignette up to 0.3;
+- white-balance sd 0.025;
+- gamma 0.8–1.25.
+
+### Results
+<!-- results:E2b -->
+<!-- /results:E2b -->
+
+### Decision
+_(pending)_
+
+---
+
+## E2c: + capture degradations
+- Parent: E2b | Config: `configs/e2c.yaml`
+
+### Motivation
+Defocus (marker batch 1), scan resampling and JPEG.
+
+### Hypothesis
+Non-inferior on dev. Watch synthetic-val accuracy for over-randomisation.
+
+### Change
+- perspective at p=0.5;
+- rotation ±6°;
+- Gaussian blur at p=0.5, σ 0.3–1.6;
+- motion blur at 0.15;
+- rescale at 0.3;
+- noise sd up to 6;
+- JPEG at p=0.5, quality 30–95.
+
+### Results
+<!-- results:E2c -->
+<!-- /results:E2c -->
+
+### Decision
+_(pending)_
+
+---
+
+## E2d: + artefacts and framing
+- Parent: E2c | Config: `configs/e2d.yaml`
+
+### Motivation
+Show-through (pen 00024), dark edge bands (pen 00038), scan speckle and very loose crops (pen-1).
+
+### Hypothesis
+Non-inferior on dev. These artefacts mainly stress the ink-box crop.
+
+### Change
+- show-through at 0.15;
+- edge band at 0.15;
+- speckle at 0.3;
+- loose crop at 0.3, with the character filling 15–60% of the frame.
+
+### Results
+<!-- results:E2d -->
+<!-- /results:E2d -->
+
+### Decision
+_(pending)_

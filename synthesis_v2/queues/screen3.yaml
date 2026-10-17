@@ -1,0 +1,9 @@
+# Phase 2/3 screening (1 seed each), run before the E1 confirmations.
+- {name: E1d-ac-s0, venv: train, cmd: "PY train/train.py --data data/e1d_n850_s0 --exp E1d-ac --parent E1d --seed 0 --input autocontrast --batch 32"}
+- {name: E3a-s0, venv: train, cmd: "PY train/train.py --data data/e3a_n850_s0 --exp E3a --parent E1d --seed 0 --input render --batch 32"}
+- {name: E3b-s0, venv: train, cmd: "PY train/train.py --data data/e3b_n850_s0 --exp E3b --parent E3a --seed 0 --input render --batch 32"}
+- {name: E3c-s0, venv: train, cmd: "PY train/train.py --data data/e3c_n850_s0 --exp E3c --parent E3a --seed 0 --input render --batch 32"}
+- {name: E2a-s0, venv: train, cmd: "PY train/train.py --data data/e2a_n850_s0 --exp E2a --parent E1d --seed 0 --input canonical --batch 32"}
+- {name: E2b-s0, venv: train, cmd: "PY train/train.py --data data/e2b_n850_s0 --exp E2b --parent E2a --seed 0 --input canonical --batch 32"}
+- {name: E2c-s0, venv: train, cmd: "PY train/train.py --data data/e2c_n850_s0 --exp E2c --parent E2b --seed 0 --input canonical --batch 32"}
+- {name: E2d-s0, venv: train, cmd: "PY train/train.py --data data/e2d_n850_s0 --exp E2d --parent E2c --seed 0 --input canonical --batch 32"}
