@@ -17,6 +17,7 @@ from ..detector_schema import stroke_record
 from ..preprocess import ink_bbox, is_blank
 
 WORK = 400
+VERSION = "proxy-v1"     # frozen after dev tuning (DR-017); bump on any change
 
 
 def _normalise(gray):

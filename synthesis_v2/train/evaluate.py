@@ -110,7 +110,7 @@ def _main():
     ap.add_argument("--run", type=Path)
     ap.add_argument("--checkpoint", type=Path)
     ap.add_argument("--name")
-    ap.add_argument("--input", choices=["canonical", "legacy", "autocontrast"])
+    ap.add_argument("--input", choices=["canonical", "legacy", "autocontrast", "render"])
     ap.add_argument("--split", choices=["dev", "test"], required=True)
     a = ap.parse_args()
 

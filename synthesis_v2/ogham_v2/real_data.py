@@ -67,7 +67,10 @@ def blank_page(h: int = 1600, w: int = 1200) -> np.ndarray:
 
 def load_split(split: str, mode: str):
     """Returns (X uint8 [N,128,128], y int [N], ids, batches, letters). Cached per preprocessing version."""
-    tag = preprocess.VERSION if mode == "canonical" else mode
+    if mode == "render":
+        from .detectors.proxy import VERSION as tag
+    else:
+        tag = preprocess.VERSION if mode == "canonical" else mode
     cache = DATA / "real_cache" / f"{split}_{mode}_{tag}.npz"
     items = split_items(split)
     if cache.exists():

@@ -97,4 +97,8 @@ def apply(mode: str, img) -> np.ndarray:
         return legacy(img)
     if mode == "autocontrast":
         return autocontrast_nearest(img)
+    if mode == "render":                      # E3: real image -> proxy line detector -> canonical render
+        from .canonical_render import render
+        from .detectors.proxy import detect
+        return render(detect(np.asarray(_to_pil(img).convert("L"))))
     raise ValueError(f"unknown preprocessing mode {mode!r}")

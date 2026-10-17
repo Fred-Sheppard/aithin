@@ -26,7 +26,7 @@ def parse():
     ap.add_argument("--parent", default="")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--probe", default="hybrid", choices=["hybrid", "alt"])
-    ap.add_argument("--input", default="canonical", choices=["canonical", "legacy", "autocontrast"])
+    ap.add_argument("--input", default="canonical", choices=["canonical", "legacy", "autocontrast", "render"])
     ap.add_argument("--batch", type=int, default=64)
     ap.add_argument("--max-steps", type=int, default=8000)
     ap.add_argument("--check-every", type=int, default=500)

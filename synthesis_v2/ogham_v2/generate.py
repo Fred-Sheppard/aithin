@@ -47,15 +47,33 @@ def make_sample(letter: str, cfg: dict, rng):
     return img, glyph, pen, info
 
 
+def _representation(img, glyph, info, rep: dict, rng):
+    """E3: detector-JSON representation of a synthetic sample, rendered canonically."""
+    from . import canonical_render, detector_errors
+    src = rep.get("source", "oracle")
+    if src == "detect":
+        from .detectors.proxy import detect
+        det = detect(img)
+    else:
+        det = oracle(glyph, info)
+        if src == "oracle_errors":
+            det = detector_errors.apply(det, rep["errors"], rng)
+    return canonical_render.render(det, rep.get("unattached", "faint"))
+
+
 def _chunk(args):
     cfg, letter, start, count, seed, modes, qa = args
     rng = np.random.default_rng([seed, INDEX[letter], start])
     out = {m: [] for m in modes}
     metas, oracles, qa_imgs = [], [], []
+    rep = cfg.get("representation") or {}
     for i in range(count):
         img, glyph, pen, info = make_sample(letter, cfg, rng)
         for m in modes:
-            out[m].append(preprocess.apply(m, img))
+            if m == "render":
+                out[m].append(_representation(img, glyph, info, rep, rng))
+            else:
+                out[m].append(preprocess.apply(m, img))
         metas.append({"letter": letter, "pen": {k: v for k, v in pen.items() if k != "intensity"}, **glyph.params,
                       "size": info["size"]})
         oracles.append(oracle(glyph, info))

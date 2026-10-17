@@ -1,0 +1,5 @@
+# E2b: E2a + lighting (gradient, shadow band, vignette, white balance, gamma).
+base: e2a
+parent: E2a
+appearance:
+  lighting: {gradient: 0.25, shadow_p: 0.3, shadow_strength: [0.05, 0.35], vignette: 0.3, wb: 0.025, gamma: [0.8, 1.25]}

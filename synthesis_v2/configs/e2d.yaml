@@ -1,0 +1,5 @@
+# E2d: E2c + artefacts and framing (show-through, dark edge band, speckle, loose crops).
+base: e2c
+parent: E2c
+appearance:
+  artefacts: {showthrough_p: 0.15, edge_band_p: 0.15, speckle_p: 0.3, loose_p: 0.3, loose_fill: [0.15, 0.6]}

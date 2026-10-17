@@ -1,0 +1,10 @@
+# E2a: E1-best + paper and ink appearance. (base is re-pointed at the E1 winner once E1 screening is decided)
+base: e1c
+parent: E1-best
+appearance:
+  paper: {base: [228, 255], tint: 4, lowfreq: 6, grain: 5, fibre_p: 0.3, ruled_p: 0.08, grid_p_given_ruled: 0.3, texture_p: 0.5}
+  ink:
+    ballpoint: {blue: 0.45, purple: 0.15, black: 0.3, grey: 0.1}     # real pen ink has a blue/purple cast
+    marker: {black: 0.85, grey: 0.15}
+    bleed_p: 0.3
+    lowink_p: 0.2

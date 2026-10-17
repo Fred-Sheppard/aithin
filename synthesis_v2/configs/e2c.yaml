@@ -1,0 +1,6 @@
+# E2c: E2b + capture (perspective, rotation, defocus/motion blur, rescale, sensor noise, JPEG).
+base: e2b
+parent: E2b
+appearance:
+  capture: {persp_p: 0.5, persp: 0.04, rotate: 6, blur_p: 0.5, blur: [0.3, 1.6], motion_p: 0.15,
+            rescale_p: 0.3, rescale: [0.35, 0.8], noise: 6, jpeg_p: 0.5, jpeg: [30, 95]}
