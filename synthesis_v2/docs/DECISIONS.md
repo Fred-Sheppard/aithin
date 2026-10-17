@@ -252,3 +252,28 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   - Every adoption under DR-021 is flagged "adopted (non-inferiority)" on its card.
   - The held-out marker-40 table at the end shows whether such modules paid off.
 - **Status:** accepted (pre-registered 2026-10-17).
+
+## DR-022: Supplementary "dev-stress" robustness metric, used as a guard from Phase 2 onwards
+- **Context:** dev saturated at 40/40 from E1b onwards, so it can no longer separate modules. Test is reserved for the final table.
+- **Metric** (`tools/stress_eval.py`): the 40 real dev images under six deterministic capture degradations, 240 images in total:
+  - blur;
+  - low resolution;
+  - JPEG q=12;
+  - ±10° rotation;
+  - low contrast;
+  - a diagonal shadow ramp.
+
+  It is evaluation-only and applied post hoc to saved weights.
+- **First results** (seed 0, computed after the E1 decisions, so they did **not** influence them):
+
+| Run | E0a | E0b | E0c | E1a-prior | E1a | E1b | E1c | E1d |
+|---|---|---|---|---|---|---|---|---|
+| Dev-stress acc | 38.3% | 66.2% | 86.7% | 88.3% | 85.4% | 94.6% | 97.1% | 98.3% |
+
+  - The hardest degradation is the shadow ramp: 47% at E1a, 72% at E1b, 82% at E1c, 90% at E1d.
+  - These results independently support the DR-021 non-inferiority adoptions of E1c and E1d.
+- **Decision (pre-registered before any Phase 2/3 result):**
+  - From Phase 2 onwards, dev-stress is a **guard**. A module adopted under DR-021 must not reduce mean dev-stress accuracy by more than 2.5 points (6/240 images).
+  - Dev-stress gains are reported but are **not** by themselves grounds for adoption.
+- **Caveat:** the degradations resemble the E2 appearance and capture modules, so E2 gains on dev-stress are partly by construction. The marker-40 test remains the unbiased check.
+- **Status:** accepted (2026-10-17).

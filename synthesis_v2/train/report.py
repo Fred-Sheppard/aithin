@@ -169,6 +169,21 @@ def card(exp, parent, probe):
         if pn:
             row += f" {fmt(float(np.mean(pv)), float(np.std(pv)), True, pn)} | {100 * (m - np.mean(pv)):+.1f} pt |"
         lines.append(row)
+    def stress(rs):
+        vals = [json.loads((r["dir"] / "metrics_devstress.json").read_text()) for r in rs if (r["dir"] / "metrics_devstress.json").exists()]
+        return vals
+    st, pst = stress(runs), stress(parent_runs)
+    if st:
+        m = float(np.mean([v["acc"] for v in st]))
+        row = f"| Dev-stress acc (supplementary, DR-022) | {100 * m:.1f}% (n={len(st)}) |"
+        if pn and pst:
+            pm = float(np.mean([v["acc"] for v in pst]))
+            row += f" {100 * pm:.1f}% (n={len(pst)}) | {100 * (m - pm):+.1f} pt |"
+        lines.append(row)
+        kinds = list(st[0]["per_kind"])
+        lines += ["", "| Dev-stress by degradation | " + " | ".join(kinds) + " |", "|---|" + "---|" * len(kinds)]
+        for name, vs in [(exp, st)] + ([(parent, pst)] if pst else []):
+            lines.append(f"| {name} | " + " | ".join(f"{100 * np.mean([v['per_kind'][k] for v in vs]):.0f}%" for k in kinds) + " |")
     blanks = ", ".join(f"{r['m']['blank_pred']} ({r['m']['blank_maxprob']:.2f})" for r in runs)
     lines += ["", f"**Blank-page control:** {blanks}", ""]
     batches = sorted(runs[0]["m"]["per_batch"])

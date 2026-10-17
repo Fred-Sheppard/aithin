@@ -21,3 +21,11 @@ timestamp,git_sha,exp_id,parent,run_id,probe,input,seed,dataset,n_per_class,batc
 2026-10-17T19:30:25,7511bb1,E1b,E1a,hybrid-canonical-s0,hybrid,canonical,0,data/e1b_n850_s0,850,32,gpu,4500,2500,9.86,0.998,0.0066,dev,40,0.0,1.0,1.0,1.0,1.0,0.9998,0.0002,0.0002,-0.002,0.9259,H,0,0,0,0,0
 2026-10-17T19:48:56,7511bb1,E1c,E1b,hybrid-canonical-s0,hybrid,canonical,0,data/e1c_n850_s0,850,32,gpu,8000,8000,18.38,1.0,0.0002,dev,40,0.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0,0.9981,H,0,0,0,0,0
 2026-10-17T20:08:44,7511bb1,E1d,E1c,hybrid-canonical-s0,hybrid,canonical,0,data/e1d_n850_s0,850,32,gpu,6500,4500,19.66,0.991,0.0333,dev,40,0.0,1.0,1.0,1.0,1.0,0.9998,0.0002,0.0002,-0.009,0.4623,H,0,0,0,0,0
+2026-10-17T20:12:48,0ef3d88,E0a,,hybrid-legacy-s0,hybrid,legacy,0,data/legacy_n850_s0,850,32,gpu,7500,5500,20.03,0.988,0.0452,dev-stress,240,0.6167,0.3833,,,0.6875,,6.0687,,0.6047,,,,,,,
+2026-10-17T20:13:02,0ef3d88,E0b,E0a,hybrid-canonical-s0,hybrid,canonical,0,data/legacy_n850_s0,850,32,gpu,8000,7000,18.91,0.989,0.0223,dev-stress,240,0.3375,0.6625,,,0.9125,,2.8863,,0.3265,,,,,,,
+2026-10-17T20:13:09,0ef3d88,E0c,E0a,hybrid-autocontrast-s0,hybrid,autocontrast,0,data/legacy_n850_s0,850,32,gpu,6500,4500,14.7,0.986,0.0521,dev-stress,240,0.1333,0.8667,,,0.9958,,0.5866,,0.1193,,,,,,,
+2026-10-17T20:13:11,0ef3d88,E1a,E0b,hybrid-canonical-s0,hybrid,canonical,0,data/e1a_n850_s0,850,32,gpu,5000,3000,10.72,0.998,0.0157,dev-stress,240,0.1458,0.8542,,,0.9917,,1.3549,,0.1438,,,,,,,
+2026-10-17T20:13:12,0ef3d88,E1a-prior,E0b,hybrid-canonical-s0,hybrid,canonical,0,data/e1a_prior_n850_s0,850,32,gpu,5500,3500,16.24,0.999,0.0033,dev-stress,240,0.1167,0.8833,,,0.9875,,1.015,,0.1157,,,,,,,
+2026-10-17T20:13:13,0ef3d88,E1b,E1a,hybrid-canonical-s0,hybrid,canonical,0,data/e1b_n850_s0,850,32,gpu,4500,2500,9.86,0.998,0.0066,dev-stress,240,0.0542,0.9458,,,0.9917,,0.4409,,0.0522,,,,,,,
+2026-10-17T20:13:14,0ef3d88,E1c,E1b,hybrid-canonical-s0,hybrid,canonical,0,data/e1c_n850_s0,850,32,gpu,8000,8000,18.38,1.0,0.0002,dev-stress,240,0.0292,0.9708,,,0.9875,,0.1839,,0.0292,,,,,,,
+2026-10-17T20:13:15,0ef3d88,E1d,E1c,hybrid-canonical-s0,hybrid,canonical,0,data/e1d_n850_s0,850,32,gpu,6500,4500,19.66,0.991,0.0333,dev-stress,240,0.0167,0.9833,,,0.9833,,0.1974,,0.0077,,,,,,,
