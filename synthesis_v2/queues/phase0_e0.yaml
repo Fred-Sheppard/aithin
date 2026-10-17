@@ -1,0 +1,12 @@
+# Phase 0: E0a (legacy loader) / E0b (canonical) / E0c (autocontrast) on legacy data, 3 seeds each, then S0.
+- {name: E0a-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0a --seed 0 --input legacy --batch 32"}
+- {name: E0b-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 0 --input canonical --batch 32"}
+- {name: E0c-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0c --parent E0a --seed 0 --input autocontrast --batch 32"}
+- {name: E0b-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 1 --input canonical --batch 32"}
+- {name: E0b-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 2 --input canonical --batch 32"}
+- {name: E0a-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0a --seed 1 --input legacy --batch 32"}
+- {name: E0a-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0a --seed 2 --input legacy --batch 32"}
+- {name: E0c-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0c --parent E0a --seed 1 --input autocontrast --batch 32"}
+- {name: E0c-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0c --parent E0a --seed 2 --input autocontrast --batch 32"}
+- {name: gen-legacy-n5000, venv: synth, cmd: "PY -m ogham_v2.legacy --out data/legacy_n5000_s0 --n-per-class 5000 --seed 0"}
+- {name: S0-n5000-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n5000_s0 --exp S0-n5000 --parent E0b --seed 0 --input canonical --batch 32"}

@@ -1,0 +1,4 @@
+# DR-003: dev drives every decision; test (the team's wild test set) is evaluated once on frozen phase winners.
+dev: [pen]
+test: [marker]
+blank_control: true

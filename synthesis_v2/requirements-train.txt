@@ -1,0 +1,13 @@
+keras==3.8.0
+matplotlib==3.11.2
+numpy==2.0.2
+opencv-python-headless==5.0.0.93
+optuna==5.0.0
+pandas==3.0.6
+pillow==13.0.0
+PyYAML==6.0.3
+scikit-image==0.26.0
+scikit-learn==1.9.1
+scipy==1.17.1
+tensorflow==2.18.0
+tensorflow-metal==1.2.0

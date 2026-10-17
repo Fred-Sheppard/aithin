@@ -1,0 +1,13 @@
+timestamp,git_sha,exp_id,parent,run_id,probe,input,seed,dataset,n_per_class,batch,device,steps_used,best_step,train_minutes,synth_val_acc,synth_val_loss,split,n,cer,acc,top3,macro_f1,aicme_acc,mean_conf,nll,ece,gap,blank_maxprob,blank_pred,tax_group_side_BH,tax_group_diag_across_MA,tax_group_other,tax_count_off_by_one,tax_count_off_more
+2026-10-17T17:51:37,2db062c,legacy-hybrid,,legacy-hybrid,legacy-checkpoint,legacy,,,,,,,,,,,test,40,0.6,0.4,0.6,0.3358,0.575,0.9508,10.9564,0.5765,,0.4646,H,0,5,12,7,0
+2026-10-17T17:51:42,2db062c,legacy-augmented,,legacy-augmented,legacy-checkpoint,legacy,,,,,,,,,,,test,40,0.85,0.15,0.4,0.0976,0.45,0.9127,10.8381,0.7627,,0.9216,B,6,3,13,7,5
+2026-10-17T17:52:04,2db062c,legacy-hybrid-autocontrast,,legacy-hybrid-autocontrast,legacy-checkpoint,autocontrast,,,,,,,,,,,test,40,0.575,0.425,0.825,0.3752,0.975,0.9251,7.3896,0.5001,,1.0,R,0,0,1,21,1
+2026-10-17T17:52:09,2db062c,legacy-augmented-autocontrast,,legacy-augmented-autocontrast,legacy-checkpoint,autocontrast,,,,,,,,,,,test,40,0.225,0.775,0.95,0.7233,0.875,0.9637,1.2415,0.1887,,0.7131,U,0,4,1,4,0
+2026-10-17T17:52:34,2db062c,legacy-hybrid-legacy,,legacy-hybrid-legacy,legacy-checkpoint,legacy,,,,,,,,,,,dev,40,0.525,0.475,0.7,0.4495,0.675,0.9233,7.4482,0.4483,,0.4646,H,1,3,9,8,0
+2026-10-17T17:52:38,2db062c,legacy-augmented-legacy,,legacy-augmented-legacy,legacy-checkpoint,legacy,,,,,,,,,,,dev,40,0.9,0.1,0.375,0.1167,0.35,0.9151,10.8251,0.8405,,0.9216,B,7,0,19,4,6
+2026-10-17T17:52:43,2db062c,legacy-hybrid-autocontrast,,legacy-hybrid-autocontrast,legacy-checkpoint,autocontrast,,,,,,,,,,,dev,40,0.175,0.825,0.975,0.79,0.975,0.9701,2.2806,0.2017,,1.0,R,0,0,1,6,0
+2026-10-17T17:52:48,2db062c,legacy-augmented-autocontrast,,legacy-augmented-autocontrast,legacy-checkpoint,autocontrast,,,,,,,,,,,dev,40,0.35,0.65,0.825,0.6133,0.875,0.9312,3.2504,0.2812,,0.7131,U,0,3,2,5,4
+2026-10-17T17:52:54,2db062c,legacy-hybrid-canonical,,legacy-hybrid-canonical,legacy-checkpoint,canonical,,,,,,,,,,,dev,40,0.175,0.825,0.95,0.815,0.925,0.9853,2.8434,0.1805,,0.4513,H,0,0,3,4,0
+2026-10-17T17:52:59,2db062c,legacy-augmented-canonical,,legacy-augmented-canonical,legacy-checkpoint,canonical,,,,,,,,,,,dev,40,0.375,0.625,0.775,0.55,0.75,0.9379,4.0574,0.3129,,0.8848,B,1,3,6,4,1
+2026-10-17T17:53:05,2db062c,legacy-hybrid-canonical,,legacy-hybrid-canonical,legacy-checkpoint,canonical,,,,,,,,,,,test,40,0.475,0.525,0.9,0.4667,1.0,0.9786,6.8878,0.4676,,0.4513,H,0,0,0,18,1
+2026-10-17T17:53:09,2db062c,legacy-augmented-canonical,,legacy-augmented-canonical,legacy-checkpoint,canonical,,,,,,,,,,,test,40,0.25,0.75,0.925,0.7017,0.875,0.962,1.8032,0.2177,,0.8848,B,0,3,2,5,0

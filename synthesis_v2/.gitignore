@@ -1,0 +1,8 @@
+.venv-synth/
+.venv-train/
+data/
+runs/
+__pycache__/
+*.npz
+*.keras
+*.h5

@@ -1,0 +1,2 @@
+exp_id,decision,note
+E0-ckpt,FINDING,"preprocessing alone +35..55 pt on frozen checkpoints; settle by retraining (E0a/b/c)"
