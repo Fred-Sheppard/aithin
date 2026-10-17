@@ -12,6 +12,12 @@
 | ECE | 0.296 | 0.343 | -0.047 |
 | Synthetic val acc | 98.9% | 98.8% | +0.1 pt |
 | Synth→real gap (val acc − dev acc) | 31.4% | 41.3% | -9.9 pt |
+| Dev-stress acc (supplementary, DR-022) | 66.2% (n=1) | 38.3% (n=1) | +27.9 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E0b | 70% | 68% | 68% | 72% | 70% | 50% |
+| E0a | 28% | 32% | 52% | 52% | 10% | 55% |
 
 **Blank-page control:** E (0.96)
 

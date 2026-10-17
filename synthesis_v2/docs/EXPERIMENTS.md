@@ -175,6 +175,12 @@ Canonical preprocessing applied to *both* the synthetic and the real images cuts
 | ECE | 0.296 | 0.343 | -0.047 |
 | Synthetic val acc | 98.9% | 98.8% | +0.1 pt |
 | Synth→real gap (val acc − dev acc) | 31.4% | 41.3% | -9.9 pt |
+| Dev-stress acc (supplementary, DR-022) | 66.2% (n=1) | 38.3% (n=1) | +27.9 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E0b | 70% | 68% | 68% | 72% | 70% | 50% |
+| E0a | 28% | 32% | 52% | 52% | 10% | 55% |
 
 **Blank-page control:** E (0.96)
 
@@ -237,6 +243,12 @@ E0c ≈ E0b on dev CER. E0c is worse on the blank-page control, and may be worse
 | ECE | 0.094 | 0.343 | -0.249 |
 | Synthetic val acc | 98.6% | 98.8% | -0.2 pt |
 | Synth→real gap (val acc − dev acc) | 8.6% | 41.3% | -32.7 pt |
+| Dev-stress acc (supplementary, DR-022) | 86.7% (n=1) | 38.3% (n=1) | +48.3 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E0c | 85% | 88% | 92% | 82% | 90% | 82% |
+| E0a | 28% | 32% | 52% | 52% | 10% | 55% |
 
 **Blank-page control:** R (1.00)
 
@@ -355,6 +367,12 @@ Correct, stem-anchored conventions raise **aicme accuracy** and lower dev CER ag
 | ECE | 0.045 | 0.296 | -0.251 |
 | Synthetic val acc | 99.9% | 98.9% | +1.0 pt |
 | Synth→real gap (val acc − dev acc) | 4.9% | 31.4% | -26.5 pt |
+| Dev-stress acc (supplementary, DR-022) | 88.3% (n=1) | 66.2% (n=1) | +22.1 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E1a-prior | 92% | 98% | 98% | 100% | 95% | 48% |
+| E0b | 70% | 68% | 68% | 72% | 70% | 50% |
 
 **Blank-page control:** A (0.75)
 
@@ -425,6 +443,12 @@ Ranges are set to cover the measured real [min, max] with a margin:
 | ECE | 0.082 | 0.045 | +0.037 |
 | Synthetic val acc | 99.8% | 99.9% | -0.1 pt |
 | Synth→real gap (val acc − dev acc) | 7.3% | 4.9% | +2.4 pt |
+| Dev-stress acc (supplementary, DR-022) | 85.4% (n=1) | 88.3% (n=1) | -2.9 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E1a | 92% | 95% | 90% | 95% | 92% | 48% |
+| E1a-prior | 92% | 98% | 98% | 100% | 95% | 48% |
 
 **Blank-page control:** B (0.95)
 
@@ -488,6 +512,12 @@ The first attempt (curvature 0.06, wave 0.012) was too strong; see DR-018.
 | ECE | 0.000 | 0.082 | -0.081 |
 | Synthetic val acc | 99.8% | 99.8% | +0.0 pt |
 | Synth→real gap (val acc − dev acc) | -0.2% | 7.3% | -7.5 pt |
+| Dev-stress acc (supplementary, DR-022) | 94.6% (n=1) | 85.4% (n=1) | +9.2 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E1b | 95% | 100% | 100% | 100% | 100% | 72% |
+| E1a | 92% | 95% | 90% | 95% | 92% | 48% |
 
 **Blank-page control:** H (0.93)
 
@@ -549,6 +579,12 @@ Lower dev CER, and mainly fewer count errors. This experiment also matters for t
 | ECE | 0.000 | 0.000 | -0.000 |
 | Synthetic val acc | 100.0% | 99.8% | +0.2 pt |
 | Synth→real gap (val acc − dev acc) | 0.0% | -0.2% | +0.2 pt |
+| Dev-stress acc (supplementary, DR-022) | 97.1% (n=1) | 94.6% (n=1) | +2.5 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E1c | 100% | 100% | 100% | 100% | 100% | 82% |
+| E1b | 95% | 100% | 100% | 100% | 100% | 72% |
 
 **Blank-page control:** H (1.00)
 
@@ -604,6 +640,12 @@ Small or no change on dev, whose crops are clean. The value should show on harde
 | ECE | 0.000 | 0.000 | +0.000 |
 | Synthetic val acc | 99.1% | 100.0% | -0.9 pt |
 | Synth→real gap (val acc − dev acc) | -0.9% | 0.0% | -0.9 pt |
+| Dev-stress acc (supplementary, DR-022) | 98.3% (n=1) | 97.1% (n=1) | +1.2 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E1d | 100% | 100% | 100% | 100% | 100% | 90% |
+| E1c | 100% | 100% | 100% | 100% | 100% | 82% |
 
 **Blank-page control:** H (0.46)
 
