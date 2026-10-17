@@ -232,3 +232,23 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   - Regenerated E1 datasets are 99.68–99.98% identical to the originals, and none are blank or uncropped.
   - The corrected datasets replaced `data/e1*_n850_s0` before the E1a–E1d screening runs started. The E1a-prior screening run used the original cache, where only 0.03% of images differ, which is negligible.
 - **Status:** accepted (2026-10-17).
+
+## DR-021: Non-inferiority rule for coverage modules (pre-registered before E1b–E1d results were seen)
+- **Context:** written at 2026-10-17 ~21:30, after E1a-prior and E1a, and before any E1b/E1c/E1d result existed.
+  - Dev CER is already 5–7.5% (2–3 images out of 40). Most later differences on dev will be at most 1–2 images.
+  - Some modules exist to cover properties that dev (pen-40) *cannot show*:
+    - E1c's marker-width ink, which only the test medium has;
+    - E1d's detector-crop distractors, which the clean single crops don't have.
+  - Under DR-004's "adopt only if dev CER falls", these would be rejected by default, even when they are exactly what generalisation to marker needs.
+- **Decision:**
+  - Modules whose motivation is **coverage of conditions absent from dev** are adopted under **non-inferiority**:
+    - mean dev CER does not rise by more than 2.5 points (1 image);
+    - mean dev NLL does not rise by more than 0.25.
+    - Both are measured over 3 seeds.
+  - These modules are E1c (pen/marker model), E1d (hard cases and distractors), E2 (appearance and capture), and E3b (detector errors).
+  - Modules motivated by *observed dev failures* still use the DR-004 superiority rule:
+    - E1a (geometry conventions);
+    - E1b (hand-drawn imperfection, since dev is hand-drawn pen).
+  - Every adoption under DR-021 is flagged "adopted (non-inferiority)" on its card.
+  - The held-out marker-40 table at the end shows whether such modules paid off.
+- **Status:** accepted (pre-registered 2026-10-17).

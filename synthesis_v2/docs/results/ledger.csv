@@ -16,3 +16,5 @@ timestamp,git_sha,exp_id,parent,run_id,probe,input,seed,dataset,n_per_class,batc
 2026-10-17T18:20:28,281eef2,E3-ref,,rules-proxy,rules,proxy-detector,,,,,,,,,,,test,40,0.025,0.975,,0.9733,1.0,,,,,,none,0,0,0,1,0
 2026-10-17T18:38:21,835e231,E0b,E0a,hybrid-canonical-s0,hybrid,canonical,0,data/legacy_n850_s0,850,32,gpu,8000,7000,18.91,0.989,0.0223,dev,40,0.325,0.675,0.95,0.636,0.9,0.9705,2.5186,0.2955,0.314,0.9595,E,3,0,1,9,0
 2026-10-17T18:53:11,835e231,E0c,E0a,hybrid-autocontrast-s0,hybrid,autocontrast,0,data/legacy_n850_s0,850,32,gpu,6500,4500,14.7,0.986,0.0521,dev,40,0.1,0.9,1.0,0.8933,1.0,0.9596,0.4359,0.0938,0.086,1.0,R,0,0,0,4,0
+2026-10-17T19:09:34,4ad372d,E1a-prior,E0b,hybrid-canonical-s0,hybrid,canonical,0,data/e1a_prior_n850_s0,850,32,gpu,5500,3500,16.24,0.999,0.0033,dev,40,0.05,0.95,1.0,0.9467,1.0,0.9946,0.1129,0.0446,0.049,0.75,A,0,0,0,2,0
+2026-10-17T19:20:25,4ad372d,E1a,E0b,hybrid-canonical-s0,hybrid,canonical,0,data/e1a_n850_s0,850,32,gpu,5000,3000,10.72,0.998,0.0157,dev,40,0.075,0.925,1.0,0.9217,1.0,0.9899,0.5851,0.0817,0.073,0.9507,B,0,0,0,3,0
