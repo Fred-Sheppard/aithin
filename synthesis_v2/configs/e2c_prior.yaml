@@ -1,0 +1,38 @@
+# E2c-prior: the frozen E2c pipeline with the UNCALIBRATED (prior) geometry ranges of E1a-prior.
+# Added because E1a's pre-registered rule triggered (3 seeds: E1a-prior better on CER and NLL) - DR-026.
+base: e2c
+parent: E2c
+geometry:
+  spacing:
+  - 0.08
+  - 0.2
+  spacing_jitter: 0.2
+  max_group_span: 0.75
+  group_pos:
+  - 0.15
+  - 0.85
+  length:
+    side:
+    - 0.25
+    - 0.7
+    across:
+    - 0.3
+    - 0.9
+    diagonal:
+    - 0.4
+    - 1.0
+  length_jitter: 0.15
+  angle_sd: 4
+  angle_max: 8
+  angle_per_stroke: 3
+  diagonal_angle:
+  - 22
+  - 60
+  balance:
+  - 0.3
+  - 0.7
+  balance_jitter: 0.08
+  tilt_sd: 5
+  tilt_max: 12
+validator:
+  across_max_angle: 12

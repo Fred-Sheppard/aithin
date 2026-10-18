@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from train import evaluate as ev  # noqa: E402
 
-CHAIN = ["E0a", "E0b", "E0c", "E1a-prior", "E1a", "E1b", "E1c", "E1d", "E2a", "E2b", "E2c", "E2d-v2", "E3a", "E3b", "E3c"]
+CHAIN = ["E0a", "E0b", "E0c", "E1a-prior", "E1a", "E1b", "E1c", "E1d", "E2a", "E2b", "E2c", "E2c-prior", "E2d-v2", "E3a", "E3b", "E3c"]
 REFERENCE = "E0b"
 OUT = ROOT / "docs" / "results"
 

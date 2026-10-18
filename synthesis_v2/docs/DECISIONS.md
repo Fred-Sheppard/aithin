@@ -319,3 +319,15 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   4. Evaluate the frozen winners **once** on marker-40.
 - **Recorded as "not decidable with the current data"** (not run): Phase 4 ablations, S1/S2 scaling, and E4 Optuna. The code is ready (`train/tune.py`, the `tools/` scripts), and these steps resume once a harder real dev set is collected (collection protocol in the plan).
 - **Status:** accepted (2026-10-18).
+
+## DR-026: Calibration (E1a) not adopted on 3 seeds; prior-range variant of the final candidate added (E2c-prior)
+- **Evidence (3 seeds, dev):**
+  - E1a-prior: CER 5.0 / 0.0 / 0.0 (mean **1.7%**), NLL mean 0.038.
+  - E1a (calibrated): CER 7.5 / 0.0 / 5.0 (mean **4.2%**), NLL mean 0.264.
+  - The prior ranges are better on both metrics, though the gap is within seed noise.
+- **Pre-registered consequence** (E1a card, written after the seed-0 screening): "If the 3-seed means show E1a-prior is better on both CER and NLL, the chain is re-based on the prior ranges."
+- **Decision:**
+  - E1a is **NOT ADOPTED**.
+  - A full re-base would regenerate and retrain E1b–E2d, about 4 GPU-hours, and could not be scored on the saturated dev set (DR-025). So the rule is honoured at the point where it matters: **E2c-prior** keeps the frozen E2c pipeline and uses the E1a-prior geometry ranges. It runs with 3 seeds (data `data/e2c_prior_n850_s0`, config `configs/e2c_prior.yaml`, generated at 825d1a5 plus this config).
+  - E2c and E2c-prior both go into the final marker-40 table. That answers whether calibrating to 40 pen images helps on an unseen medium.
+- **Status:** accepted (2026-10-18).

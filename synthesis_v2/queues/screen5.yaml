@@ -1,0 +1,4 @@
+# DR-026: prior-range variant of the final candidate (E1a pre-registered re-base rule triggered).
+- {name: E2c-prior-s0, venv: train, cmd: "PY train/train.py --data data/e2c_prior_n850_s0 --exp E2c-prior --parent E2c --seed 0 --input canonical --batch 32"}
+- {name: E2c-prior-s1, venv: train, cmd: "PY train/train.py --data data/e2c_prior_n850_s0 --exp E2c-prior --parent E2c --seed 1 --input canonical --batch 32"}
+- {name: E2c-prior-s2, venv: train, cmd: "PY train/train.py --data data/e2c_prior_n850_s0 --exp E2c-prior --parent E2c --seed 2 --input canonical --batch 32"}
