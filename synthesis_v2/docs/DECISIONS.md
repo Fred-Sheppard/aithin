@@ -331,3 +331,14 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   - A full re-base would regenerate and retrain E1b–E2d, about 4 GPU-hours, and could not be scored on the saturated dev set (DR-025). So the rule is honoured at the point where it matters: **E2c-prior** keeps the frozen E2c pipeline and uses the E1a-prior geometry ranges. It runs with 3 seeds (data `data/e2c_prior_n850_s0`, config `configs/e2c_prior.yaml`, generated at 825d1a5 plus this config).
   - E2c and E2c-prior both go into the final marker-40 table. That answers whether calibrating to 40 pen images helps on an unseen medium.
 - **Status:** accepted (2026-10-18).
+
+## DR-027: Phase 3 winner is E2c, decided on dev and synthetic-val evidence before any test result
+- **Evidence:**
+  - E2d-v2 (E2d plus the DR-023 label guard) reaches dev CER 0% and dev-stress 99.6%.
+  - But its **synthetic val accuracy is still 92.2%** (E2d was 90.9%; E2c is 99.0%). The DR-010 over-randomisation and label-noise alarm is still active.
+  - The remaining failures are the canonical crop breaking on heavily shaded, loosely framed images. That is a preprocessing limit, not something real dev contains.
+- **Decision:**
+  - **E2c is the Phase 3 winner and the frozen pipeline.** E2d-v2 is not adopted.
+  - Its remaining seeds and plain-CNN runs were removed from the queue, since they cannot change a decision.
+  - This saves about 48 minutes.
+- **Status:** accepted (2026-10-18, before any marker-40 evaluation of E2c, E2c-prior or E2d-v2).
