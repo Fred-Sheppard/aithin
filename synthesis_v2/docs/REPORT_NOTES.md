@@ -207,11 +207,64 @@ The shadow degradation improves most along the chain: 47% at E1a, 72% at E1b, 82
   - Optuna tuning (E4) on dev NLL, which is now about 0.0000.
 - The one unused, unbiased signal is the marker-40 test set, reserved for the final evaluation. The next step needs a decision; see the status note in the conversation.
 
-## Phase 4: ablations
-_(to be written)_
+## Phases 4–5: ablations, scaling, synthesis tuning (E4): deferred (DR-025)
 
-## Phase 5: synthesis tuning (E4)
-_(to be written)_
+From E1c onwards dev (pen-40) is at 40/40 on every seed, and from E2b onwards dev-stress is at 240/240. With only the 80 existing real images:
+- leave-one-out ablations can't separate components;
+- dataset-size sweeps can't separate sizes;
+- Optuna has no objective, since dev NLL is about 0.
 
-## Final results and recommended pipeline
-_(to be written)_
+The team decided to freeze the pipeline and run the final test (DR-025). The code is ready:
+- `train/tune.py` for Optuna over coarse synthesis knobs;
+- `ogham_v2/legacy.py` and `--n-per-class` for size sweeps;
+- per-module configs for ablations.
+
+These resume when a harder real dev set exists. The collection protocol is in the plan: about 200 images from at least 4 writers, with phone photos, shadows and lined paper.
+
+## Final results: held-out marker-40 (the team's wild test set)
+
+*Computed once, after freezing (DR-025, DR-027). Full table: `results/final_table.md`. Figure: `results/figures/overview/final_test.png`. Means over 3 training seeds for the hybrid probe; paired bootstrap 95% CI against E0b, the legacy generator under the same preprocessing.*
+
+| Pipeline | Marker-40 accuracy | CER | Δ acc vs E0b [95% CI] | Main remaining error |
+|---|---|---|---|---|
+| Team's reported baseline (legacy Hybrid checkpoint) | 42.5% (reported); 40.0% (our harness) | 57.5% | | wrong letter group (17/24) |
+| E0a: legacy generator, legacy loader (retrained) | 35.8 ± 7.2% | 64.2% | −26.7 [−40.0, −14.2] | stroke count |
+| E0b: legacy generator, canonical preprocessing | 62.5% (2 seeds) | 37.5% | reference | stroke count |
+| E1a-prior: + parametric stroke model | 87.5 ± 5.4% | 12.5% | **+25.0 [+9.6, +39.2]** | stroke count (5/seed) |
+| E1a: + calibrated ranges *(not adopted)* | 75.8 ± 4.2% | 24.2% | +13.3 [−3.3, +28.8] | stroke count |
+| E1b: + hand-drawn imperfection | 77.5 ± 3.5% | 22.5% | +15.0 [−0.0, +30.0] | stroke count |
+| **E1c: + ballpoint/marker ink model** | **100.0%** (40/40 on all 3 seeds) | **0.0%** | **+37.5 [+23.8, +51.2]** | none |
+| E1d: + hard cases, crop distractors | 99.2 ± 1.2% | 0.8% | +36.7 [+22.9, +50.0] | 1 error across 3 seeds |
+| **E2c: + paper, ink, lighting, capture (frozen pipeline)** | **98.3 ± 1.2%** | **1.7%** | **+35.8 [+22.1, +49.6]** | 2 errors across 3 seeds |
+| E3-ref: line detector + rules (no learning) | 97.5% | 2.5% | | split thick crossing stroke |
+
+**Conclusions**
+1. **Better synthesis took the probe from 40% to 98–100% on the team's wild test set, without a single real training image.** CER fell from 57.5% to 0–1.7%. The model is unchanged. Only the training data and the preprocessing changed.
+2. **Two things did almost all the work:**
+   - **(a) correct stroke geometry:** the stem-anchored parametric model, +25 points;
+   - **(b) an ink/pen-width model covering thick marker:** +22.5 points on marker, to 100%.
+
+   The second was adopted under a pre-registered non-inferiority rule, because pen-only dev could not show its value. The held-out marker test vindicates that rule (DR-021).
+3. **The error taxonomy moves in the expected order.**
+   - Legacy models make wrong-group errors.
+   - The stroke model removes them, leaving count errors on thick strokes.
+   - The marker-width model removes those.
+4. **Calibrating the generator to 40 real images hurt on dev (NLL) and on marker (75.8% vs 87.5%).** Cover the real variation broadly rather than fitting a small sample (DR-026). The E2c-prior row shows whether this still matters inside the full pipeline.
+5. **Appearance and capture randomisation (E2) didn't change clean accuracy** (98–100% either way), but they made the probe robust to shadows and degradations. Dev-stress went from 96% to 100%.
+6. **On these clean crops, a line detector with counting rules is as good as the learned probe** (97.5%). With the current detector, the learned detector-input path is limited by the detector's shading robustness (DR-024).
+7. **Preprocessing matters as much as the generator for the legacy pipeline.** With good synthetic data, the team's autocontrast branch and our canonical preprocessing are equivalent. Canonical additionally handles blank pages safely.
+
+**Recommended synthesis pipeline (frozen):** `configs/e2c.yaml`, generated with `ogham_v2.generate`:
+- parametric stroke model with label validator, using the broader prior ranges (or calibrated; see E2c-prior);
+- hand-drawn imperfection;
+- 50/50 ballpoint/marker ink model;
+- hard cases and crop distractors;
+- paper and ink, lighting, and capture randomisation;
+- canonical preprocessing;
+- 850 images per class (scaling not yet determinable).
+
+**Caveats**
+- The test set is 40 images from one session per batch. 95% CIs on single configurations are about ±10 points.
+- Dev and test share writers. A writer-disjoint test set is the next step.
+- All conclusions are for single-character crops.
+- *Still to come in this table:* E2c-prior (calibration inside the full pipeline), the second probe (plain CNN) at E0b, E1d and E2c, E3c seeds 1–2, and E0b seed 2.

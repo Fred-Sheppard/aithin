@@ -25,7 +25,7 @@
 | E3c | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 99.5% | 0.01 | 98.7% | B (0.29) | NON-INFERIOR (detector track) |
 | E2a | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 98.1% | I (0.30) | ADOPTED (non-inferiority) |
 | E2b | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 98.3% | H (0.32) | ADOPTED (non-inferiority) |
-| E2c | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 99.0% | F (0.33) | ADOPTED (non-inferiority) |
+| E2c | hybrid | canonical | 3 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 99.0% | F (0.43) | ADOPTED (non-inferiority) |
 | E2d | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 90.9% | H (0.11) | ALARM -> fixed (E2d-v2) |
 | E2d-v2 | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 92.2% | A (0.10) |  |
 
@@ -40,3 +40,18 @@
 | legacy-hybrid-canonical | legacy-checkpoint | canonical | 1 | 47.5% | 52.5% | 90.0% | 0.47 | 100.0% | 97.9% | 6.89 |  | H (0.45) |  |
 | legacy-augmented-canonical | legacy-checkpoint | canonical | 1 | 25.0% | 75.0% | 92.5% | 0.70 | 87.5% | 96.2% | 1.80 |  | B (0.88) |  |
 | E3-ref | rules | proxy-detector | 1 | 2.5% | 97.5% |  | 0.97 | 100.0% |  |  |  | none | FINDING |
+| E0a | hybrid | legacy | 3 | 64.2% | 35.8% | 77.5% | 0.32 | 77.5% | 94.4% | 5.56 | 98.6% | A (0.36) | REFERENCE |
+| E0b | hybrid | canonical | 2 | 37.5% | 62.5% | 92.5% | 0.59 | 95.0% | 95.6% | 2.73 | 99.0% | H (0.79) | ADOPTED (provisional) |
+| E0c | hybrid | autocontrast | 3 | 49.2% | 50.8% | 90.0% | 0.48 | 100.0% | 96.4% | 3.72 | 98.9% | R (1.00) | FINDING |
+| E1a-prior | hybrid | canonical | 3 | 12.5% | 87.5% | 100.0% | 0.87 | 100.0% | 98.6% | 0.79 | 99.8% | B (0.83) | ADOPTED (3 seeds) |
+| E1a | hybrid | canonical | 3 | 24.2% | 75.8% | 98.3% | 0.72 | 100.0% | 97.8% | 2.05 | 99.8% | H (1.00) | NOT ADOPTED (3 seeds) |
+| E1b | hybrid | canonical | 3 | 22.5% | 77.5% | 97.5% | 0.75 | 100.0% | 98.6% | 1.77 | 99.9% | H (0.86) | ADOPTED (3 seeds) |
+| E1c | hybrid | canonical | 3 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 100.0% | B (1.00) | ADOPTED (3 seeds) |
+| E1d | hybrid | canonical | 3 | 0.8% | 99.2% | 100.0% | 0.99 | 100.0% | 99.9% | 0.02 | 99.2% | H (0.65) | ADOPTED (non-inferiority, 3 seeds) |
+| E2a | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 98.1% | I (0.30) | ADOPTED (non-inferiority) |
+| E2b | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 98.3% | H (0.32) | ADOPTED (non-inferiority) |
+| E2c | hybrid | canonical | 3 | 1.7% | 98.3% | 100.0% | 0.98 | 100.0% | 99.5% | 0.03 | 99.0% | F (0.43) | ADOPTED (non-inferiority) |
+| E2d-v2 | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 99.1% | 0.01 | 92.2% | A (0.10) |  |
+| E3a | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 100.0% | B (0.53) | NOT ADOPTED (guard) |
+| E3b | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 94.4% | 0.06 | 89.4% | A (0.28) | NON-INFERIOR (detector track) |
+| E3c | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 99.9% | 0.00 | 98.7% | B (0.29) | NON-INFERIOR (detector track) |

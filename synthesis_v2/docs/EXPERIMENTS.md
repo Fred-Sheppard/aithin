@@ -1269,3 +1269,21 @@ Generator fix only. No config change.
 
 ### Decision
 _(pending: queued at the head of screen2)_
+
+---
+
+## FINAL: held-out evaluation on marker-40 (frozen configurations, DR-025/DR-027)
+- Date: 2026-10-18 | Tool: `train/final_table.py --evaluate` | Full table: [results/final_table.md](results/final_table.md)
+- This was computed once, after freezing. No result here feeds back into any decision.
+
+**Headline (hybrid probe, 3 seeds):**
+
+| Pipeline | Marker-40 accuracy | CER | Δ accuracy vs legacy generator E0b [95% CI] |
+|---|---|---|---|
+| Frozen pipeline **E2c** | **98.3 ± 1.2%** | 1.7% | +35.8 pt [+22.1, +49.6] |
+| **E1c** | **100%** (all 3 seeds) | 0% | |
+| Team's reported baseline | 42.5% | 57.5% | |
+
+Narrative and conclusions are in [REPORT_NOTES.md](REPORT_NOTES.md#final-results-held-out-marker-40-the-teams-wild-test-set).
+
+*Pending rows:* E2c-prior, the second probe (plain CNN) at E0b/E1d/E2c, E3c seeds 1–2, E0b seed 2. The table is re-run when they finish.
