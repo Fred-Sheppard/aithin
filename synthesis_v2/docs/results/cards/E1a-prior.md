@@ -1,34 +1,34 @@
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_prior_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 5500 (best at 3500) | **train time:** 16.2 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_prior_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 6000 (best at 4000) | **train time:** 14.3 min/run
 
-| Metric (dev, pen-40) | E1a-prior (n=1) | E0b (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E1a-prior (n=3) | E0b (n=2) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 5.0% | 32.5% | -27.5 pt [-42.5, -12.5] |
-| Accuracy | 95.0% | 67.5% | +27.5 pt [+12.5, +42.5] |
-| Top-3 | 100.0% | 95.0% | +5.0 pt |
-| Macro-F1 | 0.947 | 0.636 | +0.311 |
-| Aicme acc | 100.0% | 90.0% | +10.0 pt |
-| Mean conf | 99.5% | 97.1% | +2.4 pt |
-| NLL | 0.113 | 2.519 | -2.406 [-3.987, -1.040] |
-| ECE | 0.045 | 0.296 | -0.251 |
-| Synthetic val acc | 99.9% | 98.9% | +1.0 pt |
-| Synth→real gap (val acc − dev acc) | 4.9% | 31.4% | -26.5 pt |
-| Dev-stress acc (supplementary, DR-022) | 88.3% (n=1) | 66.2% (n=1) | +22.1 pt |
+| CER | 1.7% ± 2.4 | 28.7% ± 3.7 | -27.1 pt [-40.4, -14.2] |
+| Accuracy | 98.3% ± 2.4 | 71.2% ± 3.7 | +27.1 pt [+14.2, +40.4] |
+| Top-3 | 100.0% ± 0.0 | 96.2% ± 1.3 | +3.8 pt |
+| Macro-F1 | 0.982 ± 0.025 | 0.670 ± 0.034 | +0.313 |
+| Aicme acc | 100.0% ± 0.0 | 92.5% ± 2.5 | +7.5 pt |
+| Mean conf | 99.8% ± 0.2 | 97.5% ± 0.4 | +2.3 pt |
+| NLL | 0.038 ± 0.053 | 2.299 ± 0.220 | -2.261 [-3.638, -1.058] |
+| ECE | 0.015 ± 0.021 | 0.277 ± 0.019 | -0.262 |
+| Synthetic val acc | 99.8% ± 0.0 | 99.1% ± 0.1 | +0.8 pt |
+| Synth→real gap (val acc − dev acc) | 1.5% ± 2.4 | 27.8% ± 3.6 | -26.3 pt |
+| Dev-stress acc (supplementary, DR-022) | 89.6% (n=3) | 67.3% (n=2) | +22.3 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E1a-prior | 92% | 98% | 98% | 100% | 95% | 48% |
-| E0b | 70% | 68% | 68% | 72% | 70% | 50% |
+| E1a-prior | 95% | 98% | 99% | 100% | 98% | 47% |
+| E0b | 71% | 71% | 70% | 70% | 72% | 49% |
 
-**Blank-page control:** A (0.75)
+**Blank-page control:** A (0.75), B (0.59), B (0.83)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E1a-prior | 10.0% | 0.0% |
-| E0b | 30.0% | 35.0% |
+| E1a-prior | 3.3% | 0.0% |
+| E0b | 27.5% | 30.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E1a-prior | 0.0 | 0.0 | 0.0 | 2.0 | 0.0 |
-| E0b | 3.0 | 0.0 | 1.0 | 9.0 | 0.0 |
+| E1a-prior | 0.0 | 0.0 | 0.0 | 0.7 | 0.0 |
+| E0b | 2.5 | 0.0 | 0.5 | 8.5 | 0.0 |
 
 **Figures:** [curves](results/figures/E1a-prior/learning_curves.png) · [confusion](results/figures/E1a-prior/confusion_dev.png) · [taxonomy](results/figures/E1a-prior/taxonomy_dev.png) · [contact sheet](results/figures/E1a-prior/contact_sheet.png)

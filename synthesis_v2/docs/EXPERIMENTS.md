@@ -106,35 +106,35 @@ None. This is the reference: legacy data with the legacy loader (keras `load_img
 
 ### Results
 <!-- results:E0a -->
-**Probe:** hybrid | **input:** legacy | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 7500 (best at 5500) | **train time:** 20.0 min/run
+**Probe:** hybrid | **input:** legacy | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 6833 (best at 4833) | **train time:** 16.1 min/run
 
-| Metric (dev, pen-40) | E0a (n=1) |
+| Metric (dev, pen-40) | E0a (n=3) |
 |---|---|
-| CER | 42.5% |
-| Accuracy | 57.5% |
-| Top-3 | 85.0% |
-| Macro-F1 | 0.492 |
-| Aicme acc | 77.5% |
-| Mean conf | 91.8% |
-| NLL | 2.701 |
-| ECE | 0.343 |
-| Synthetic val acc | 98.8% |
-| Synth→real gap (val acc − dev acc) | 41.3% |
-| Dev-stress acc (supplementary, DR-022) | 38.3% (n=1) |
+| CER | 41.7% ± 7.2 |
+| Accuracy | 58.3% ± 7.2 |
+| Top-3 | 83.3% ± 1.2 |
+| Macro-F1 | 0.530 ± 0.084 |
+| Aicme acc | 75.8% ± 2.4 |
+| Mean conf | 92.2% ± 3.9 |
+| NLL | 3.019 ± 0.244 |
+| ECE | 0.355 ± 0.042 |
+| Synthetic val acc | 98.6% ± 0.1 |
+| Synth→real gap (val acc − dev acc) | 40.3% ± 7.1 |
+| Dev-stress acc (supplementary, DR-022) | 38.2% (n=3) |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E0a | 28% | 32% | 52% | 52% | 10% | 55% |
+| E0a | 28% | 32% | 52% | 47% | 13% | 56% |
 
-**Blank-page control:** H (0.79)
+**Blank-page control:** H (0.79), A (0.57), A (0.36)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E0a | 60.0% | 25.0% |
+| E0a | 53.3% | 30.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E0a | 0.0 | 6.0 | 3.0 | 8.0 | 0.0 |
+| E0a | 0.0 | 5.3 | 4.3 | 7.0 | 0.0 |
 
 **Figures:** [curves](results/figures/E0a/learning_curves.png) · [confusion](results/figures/E0a/confusion_dev.png) · [taxonomy](results/figures/E0a/taxonomy_dev.png)
 <!-- /results:E0a -->
@@ -161,38 +161,38 @@ Canonical preprocessing applied to *both* the synthetic and the real images cuts
 
 ### Results
 <!-- results:E0b -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7000) | **train time:** 18.9 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 2 | **steps used:** 7500 (best at 6000) | **train time:** 17.1 min/run
 
-| Metric (dev, pen-40) | E0b (n=1) | E0a (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E0b (n=2) | E0a (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 32.5% | 42.5% | -10.0 pt [-30.0, +10.0] |
-| Accuracy | 67.5% | 57.5% | +10.0 pt [-10.0, +30.0] |
-| Top-3 | 95.0% | 85.0% | +10.0 pt |
-| Macro-F1 | 0.636 | 0.492 | +0.144 |
-| Aicme acc | 90.0% | 77.5% | +12.5 pt |
-| Mean conf | 97.1% | 91.8% | +5.3 pt |
-| NLL | 2.519 | 2.701 | -0.183 [-1.720, +1.511] |
-| ECE | 0.296 | 0.343 | -0.047 |
-| Synthetic val acc | 98.9% | 98.8% | +0.1 pt |
-| Synth→real gap (val acc − dev acc) | 31.4% | 41.3% | -9.9 pt |
-| Dev-stress acc (supplementary, DR-022) | 66.2% (n=1) | 38.3% (n=1) | +27.9 pt |
+| CER | 28.7% ± 3.7 | 41.7% ± 7.2 | -12.9 pt [-29.6, +5.8] |
+| Accuracy | 71.2% ± 3.7 | 58.3% ± 7.2 | +12.9 pt [-5.8, +29.6] |
+| Top-3 | 96.2% ± 1.3 | 83.3% ± 1.2 | +12.9 pt |
+| Macro-F1 | 0.670 ± 0.034 | 0.530 ± 0.084 | +0.140 |
+| Aicme acc | 92.5% ± 2.5 | 75.8% ± 2.4 | +16.7 pt |
+| Mean conf | 97.5% ± 0.4 | 92.2% ± 3.9 | +5.3 pt |
+| NLL | 2.299 ± 0.220 | 3.019 ± 0.244 | -0.720 [-2.311, +0.985] |
+| ECE | 0.277 ± 0.019 | 0.355 ± 0.042 | -0.078 |
+| Synthetic val acc | 99.1% ± 0.1 | 98.6% ± 0.1 | +0.4 pt |
+| Synth→real gap (val acc − dev acc) | 27.8% ± 3.6 | 40.3% ± 7.1 | -12.5 pt |
+| Dev-stress acc (supplementary, DR-022) | 67.3% (n=2) | 38.2% (n=3) | +29.1 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E0b | 70% | 68% | 68% | 72% | 70% | 50% |
-| E0a | 28% | 32% | 52% | 52% | 10% | 55% |
+| E0b | 71% | 71% | 70% | 70% | 72% | 49% |
+| E0a | 28% | 32% | 52% | 47% | 13% | 56% |
 
-**Blank-page control:** E (0.96)
+**Blank-page control:** E (0.96), H (0.79)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E0b | 30.0% | 35.0% |
-| E0a | 60.0% | 25.0% |
+| E0b | 27.5% | 30.0% |
+| E0a | 53.3% | 30.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E0b | 3.0 | 0.0 | 1.0 | 9.0 | 0.0 |
-| E0a | 0.0 | 6.0 | 3.0 | 8.0 | 0.0 |
+| E0b | 2.5 | 0.0 | 0.5 | 8.5 | 0.0 |
+| E0a | 0.0 | 5.3 | 4.3 | 7.0 | 0.0 |
 
 **Figures:** [curves](results/figures/E0b/learning_curves.png) · [confusion](results/figures/E0b/confusion_dev.png) · [taxonomy](results/figures/E0b/taxonomy_dev.png)
 <!-- /results:E0b -->
@@ -229,38 +229,38 @@ E0c ≈ E0b on dev CER. E0c is worse on the blank-page control, and may be worse
 
 ### Results
 <!-- results:E0c -->
-**Probe:** hybrid | **input:** autocontrast | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 6500 (best at 4500) | **train time:** 14.7 min/run
+**Probe:** hybrid | **input:** autocontrast | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 6833 (best at 4833) | **train time:** 15.6 min/run
 
-| Metric (dev, pen-40) | E0c (n=1) | E0a (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E0c (n=3) | E0a (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 10.0% | 42.5% | -32.5 pt [-47.5, -20.0] |
-| Accuracy | 90.0% | 57.5% | +32.5 pt [+20.0, +47.5] |
-| Top-3 | 100.0% | 85.0% | +15.0 pt |
-| Macro-F1 | 0.893 | 0.492 | +0.401 |
-| Aicme acc | 100.0% | 77.5% | +22.5 pt |
-| Mean conf | 96.0% | 91.8% | +4.2 pt |
-| NLL | 0.436 | 2.701 | -2.265 [-3.427, -1.126] |
-| ECE | 0.094 | 0.343 | -0.249 |
-| Synthetic val acc | 98.6% | 98.8% | -0.2 pt |
-| Synth→real gap (val acc − dev acc) | 8.6% | 41.3% | -32.7 pt |
-| Dev-stress acc (supplementary, DR-022) | 86.7% (n=1) | 38.3% (n=1) | +48.3 pt |
+| CER | 18.3% ± 5.9 | 41.7% ± 7.2 | -23.3 pt [-35.0, -11.7] |
+| Accuracy | 81.7% ± 5.9 | 58.3% ± 7.2 | +23.3 pt [+11.7, +35.0] |
+| Top-3 | 99.2% ± 1.2 | 83.3% ± 1.2 | +15.8 pt |
+| Macro-F1 | 0.792 ± 0.072 | 0.530 ± 0.084 | +0.263 |
+| Aicme acc | 97.5% ± 2.0 | 75.8% ± 2.4 | +21.7 pt |
+| Mean conf | 96.0% ± 0.6 | 92.2% ± 3.9 | +3.9 pt |
+| NLL | 0.950 ± 0.386 | 3.019 ± 0.244 | -2.069 [-3.267, -0.986] |
+| ECE | 0.179 ± 0.062 | 0.355 ± 0.042 | -0.176 |
+| Synthetic val acc | 98.9% ± 0.2 | 98.6% ± 0.1 | +0.2 pt |
+| Synth→real gap (val acc − dev acc) | 17.2% ± 6.1 | 40.3% ± 7.1 | -23.1 pt |
+| Dev-stress acc (supplementary, DR-022) | 80.1% (n=3) | 38.2% (n=3) | +41.9 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E0c | 85% | 88% | 92% | 82% | 90% | 82% |
-| E0a | 28% | 32% | 52% | 52% | 10% | 55% |
+| E0c | 82% | 83% | 83% | 73% | 82% | 78% |
+| E0a | 28% | 32% | 52% | 47% | 13% | 56% |
 
-**Blank-page control:** R (1.00)
+**Blank-page control:** R (1.00), I (1.00), R (1.00)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E0c | 10.0% | 10.0% |
-| E0a | 60.0% | 25.0% |
+| E0c | 20.0% | 16.7% |
+| E0a | 53.3% | 30.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E0c | 0.0 | 0.0 | 0.0 | 4.0 | 0.0 |
-| E0a | 0.0 | 6.0 | 3.0 | 8.0 | 0.0 |
+| E0c | 0.0 | 0.3 | 0.7 | 6.3 | 0.0 |
+| E0a | 0.0 | 5.3 | 4.3 | 7.0 | 0.0 |
 
 **Figures:** [curves](results/figures/E0c/learning_curves.png) · [confusion](results/figures/E0c/confusion_dev.png) · [taxonomy](results/figures/E0c/taxonomy_dev.png)
 <!-- /results:E0c -->
@@ -353,38 +353,38 @@ Correct, stem-anchored conventions raise **aicme accuracy** and lower dev CER ag
 
 ### Results
 <!-- results:E1a-prior -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_prior_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 5500 (best at 3500) | **train time:** 16.2 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_prior_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 6000 (best at 4000) | **train time:** 14.3 min/run
 
-| Metric (dev, pen-40) | E1a-prior (n=1) | E0b (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E1a-prior (n=3) | E0b (n=2) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 5.0% | 32.5% | -27.5 pt [-42.5, -12.5] |
-| Accuracy | 95.0% | 67.5% | +27.5 pt [+12.5, +42.5] |
-| Top-3 | 100.0% | 95.0% | +5.0 pt |
-| Macro-F1 | 0.947 | 0.636 | +0.311 |
-| Aicme acc | 100.0% | 90.0% | +10.0 pt |
-| Mean conf | 99.5% | 97.1% | +2.4 pt |
-| NLL | 0.113 | 2.519 | -2.406 [-3.987, -1.040] |
-| ECE | 0.045 | 0.296 | -0.251 |
-| Synthetic val acc | 99.9% | 98.9% | +1.0 pt |
-| Synth→real gap (val acc − dev acc) | 4.9% | 31.4% | -26.5 pt |
-| Dev-stress acc (supplementary, DR-022) | 88.3% (n=1) | 66.2% (n=1) | +22.1 pt |
+| CER | 1.7% ± 2.4 | 28.7% ± 3.7 | -27.1 pt [-40.4, -14.2] |
+| Accuracy | 98.3% ± 2.4 | 71.2% ± 3.7 | +27.1 pt [+14.2, +40.4] |
+| Top-3 | 100.0% ± 0.0 | 96.2% ± 1.3 | +3.8 pt |
+| Macro-F1 | 0.982 ± 0.025 | 0.670 ± 0.034 | +0.313 |
+| Aicme acc | 100.0% ± 0.0 | 92.5% ± 2.5 | +7.5 pt |
+| Mean conf | 99.8% ± 0.2 | 97.5% ± 0.4 | +2.3 pt |
+| NLL | 0.038 ± 0.053 | 2.299 ± 0.220 | -2.261 [-3.638, -1.058] |
+| ECE | 0.015 ± 0.021 | 0.277 ± 0.019 | -0.262 |
+| Synthetic val acc | 99.8% ± 0.0 | 99.1% ± 0.1 | +0.8 pt |
+| Synth→real gap (val acc − dev acc) | 1.5% ± 2.4 | 27.8% ± 3.6 | -26.3 pt |
+| Dev-stress acc (supplementary, DR-022) | 89.6% (n=3) | 67.3% (n=2) | +22.3 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E1a-prior | 92% | 98% | 98% | 100% | 95% | 48% |
-| E0b | 70% | 68% | 68% | 72% | 70% | 50% |
+| E1a-prior | 95% | 98% | 99% | 100% | 98% | 47% |
+| E0b | 71% | 71% | 70% | 70% | 72% | 49% |
 
-**Blank-page control:** A (0.75)
+**Blank-page control:** A (0.75), B (0.59), B (0.83)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E1a-prior | 10.0% | 0.0% |
-| E0b | 30.0% | 35.0% |
+| E1a-prior | 3.3% | 0.0% |
+| E0b | 27.5% | 30.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E1a-prior | 0.0 | 0.0 | 0.0 | 2.0 | 0.0 |
-| E0b | 3.0 | 0.0 | 1.0 | 9.0 | 0.0 |
+| E1a-prior | 0.0 | 0.0 | 0.0 | 0.7 | 0.0 |
+| E0b | 2.5 | 0.0 | 0.5 | 8.5 | 0.0 |
 
 **Figures:** [curves](results/figures/E1a-prior/learning_curves.png) · [confusion](results/figures/E1a-prior/confusion_dev.png) · [taxonomy](results/figures/E1a-prior/taxonomy_dev.png) · [contact sheet](results/figures/E1a-prior/contact_sheet.png)
 <!-- /results:E1a-prior -->
@@ -403,6 +403,11 @@ The CIs exclude 0 even on a single seed.
 - All letter-group errors disappear. That was the primary hypothesis: correct, stem-anchored side and angle conventions.
 - Both remaining errors are off-by-one count errors on pen-1 vowels (E→U, O→A).
 - Seeds 1–2 are queued (screen2).
+
+**3-seed confirmation (2026-10-18): CONFIRMED.**
+- Dev CER 5.0 / 0.0 / 0.0, mean **1.7%**, against 28.7% for E0b.
+- Paired Δ CER −27.1 pt [−40.4, −14.2]; Δ NLL −2.26 [−3.64, −1.06].
+- Dev-stress 88.3 / 91.7 / 88.7, mean 89.6%.
 
 ---
 
@@ -429,38 +434,38 @@ Ranges are set to cover the measured real [min, max] with a margin:
 
 ### Results
 <!-- results:E1a -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 5000 (best at 3000) | **train time:** 10.7 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1a_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 6000 (best at 4000) | **train time:** 13.0 min/run
 
-| Metric (dev, pen-40) | E1a (n=1) | E1a-prior (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E1a (n=3) | E1a-prior (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 7.5% | 5.0% | +2.5 pt [-0.0, +7.5] |
-| Accuracy | 92.5% | 95.0% | -2.5 pt [-7.5, +0.0] |
-| Top-3 | 100.0% | 100.0% | +0.0 pt |
-| Macro-F1 | 0.922 | 0.947 | -0.025 |
-| Aicme acc | 100.0% | 100.0% | +0.0 pt |
-| Mean conf | 99.0% | 99.5% | -0.5 pt |
-| NLL | 0.585 | 0.113 | +0.472 [+0.013, +1.004] |
-| ECE | 0.082 | 0.045 | +0.037 |
-| Synthetic val acc | 99.8% | 99.9% | -0.1 pt |
-| Synth→real gap (val acc − dev acc) | 7.3% | 4.9% | +2.4 pt |
-| Dev-stress acc (supplementary, DR-022) | 85.4% (n=1) | 88.3% (n=1) | -2.9 pt |
+| CER | 4.2% ± 3.1 | 1.7% ± 2.4 | +2.5 pt [-0.0, +5.8] |
+| Accuracy | 95.8% ± 3.1 | 98.3% ± 2.4 | -2.5 pt [-5.8, +0.0] |
+| Top-3 | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Macro-F1 | 0.957 ± 0.032 | 0.982 ± 0.025 | -0.025 |
+| Aicme acc | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Mean conf | 99.4% ± 0.4 | 99.8% ± 0.2 | -0.4 pt |
+| NLL | 0.264 ± 0.242 | 0.038 ± 0.053 | +0.226 [+0.053, +0.431] |
+| ECE | 0.041 ± 0.033 | 0.015 ± 0.021 | +0.026 |
+| Synthetic val acc | 99.8% ± 0.1 | 99.8% ± 0.0 | -0.0 pt |
+| Synth→real gap (val acc − dev acc) | 4.0% ± 3.1 | 1.5% ± 2.4 | +2.5 pt |
+| Dev-stress acc (supplementary, DR-022) | 87.9% (n=3) | 89.6% (n=3) | -1.7 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E1a | 92% | 95% | 90% | 95% | 92% | 48% |
-| E1a-prior | 92% | 98% | 98% | 100% | 95% | 48% |
+| E1a | 94% | 96% | 95% | 97% | 96% | 50% |
+| E1a-prior | 95% | 98% | 99% | 100% | 98% | 47% |
 
-**Blank-page control:** B (0.95)
+**Blank-page control:** B (0.95), A (0.86), H (1.00)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E1a | 15.0% | 0.0% |
-| E1a-prior | 10.0% | 0.0% |
+| E1a | 8.3% | 0.0% |
+| E1a-prior | 3.3% | 0.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E1a | 0.0 | 0.0 | 0.0 | 3.0 | 0.0 |
-| E1a-prior | 0.0 | 0.0 | 0.0 | 2.0 | 0.0 |
+| E1a | 0.0 | 0.0 | 0.0 | 1.7 | 0.0 |
+| E1a-prior | 0.0 | 0.0 | 0.0 | 0.7 | 0.0 |
 
 **Figures:** [curves](results/figures/E1a/learning_curves.png) · [confusion](results/figures/E1a/confusion_dev.png) · [taxonomy](results/figures/E1a/taxonomy_dev.png) · [contact sheet](results/figures/E1a/contact_sheet.png)
 <!-- /results:E1a -->
@@ -473,6 +478,13 @@ Ranges are set to cover the measured real [min, max] with a margin:
 - Under DR-004, "inconclusive" keeps the simpler config, but here both configs are equally simple: they differ only in range values.
 - Provisional choice: the **calibrated (measured) ranges**, because they rest on evidence. The E1b–E1d chain was built on them.
 - If the 3-seed means show E1a-prior is better on both CER and NLL, the chain is re-based on the prior ranges and the decision is recorded here.
+
+**3-seed confirmation (2026-10-18): NOT ADOPTED (DR-026).**
+- Dev CER 7.5 / 0.0 / 5.0, mean 4.2%, against E1a-prior's 1.7%. Paired Δ CER +2.5 pt [−0.0, +5.8].
+- **Δ NLL +0.226 [+0.053, +0.431]: significantly worse.**
+- Calibrating the generator's ranges to the 40 measured dev images *narrowed* them (shorter vowel range, tighter diagonal angles). This made the probe less well calibrated on real data.
+- This supports the domain-randomisation principle of covering the real range rather than matching a small real sample.
+- The pre-registered re-base rule fired. It is honoured through the prior-range final candidate E2c-prior (DR-026).
 
 ---
 
@@ -498,38 +510,38 @@ The first attempt (curvature 0.06, wave 0.012) was too strong; see DR-018.
 
 ### Results
 <!-- results:E1b -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1b_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 4500 (best at 2500) | **train time:** 9.9 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1b_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 4333 (best at 2333) | **train time:** 9.5 min/run
 
-| Metric (dev, pen-40) | E1b (n=1) | E1a (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E1b (n=3) | E1a (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 0.0% | 7.5% | -7.5 pt [-15.0, -0.0] |
-| Accuracy | 100.0% | 92.5% | +7.5 pt [+0.0, +15.0] |
-| Top-3 | 100.0% | 100.0% | +0.0 pt |
-| Macro-F1 | 1.000 | 0.922 | +0.078 |
-| Aicme acc | 100.0% | 100.0% | +0.0 pt |
-| Mean conf | 100.0% | 99.0% | +1.0 pt |
-| NLL | 0.000 | 0.585 | -0.585 [-1.263, -0.013] |
-| ECE | 0.000 | 0.082 | -0.081 |
-| Synthetic val acc | 99.8% | 99.8% | +0.0 pt |
-| Synth→real gap (val acc − dev acc) | -0.2% | 7.3% | -7.5 pt |
-| Dev-stress acc (supplementary, DR-022) | 94.6% (n=1) | 85.4% (n=1) | +9.2 pt |
+| CER | 2.5% ± 2.0 | 4.2% ± 3.1 | -1.7 pt [-5.0, +1.7] |
+| Accuracy | 97.5% ± 2.0 | 95.8% ± 3.1 | +1.7 pt [-1.7, +5.0] |
+| Top-3 | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Macro-F1 | 0.973 ± 0.022 | 0.957 ± 0.032 | +0.016 |
+| Aicme acc | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Mean conf | 99.2% ± 0.6 | 99.4% ± 0.4 | -0.1 pt |
+| NLL | 0.052 ± 0.048 | 0.264 ± 0.242 | -0.211 [-0.412, -0.040] |
+| ECE | 0.024 ± 0.020 | 0.041 ± 0.033 | -0.017 |
+| Synthetic val acc | 99.9% ± 0.0 | 99.8% ± 0.1 | +0.1 pt |
+| Synth→real gap (val acc − dev acc) | 2.4% ± 2.1 | 4.0% ± 3.1 | -1.6 pt |
+| Dev-stress acc (supplementary, DR-022) | 87.9% (n=3) | 87.9% (n=3) | +0.0 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E1b | 95% | 100% | 100% | 100% | 100% | 72% |
-| E1a | 92% | 95% | 90% | 95% | 92% | 48% |
+| E1b | 87% | 92% | 98% | 99% | 98% | 54% |
+| E1a | 94% | 96% | 95% | 97% | 96% | 50% |
 
-**Blank-page control:** H (0.93)
+**Blank-page control:** H (0.93), H (0.77), H (0.86)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E1b | 0.0% | 0.0% |
-| E1a | 15.0% | 0.0% |
+| E1b | 5.0% | 0.0% |
+| E1a | 8.3% | 0.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E1b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
-| E1a | 0.0 | 0.0 | 0.0 | 3.0 | 0.0 |
+| E1b | 0.0 | 0.0 | 0.0 | 1.0 | 0.0 |
+| E1a | 0.0 | 0.0 | 0.0 | 1.7 | 0.0 |
 
 **Figures:** [curves](results/figures/E1b/learning_curves.png) · [confusion](results/figures/E1b/confusion_dev.png) · [taxonomy](results/figures/E1b/taxonomy_dev.png) · [contact sheet](results/figures/E1b/contact_sheet.png)
 <!-- /results:E1b -->
@@ -544,6 +556,12 @@ Against E1a:
 - The hand-drawn imperfection removed the pen-1 vowel under-counts.
 - After the DR-018 fixes, the imperfections stay label-preserving: detector decode on QA renders is 99%.
 - **Dev is now saturated (40/40).** From here on, dev differences are measured mainly through NLL and seed means.
+
+**3-seed confirmation (2026-10-18): CONFIRMED (superiority on NLL).**
+- Dev CER 0.0 / 2.5 / 5.0, mean 2.5%, against 4.2%. Paired Δ CER −1.7 pt [−5.0, +1.7].
+- **Δ NLL −0.211 [−0.412, −0.040].**
+- Dev-stress mean 87.9%.
+- Seed 0's perfect score was partly luck. The mean improvement over E1a holds.
 
 ---
 
@@ -565,38 +583,38 @@ Lower dev CER, and mainly fewer count errors. This experiment also matters for t
 
 ### Results
 <!-- results:E1c -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1c_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 8000) | **train time:** 18.4 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1c_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 7167 (best at 6500) | **train time:** 15.9 min/run
 
-| Metric (dev, pen-40) | E1c (n=1) | E1b (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E1c (n=3) | E1b (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
-| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
-| Top-3 | 100.0% | 100.0% | +0.0 pt |
-| Macro-F1 | 1.000 | 1.000 | +0.000 |
-| Aicme acc | 100.0% | 100.0% | +0.0 pt |
-| Mean conf | 100.0% | 100.0% | +0.0 pt |
-| NLL | 0.000 | 0.000 | -0.000 [-0.000, -0.000] |
-| ECE | 0.000 | 0.000 | -0.000 |
-| Synthetic val acc | 100.0% | 99.8% | +0.2 pt |
-| Synth→real gap (val acc − dev acc) | 0.0% | -0.2% | +0.2 pt |
-| Dev-stress acc (supplementary, DR-022) | 97.1% (n=1) | 94.6% (n=1) | +2.5 pt |
+| CER | 0.0% ± 0.0 | 2.5% ± 2.0 | -2.5 pt [-5.8, -0.0] |
+| Accuracy | 100.0% ± 0.0 | 97.5% ± 2.0 | +2.5 pt [+0.0, +5.8] |
+| Top-3 | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Macro-F1 | 1.000 ± 0.000 | 0.973 ± 0.022 | +0.027 |
+| Aicme acc | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Mean conf | 100.0% ± 0.0 | 99.2% ± 0.6 | +0.8 pt |
+| NLL | 0.000 ± 0.000 | 0.052 ± 0.048 | -0.052 [-0.114, -0.004] |
+| ECE | 0.000 ± 0.000 | 0.024 ± 0.020 | -0.024 |
+| Synthetic val acc | 100.0% ± 0.0 | 99.9% ± 0.0 | +0.1 pt |
+| Synth→real gap (val acc − dev acc) | -0.0% ± 0.0 | 2.4% ± 2.1 | -2.4 pt |
+| Dev-stress acc (supplementary, DR-022) | 96.5% (n=3) | 87.9% (n=3) | +8.6 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E1c | 100% | 100% | 100% | 100% | 100% | 82% |
-| E1b | 95% | 100% | 100% | 100% | 100% | 72% |
+| E1c | 100% | 100% | 100% | 100% | 100% | 79% |
+| E1b | 87% | 92% | 98% | 99% | 98% | 54% |
 
-**Blank-page control:** H (1.00)
+**Blank-page control:** H (1.00), H (1.00), B (1.00)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
 | E1c | 0.0% | 0.0% |
-| E1b | 0.0% | 0.0% |
+| E1b | 5.0% | 0.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
 | E1c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
-| E1b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1b | 0.0 | 0.0 | 0.0 | 1.0 | 0.0 |
 
 **Figures:** [curves](results/figures/E1c/learning_curves.png) · [confusion](results/figures/E1c/confusion_dev.png) · [taxonomy](results/figures/E1c/taxonomy_dev.png) · [contact sheet](results/figures/E1c/contact_sheet.png)
 <!-- /results:E1c -->
@@ -607,6 +625,11 @@ Lower dev CER, and mainly fewer count errors. This experiment also matters for t
 - Dev CER is 0.0% → 0.0% and NLL 0.0002 → <0.0001: non-inferior.
 - The run is also the most *stable* of the chain. Dev CER is 0 at every check from step 1,000 onwards, a trajectory mean of 0.006 against 0.047 for E1b.
 - The pen/marker model exists mainly to cover the marker medium, which only the test set contains. Its payoff is measured once, in the final marker-40 table.
+
+**3-seed confirmation (2026-10-18): CONFIRMED (now superior, not just non-inferior).**
+- Dev CER 0 / 0 / 0 (mean 0.0%), against E1b's 2.5%. NLL ≈ 0.
+- Dev-stress 97.1 / 97.1 / 95.4, mean **96.5%**, against E1b's 87.9%.
+- The pen/marker ink model is what made the chain stable across seeds.
 
 ---
 
@@ -626,28 +649,28 @@ Small or no change on dev, whose crops are clean. The value should show on harde
 
 ### Results
 <!-- results:E1d -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1d_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 6500 (best at 4500) | **train time:** 19.7 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e1d_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 7167 (best at 5167) | **train time:** 17.3 min/run
 
-| Metric (dev, pen-40) | E1d (n=1) | E1c (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E1d (n=3) | E1c (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
-| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
-| Top-3 | 100.0% | 100.0% | +0.0 pt |
-| Macro-F1 | 1.000 | 1.000 | +0.000 |
-| Aicme acc | 100.0% | 100.0% | +0.0 pt |
-| Mean conf | 100.0% | 100.0% | -0.0 pt |
-| NLL | 0.000 | 0.000 | +0.000 [+0.000, +0.000] |
-| ECE | 0.000 | 0.000 | +0.000 |
-| Synthetic val acc | 99.1% | 100.0% | -0.9 pt |
-| Synth→real gap (val acc − dev acc) | -0.9% | 0.0% | -0.9 pt |
-| Dev-stress acc (supplementary, DR-022) | 98.3% (n=1) | 97.1% (n=1) | +1.2 pt |
+| CER | 0.0% ± 0.0 | 0.0% ± 0.0 | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Macro-F1 | 1.000 ± 0.000 | 1.000 ± 0.000 | +0.000 |
+| Aicme acc | 100.0% ± 0.0 | 100.0% ± 0.0 | +0.0 pt |
+| Mean conf | 100.0% ± 0.0 | 100.0% ± 0.0 | -0.0 pt |
+| NLL | 0.000 ± 0.000 | 0.000 ± 0.000 | +0.000 [+0.000, +0.000] |
+| ECE | 0.000 ± 0.000 | 0.000 ± 0.000 | +0.000 |
+| Synthetic val acc | 99.2% ± 0.1 | 100.0% ± 0.0 | -0.7 pt |
+| Synth→real gap (val acc − dev acc) | -0.8% ± 0.1 | -0.0% ± 0.0 | -0.7 pt |
+| Dev-stress acc (supplementary, DR-022) | 95.7% (n=3) | 96.5% (n=3) | -0.8 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E1d | 100% | 100% | 100% | 100% | 100% | 90% |
-| E1c | 100% | 100% | 100% | 100% | 100% | 82% |
+| E1d | 100% | 100% | 100% | 100% | 100% | 74% |
+| E1c | 100% | 100% | 100% | 100% | 100% | 79% |
 
-**Blank-page control:** H (0.46)
+**Blank-page control:** H (0.46), H (0.95), H (0.65)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
@@ -669,6 +692,11 @@ Small or no change on dev, whose crops are clean. The value should show on harde
 - Synthetic val accuracy falls to 99.1%, which is expected because these are hard cases by design. It is not an over-randomisation alarm, since real dev is unaffected.
 - The hard cases and distractors exist for detector crops and the detector track (E3). The proxy detector decodes only 91% of E1d renders, against 97.5–100% on real images, so E1d is a deliberate stress set.
 - **E1d is the provisional E1-best** and the base for Phase 2 (E3a–c) and Phase 3 (E2a–d).
+
+**3-seed confirmation (2026-10-18): CONFIRMED (non-inferiority).**
+- Dev CER 0 / 0 / 0, NLL ≈ 0.
+- Dev-stress 98.3 / 95.0 / 93.8, mean 95.7%, against E1c's 96.5% (−0.8 pt, within the DR-022 margin).
+- Synthetic val 99.1–99.4%.
 
 ---
 
@@ -1203,6 +1231,40 @@ Generator fix only. No config change.
 
 ### Results
 <!-- results:E2d-v2 -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e2d_v2_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 6500) | **train time:** 24.3 min/run
+
+| Metric (dev, pen-40) | E2d-v2 (n=1) | E2c (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | +0.0 pt |
+| NLL | 0.000 | 0.000 | -0.000 [-0.001, +0.001] |
+| ECE | 0.000 | 0.000 | -0.000 |
+| Synthetic val acc | 92.2% | 99.0% | -6.8 pt |
+| Synth→real gap (val acc − dev acc) | -7.8% | -1.0% | -6.8 pt |
+| Dev-stress acc (supplementary, DR-022) | 99.6% (n=1) | 100.0% (n=1) | -0.4 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E2d-v2 | 100% | 100% | 100% | 100% | 100% | 98% |
+| E2c | 100% | 100% | 100% | 100% | 100% | 100% |
+
+**Blank-page control:** A (0.10)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E2d-v2 | 0.0% | 0.0% |
+| E2c | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E2d-v2 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E2c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E2d-v2/learning_curves.png) · [confusion](results/figures/E2d-v2/confusion_dev.png) · [taxonomy](results/figures/E2d-v2/taxonomy_dev.png) · [contact sheet](results/figures/E2d-v2/contact_sheet.png)
 <!-- /results:E2d-v2 -->
 
 ### Decision
