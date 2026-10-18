@@ -686,10 +686,54 @@ Preprocessing only. Train and dev use autocontrast + nearest squash instead of c
 
 ### Results
 <!-- results:E1d-ac -->
+**Probe:** hybrid | **input:** autocontrast | **dataset:** `data/e1d_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7500) | **train time:** 1074.3 min/run
+
+| Metric (dev, pen-40) | E1d-ac (n=1) | E1d (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | +0.0 pt |
+| NLL | 0.000 | 0.000 | -0.000 [-0.000, +0.000] |
+| ECE | 0.000 | 0.000 | -0.000 |
+| Synthetic val acc | 98.8% | 99.1% | -0.3 pt |
+| Synth→real gap (val acc − dev acc) | -1.2% | -0.9% | -0.3 pt |
+| Dev-stress acc (supplementary, DR-022) | 97.5% (n=1) | 98.3% (n=1) | -0.8 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E1d-ac | 100% | 100% | 100% | 100% | 100% | 85% |
+| E1d | 100% | 100% | 100% | 100% | 100% | 90% |
+
+**Blank-page control:** A (0.45)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E1d-ac | 0.0% | 0.0% |
+| E1d | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E1d-ac | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1d | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E1d-ac/learning_curves.png) · [confusion](results/figures/E1d-ac/confusion_dev.png) · [taxonomy](results/figures/E1d-ac/taxonomy_dev.png)
 <!-- /results:E1d-ac -->
 
 ### Decision
-_(pending)_
+**FINDING; canonical retained (DR-005 stands).**
+
+| Input on E1-best data | Dev CER | Dev-stress |
+|---|---|---|
+| Autocontrast | 0.0% | 97.5% |
+| Canonical | 0.0% | 98.3% |
+
+- With the new generator, autocontrast + nearest is no better than canonical.
+- It still turns a blank page into a confident letter.
+- The large E0c advantage was specific to legacy data. This supports the E0b hypothesis: canonical scale normalisation exposed the legacy generator's too-wide stroke spacing, and the calibrated E1 geometry removes that mismatch.
+- **Recommendation to the team:** canonical preprocessing pairs with the v2 generator. The autocontrast branch is not needed once the training data is fixed.
 
 ---
 
@@ -707,10 +751,53 @@ The probe's input becomes `canonical_render(json)` (DR-008). Training JSON is th
 
 ### Results
 <!-- results:E3a -->
+**Probe:** hybrid | **input:** render | **dataset:** `data/e3a_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 6000 (best at 4000) | **train time:** 12.9 min/run
+
+| Metric (dev, pen-40) | E3a (n=1) | E1d (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | +0.0 pt |
+| NLL | 0.000 | 0.000 | -0.000 [-0.000, -0.000] |
+| ECE | 0.000 | 0.000 | -0.000 |
+| Synthetic val acc | 100.0% | 99.1% | +0.9 pt |
+| Synth→real gap (val acc − dev acc) | 0.0% | -0.9% | +0.9 pt |
+| Dev-stress acc (supplementary, DR-022) | 84.2% (n=1) | 98.3% (n=1) | -14.2 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E3a | 100% | 100% | 100% | 100% | 100% | 5% |
+| E1d | 100% | 100% | 100% | 100% | 100% | 90% |
+
+**Blank-page control:** B (0.53)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E3a | 0.0% | 0.0% |
+| E1d | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E3a | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1d | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E3a/learning_curves.png) · [confusion](results/figures/E3a/confusion_dev.png) · [taxonomy](results/figures/E3a/taxonomy_dev.png) · [contact sheet](results/figures/E3a/contact_sheet.png)
 <!-- /results:E3a -->
 
 ### Decision
-_(pending)_
+**NOT ADOPTED as the default input.** It fails the DR-022 dev-stress guard.
+
+- On clean dev it ties: CER 0%, NLL ≈ 0, non-inferior.
+- On dev-stress it scores **84.2%, against 98.3% for the pixel path (E1d)**, a −14.2 pt drop.
+- Every degradation scores 100% except the shadow ramp, which scores **5%**.
+- The cause is the proxy detector, not the synthetic data. E3-ref (the detector plus rules, no learning) scores 84.6% on dev-stress with shadow 7%:
+  - global Otsu binarisation turns a shadow gradient into "ink";
+  - the stem is lost;
+  - the canonical render is then blank or wrong.
+- **Gate (Phase 2):** raw pixels win with the current detector. E2 (appearance) is therefore the main lever for the probe. The detector path needs **shading-robust binarisation** before it can compete (DR-024).
 
 ---
 
@@ -735,10 +822,49 @@ These rates are centred on the proxy detector's measured E1c errors (`tools/meas
 
 ### Results
 <!-- results:E3b -->
+**Probe:** hybrid | **input:** render | **dataset:** `data/e3b_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 6500) | **train time:** 17.2 min/run
+
+| Metric (dev, pen-40) | E3b (n=1) | E3a (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 92.9% | 100.0% | -7.1 pt |
+| NLL | 0.078 | 0.000 | +0.078 [+0.051, +0.113] |
+| ECE | 0.071 | 0.000 | +0.071 |
+| Synthetic val acc | 89.4% | 100.0% | -10.6 pt |
+| Synth→real gap (val acc − dev acc) | -10.6% | 0.0% | -10.6 pt |
+| Dev-stress acc (supplementary, DR-022) | 84.6% (n=1) | 84.2% (n=1) | +0.4 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E3b | 100% | 100% | 100% | 100% | 100% | 8% |
+| E3a | 100% | 100% | 100% | 100% | 100% | 5% |
+
+**Blank-page control:** A (0.28)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E3b | 0.0% | 0.0% |
+| E3a | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E3b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E3a | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E3b/learning_curves.png) · [confusion](results/figures/E3b/confusion_dev.png) · [taxonomy](results/figures/E3b/taxonomy_dev.png) · [contact sheet](results/figures/E3b/contact_sheet.png)
 <!-- /results:E3b -->
 
 ### Decision
-_(pending)_
+**Non-inferior to E3a, which itself is not the default input.** Kept as the preferred decoder-training recipe for the detector track.
+
+- Dev CER 0%. NLL 0.078 against E3a's 0.000; the Δ is within the DR-021 margin of 0.25.
+- Dev-stress 84.6% (+0.4 pt).
+- Synthetic val accuracy is 89.4%. Simulated detector errors make about 10% of synthetic samples genuinely ambiguous (a dropped stroke changes the visible count). That is expected for this module, not an alarm.
+- The simulated errors cannot help when the detector loses the stem entirely, which is the shadow case.
 
 ---
 
@@ -756,10 +882,48 @@ Every training sample goes from E1d render to proxy detector v1, then JSON, then
 
 ### Results
 <!-- results:E3c -->
+**Probe:** hybrid | **input:** render | **dataset:** `data/e3c_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7500) | **train time:** 17.1 min/run
+
+| Metric (dev, pen-40) | E3c (n=1) | E3a (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 99.5% | 100.0% | -0.5 pt |
+| NLL | 0.006 | 0.000 | +0.005 [+0.001, +0.014] |
+| ECE | 0.005 | 0.000 | +0.005 |
+| Synthetic val acc | 98.7% | 100.0% | -1.3 pt |
+| Synth→real gap (val acc − dev acc) | -1.3% | 0.0% | -1.3 pt |
+| Dev-stress acc (supplementary, DR-022) | 85.0% (n=1) | 84.2% (n=1) | +0.8 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E3c | 100% | 100% | 100% | 100% | 100% | 10% |
+| E3a | 100% | 100% | 100% | 100% | 100% | 5% |
+
+**Blank-page control:** B (0.29)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E3c | 0.0% | 0.0% |
+| E3a | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E3c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E3a | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E3c/learning_curves.png) · [confusion](results/figures/E3c/confusion_dev.png) · [taxonomy](results/figures/E3c/taxonomy_dev.png) · [contact sheet](results/figures/E3c/contact_sheet.png)
 <!-- /results:E3c -->
 
 ### Decision
-_(pending)_
+**Non-inferior; the best of the E3 variants. Kept as the decoder-training recipe once the detector is shading-robust.**
+
+- Render-then-detect: dev CER 0%, NLL 0.006, dev-stress 85.0%, synthetic val 98.7%.
+- It learns the proxy detector's real artefacts (merged blobs, stray stem-top segments) without needing hand-set error rates.
+- Re-run on E2-best photos with a shading-robust detector (proxy-v2) is a follow-up (DR-024).
 
 ---
 
@@ -781,10 +945,49 @@ Non-inferior on dev (DR-021: a coverage module). Dev is pen on near-white paper,
 
 ### Results
 <!-- results:E2a -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e2a_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 7000 (best at 5000) | **train time:** 15.0 min/run
+
+| Metric (dev, pen-40) | E2a (n=1) | E1d (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | +0.0 pt |
+| NLL | 0.000 | 0.000 | -0.000 [-0.000, +0.000] |
+| ECE | 0.000 | 0.000 | -0.000 |
+| Synthetic val acc | 98.1% | 99.1% | -1.0 pt |
+| Synth→real gap (val acc − dev acc) | -1.9% | -0.9% | -1.0 pt |
+| Dev-stress acc (supplementary, DR-022) | 97.9% (n=1) | 98.3% (n=1) | -0.4 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E2a | 100% | 100% | 100% | 100% | 100% | 88% |
+| E1d | 100% | 100% | 100% | 100% | 100% | 90% |
+
+**Blank-page control:** I (0.30)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E2a | 0.0% | 0.0% |
+| E1d | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E2a | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E1d | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E2a/learning_curves.png) · [confusion](results/figures/E2a/confusion_dev.png) · [taxonomy](results/figures/E2a/taxonomy_dev.png) · [contact sheet](results/figures/E2a/contact_sheet.png)
 <!-- /results:E2a -->
 
 ### Decision
-_(pending)_
+**ADOPTED (non-inferiority, DR-021).**
+
+- Dev CER 0% → 0%, NLL ≈ 0.
+- Dev-stress 97.9%, against E1d's 98.3%. The −0.4 pt drop is within the 2.5 pt guard.
+- Synthetic val 98.1%.
+- Paper and ink variety do not hurt, but do not help measurably on pen-on-white dev either. As expected, canonical autocontrast already normalises paper tone.
 
 ---
 
@@ -806,10 +1009,48 @@ Non-inferior on dev.
 
 ### Results
 <!-- results:E2b -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e2b_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 7500 (best at 5500) | **train time:** 16.1 min/run
+
+| Metric (dev, pen-40) | E2b (n=1) | E2a (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | -0.0 pt |
+| NLL | 0.000 | 0.000 | +0.000 [-0.000, +0.000] |
+| ECE | 0.000 | 0.000 | +0.000 |
+| Synthetic val acc | 98.3% | 98.1% | +0.2 pt |
+| Synth→real gap (val acc − dev acc) | -1.7% | -1.9% | +0.2 pt |
+| Dev-stress acc (supplementary, DR-022) | 100.0% (n=1) | 97.9% (n=1) | +2.1 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E2b | 100% | 100% | 100% | 100% | 100% | 100% |
+| E2a | 100% | 100% | 100% | 100% | 100% | 88% |
+
+**Blank-page control:** H (0.32)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E2b | 0.0% | 0.0% |
+| E2a | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E2b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E2a | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E2b/learning_curves.png) · [confusion](results/figures/E2b/confusion_dev.png) · [taxonomy](results/figures/E2b/taxonomy_dev.png) · [contact sheet](results/figures/E2b/contact_sheet.png)
 <!-- /results:E2b -->
 
 ### Decision
-_(pending)_
+**ADOPTED (non-inferiority, DR-021).** Robustness gain on dev-stress.
+
+- Dev CER 0%, NLL ≈ 0.
+- **Dev-stress 97.9% → 100%**: the shadow degradation goes from 88% to **100%**.
+- Lighting randomisation (gradients, shadow bands, vignette) teaches exactly the invariance the shadow ramp tests. As DR-022 notes, this gain is partly by construction.
 
 ---
 
@@ -833,10 +1074,48 @@ Non-inferior on dev. Watch synthetic-val accuracy for over-randomisation.
 
 ### Results
 <!-- results:E2c -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e2c_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7000) | **train time:** 17.2 min/run
+
+| Metric (dev, pen-40) | E2c (n=1) | E2b (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | -0.0 pt |
+| NLL | 0.000 | 0.000 | +0.000 [+0.000, +0.001] |
+| ECE | 0.000 | 0.000 | +0.000 |
+| Synthetic val acc | 99.0% | 98.3% | +0.7 pt |
+| Synth→real gap (val acc − dev acc) | -1.0% | -1.7% | +0.7 pt |
+| Dev-stress acc (supplementary, DR-022) | 100.0% (n=1) | 100.0% (n=1) | +0.0 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E2c | 100% | 100% | 100% | 100% | 100% | 100% |
+| E2b | 100% | 100% | 100% | 100% | 100% | 100% |
+
+**Blank-page control:** F (0.33)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E2c | 0.0% | 0.0% |
+| E2b | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E2c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E2b | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E2c/learning_curves.png) · [confusion](results/figures/E2c/confusion_dev.png) · [taxonomy](results/figures/E2c/taxonomy_dev.png) · [contact sheet](results/figures/E2c/contact_sheet.png)
 <!-- /results:E2c -->
 
 ### Decision
-_(pending)_
+**ADOPTED (non-inferiority, DR-021).**
+
+- Dev CER 0%, NLL ≈ 0, dev-stress 100%, synthetic val 99.0%.
+- Capture degradations (perspective, blur, noise, JPEG, rescale) cost nothing on real dev.
+- Their dev-stress categories (blur, lowres, JPEG, rotate) were already at 100% from E1d onwards.
 
 ---
 
@@ -857,7 +1136,74 @@ Non-inferior on dev. These artefacts mainly stress the ink-box crop.
 
 ### Results
 <!-- results:E2d -->
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/e2d_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7000) | **train time:** 18.0 min/run
+
+| Metric (dev, pen-40) | E2d (n=1) | E2c (n=1) | Δ vs parent [95% CI] |
+|---|---|---|---|
+| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% | 100.0% | +0.0 pt |
+| Mean conf | 100.0% | 100.0% | +0.0 pt |
+| NLL | 0.000 | 0.000 | -0.000 [-0.001, +0.000] |
+| ECE | 0.000 | 0.000 | -0.000 |
+| Synthetic val acc | 90.9% | 99.0% | -8.1 pt |
+| Synth→real gap (val acc − dev acc) | -9.1% | -1.0% | -8.1 pt |
+| Dev-stress acc (supplementary, DR-022) | 100.0% (n=1) | 100.0% (n=1) | +0.0 pt |
+
+| Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
+|---|---|---|---|---|---|---|
+| E2d | 100% | 100% | 100% | 100% | 100% | 100% |
+| E2c | 100% | 100% | 100% | 100% | 100% | 100% |
+
+**Blank-page control:** H (0.11)
+
+| Per batch (dev CER) | pen-1 | pen-2 |
+|---|---|---|
+| E2d | 0.0% | 0.0% |
+| E2c | 0.0% | 0.0% |
+
+| Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
+|---|---|---|---|---|---|
+| E2d | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| E2c | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+**Figures:** [curves](results/figures/E2d/learning_curves.png) · [confusion](results/figures/E2d/confusion_dev.png) · [taxonomy](results/figures/E2d/taxonomy_dev.png) · [contact sheet](results/figures/E2d/contact_sheet.png)
 <!-- /results:E2d -->
 
 ### Decision
-_(pending)_
+**Over-randomisation and label-break alarm. Replaced by E2d-v2 after a generator fix (DR-023).**
+
+- Real metrics are unchanged: dev CER 0%, NLL ≈ 0, dev-stress 100%.
+- But **synthetic val accuracy fell to 90.9%** (from 99.0%), the DR-010 alarm.
+- Inspection of the failing validation images (`data/_e2d_val_errors.png`) found three causes:
+  1. **Label-breaking:** perspective/rotation warps pushed loosely framed characters partly or fully out of the frame.
+  2. **Crop failure:** heavy shading plus very loose framing defeats the ink-box crop, so the character stays tiny at 128 px. This is a preprocessing robustness limit.
+  3. **Show-through ghosts:** at up to 18% strength, the mirrored ghost looks like a second character, and a mirrored B-group letter looks like an H-group letter.
+- **Fix (DR-023):**
+  - Warps are applied only if at least 97% of the ink stays in frame.
+  - Show-through strength is cut to 4–10%.
+- **E2d-v2** (the same config, fixed generator) is queued.
+
+
+---
+
+## E2d-v2: E2d with the label-guarded generator (DR-023)
+- Parent: E2c | Config: `configs/e2d.yaml` (unchanged) | Data: `data/e2d_v2_n850_s0` (generator at cb6725c)
+
+### Motivation
+E2d's 90.9% synthetic validation accuracy exposed label-breaking warps and over-strong show-through (DR-023).
+
+### Hypothesis
+Synthetic val recovers to about 98% or more, and dev and dev-stress stay at the ceiling. If synthetic val stays low, the remaining failures are the crop-under-shading limit (cause 2), which is a preprocessing issue rather than label noise.
+
+### Change
+Generator fix only. No config change.
+
+### Results
+<!-- results:E2d-v2 -->
+<!-- /results:E2d-v2 -->
+
+### Decision
+_(pending: queued at the head of screen2)_

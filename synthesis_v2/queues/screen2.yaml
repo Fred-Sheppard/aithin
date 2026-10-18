@@ -1,3 +1,4 @@
+- {name: E2d-v2-s0, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 0 --input canonical --batch 32"}
 # 3-seed confirmations for the E1 chain (dev CER near floor: DR-004/DR-021 decisions need seed averages).
 - {name: E1a-prior-s1, venv: train, cmd: "PY train/train.py --data data/e1a_prior_n850_s0 --exp E1a-prior --parent E0b --seed 1 --input canonical --batch 32"}
 - {name: E1a-prior-s2, venv: train, cmd: "PY train/train.py --data data/e1a_prior_n850_s0 --exp E1a-prior --parent E0b --seed 2 --input canonical --batch 32"}

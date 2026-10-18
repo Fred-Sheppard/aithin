@@ -277,3 +277,25 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   - Dev-stress gains are reported but are **not** by themselves grounds for adoption.
 - **Caveat:** the degradations resemble the E2 appearance and capture modules, so E2 gains on dev-stress are partly by construction. The marker-40 test remains the unbiased check.
 - **Status:** accepted (2026-10-17).
+
+## DR-023: Appearance warps must keep the character in frame; show-through is fainter
+- **Evidence:** E2d's synthetic val accuracy fell to 90.9%. The failing validation images showed:
+  - characters warped partly or fully out of the frame (label-breaking);
+  - mirrored show-through ghosts strong enough (up to 18%) to read as a second character or a mirrored group.
+- **Decision:**
+  - `appearance._capture` warps the ink coverage map with the same matrix, and skips the warp unless at least 97% of the ink stays in frame.
+  - Show-through strength is now configurable and defaults to 4–10%.
+  - Datasets now record the generator `git_sha` (`dataset.json`).
+- **Scope:** this affects E2c and E2d generation. E2c-s0 and E2d-s0 were trained on the pre-fix data (E2c's synthetic val was 99.0%, so the effect was minor). E2d-v2 re-runs E2d on the fixed generator.
+- **Status:** accepted (2026-10-18).
+
+## DR-024: With the proxy detector, the detector path is limited by detector robustness to shading
+- **Evidence:**
+  - E3a, E3b and E3c score 84–85% on dev-stress against 98–100% for the pixel path.
+  - E3-ref (detector plus rules) scores 84.6%. Every degradation category is at 100% except the shadow ramp: detector 7%, learned decoders 5–10%.
+  - Global Otsu after autocontrast turns an illumination gradient into ink, so the stem is lost.
+- **Decision:**
+  1. For the probe, the **pixel path (E1/E2 data + canonical preprocessing) is the default**. This is the Phase 2 gate outcome.
+  2. The detector track keeps E3c (render-then-detect) as its decoder-training recipe.
+  3. **Recommendation for the teammate's detector:** add shading correction before binarisation, such as background division (divide by a large-σ blur) or adaptive/Sauvola thresholding. Test it on the dev-stress shadow set, a ready-made regression test. Our E2b lighting generator can produce unlimited shaded test images with exact labels.
+- **Status:** accepted (2026-10-18).

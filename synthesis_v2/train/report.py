@@ -246,16 +246,18 @@ def waterfall(exps, name):
     decisions = {}
     if DECISIONS_CSV.exists():
         decisions = {r["exp_id"]: r["decision"] for r in csv.DictReader(open(DECISIONS_CSV))}
-    cer, nll, sd, ns = [], [], [], []
+    cer, nll, sd, ns, stress = [], [], [], [], []
     for e in exps:
         rs = load_runs(e)
+        sv = [json.loads((r["dir"] / "metrics_devstress.json").read_text())["acc"] for r in rs if (r["dir"] / "metrics_devstress.json").exists()]
+        stress.append(np.mean(sv) if sv else np.nan)
         vals = [r["m"]["cer"] for r in rs]
         cer.append(np.mean(vals))
         sd.append(np.std(vals))
         nll.append(np.mean([r["m"]["nll"] for r in rs]))
         ns.append(len(rs))
     colour = lambda d: "#2a9d55" if d.startswith("ADOPTED") else "#c44e52" if d.startswith("REJECTED") else "#8c8c8c"  # noqa: E731
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(13, 3.8))
+    fig, (a1, a3, a2) = plt.subplots(1, 3, figsize=(18, 4))
     x = np.arange(len(exps))
     a1.bar(x, 100 * np.array(cer), yerr=100 * np.array(sd), color=[colour(decisions.get(e, "")) for e in exps], capsize=3)
     for i, (c, n) in enumerate(zip(cer, ns)):
@@ -265,6 +267,14 @@ def waterfall(exps, name):
     a1.set_xticks(x, exps, rotation=30, fontsize=8)
     a1.set_ylabel("dev CER (%)")
     a1.set_title("Dev CER along the chain (green = adopted, grey = reference / finding / inconclusive)", fontsize=9, pad=10)
+    a3.bar(x, 100 * np.array(stress), color=[colour(decisions.get(e, "")) for e in exps])
+    for i, v in enumerate(stress):
+        if not np.isnan(v):
+            a3.text(i, 100 * v + 1, f"{100 * v:.0f}", ha="center", fontsize=8)
+    a3.set_ylim(0, 110)
+    a3.set_xticks(x, exps, rotation=30, fontsize=8)
+    a3.set_ylabel("dev-stress accuracy (%)")
+    a3.set_title("Dev-stress robustness (supplementary, DR-022)", fontsize=9, pad=10)
     a2.plot(x, nll, "o-")
     a2.set_yscale("symlog", linthresh=0.01)
     a2.set_xticks(x, exps, rotation=30, fontsize=8)

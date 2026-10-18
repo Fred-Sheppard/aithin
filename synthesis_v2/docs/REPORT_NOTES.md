@@ -131,11 +131,65 @@ The shadow degradation improves most along the chain: 47% at E1a, 72% at E1b, 82
 - 40 dev images, all pen.
 - The 95% CIs on a 40-image dev set are wide. Only the E0b→E1a-prior step is statistically decisive so far.
 
-## Phase 2: representation fork (E3-ref, E3a, E3b)
-_(to be written)_
+## Phase 2: representation fork (E3-ref, E3a, E3b, E3c)
 
-## Phase 3: appearance randomisation (E2) and render-then-detect (E3c)
-_(to be written)_
+*Screening, seed 0. Figure: `results/figures/overview/waterfall_phase1_3.png`.*
+
+**Question.** Should the recogniser read the line detector's output (a canonical render of its JSON) instead of pixels? Report §9 predicts this "may matter more than any realism trick".
+
+| Variant | Training data | Dev CER | Dev-stress | Shadow subset |
+|---|---|---|---|---|
+| E3-ref | none: detector + counting rules | 0.0% | 84.6% | 7% |
+| E3a | oracle JSON of E1d geometry | 0.0% | 84.2% | 5% |
+| E3b | oracle + simulated detector errors | 0.0% | 84.6% | 7% |
+| E3c | render-then-detect (the real detector on synthetic renders) | 0.0% | 85.0% | 10% |
+| *pixel path, E1d* | E1d images, canonical | 0.0% | **98.3%** | 90% |
+
+**Findings**
+1. **On clean crops, the detector representation is already solved.** Rules alone reach 100% dev and 97.5% test. Every learned E3 variant also reaches 100% dev.
+2. **The detector path is exactly as robust as the detector.**
+   - Every E3 variant inherits the proxy detector's failure under a shadow gradient (5–10%). Global Otsu turns the shadow into ink and the stem is lost.
+   - No amount of synthetic decoder training fixes a stem that was never detected.
+   - The gate therefore chose the **pixel path** as the probe's default (DR-024).
+3. **Among decoder-training recipes**, render-then-detect (E3c) is the best and the most principled. It learns the detector's real artefacts without hand-set error rates. Simulated errors (E3b) make about 10% of synthetic samples genuinely ambiguous.
+
+**Recommendation for the teammate's detector**
+- Add shading correction before binarisation: background division or Sauvola thresholding.
+- Use our dev-stress shadow set, plus E2b-style generated shaded images (unlimited, exactly labelled), as its regression test.
+- This is the clearest example of synthetic data being most useful as a **test generator for the detector**.
+
+## Phase 3: appearance and capture randomisation (E2a–E2d)
+
+*Screening, seed 0.*
+
+| Step | Adds | Dev CER | Dev-stress | Synthetic val | Decision |
+|---|---|---|---|---|---|
+| E1d | (base) | 0.0% | 98.3% | 99.1% | |
+| E2a | paper + ink | 0.0% | 97.9% | 98.1% | adopted (non-inferiority) |
+| E2b | + lighting | 0.0% | **100%** | 98.3% | adopted; shadow 88% → 100% |
+| E2c | + capture (perspective, blur, noise, JPEG) | 0.0% | 100% | 99.0% | adopted (non-inferiority) |
+| E2d | + artefacts and loose crops | 0.0% | 100% | **90.9%** | alarm → generator fix → E2d-v2 queued |
+
+**Findings**
+1. **With canonical preprocessing, appearance randomisation costs nothing on real data and buys robustness.**
+   - Lighting (E2b) is the module that closes the remaining dev-stress gap, the shadow degradation.
+   - Partly by construction, since the stress test and the module target the same effect (DR-022 caveat).
+2. **The synthetic-validation alarm worked as designed (E2d).**
+   - Real metrics were flat, but synthetic val dropped to 90.9%.
+   - Inspection showed label-breaking warps (characters pushed out of frame) and over-strong mirrored show-through.
+   - Both are fixed in the generator (DR-023), with E2d-v2 queued.
+   - This is the over-randomisation failure mode the report warns about, caught before it reached a decision.
+3. **Preprocessing question settled (E1d-ac).**
+   - With the v2 generator, autocontrast + nearest (the teammate branch) is no better than canonical: dev 0% for both, dev-stress 97.5% against 98.3%.
+   - E0c's large advantage on legacy data came from the legacy generator's spacing mismatch, which canonical exposes. It was not an advantage of autocontrast itself.
+
+**The ceiling problem (important for the remaining plan)**
+- From E1b onwards every pixel-path run scores 40/40 on dev, and from E2b onwards 240/240 on dev-stress.
+- With only the 80 existing real images, the remaining planned steps have no discriminating signal on dev:
+  - leave-one-out ablations;
+  - dataset-size scaling;
+  - Optuna tuning (E4) on dev NLL, which is now about 0.0000.
+- The one unused, unbiased signal is the marker-40 test set, reserved for the final evaluation. The next step needs a decision; see the status note in the conversation.
 
 ## Phase 4: ablations
 _(to be written)_
