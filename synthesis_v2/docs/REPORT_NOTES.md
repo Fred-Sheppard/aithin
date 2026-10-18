@@ -68,7 +68,18 @@ What this shows:
 
 ## Phase 1: stroke model (E1)
 
-*Status 2026-10-17: screening complete (seed 0). 3-seed confirmations are queued, and the numbers below will be updated.*
+*Status 2026-10-18: 3-seed confirmations complete. The 3-seed table is directly below. The seed-0 screening table after it is kept as an audit trail.*
+
+**3-seed results (dev, paired bootstrap 95% CI against the parent):**
+
+| Step | Dev CER (3 seeds) | Δ CER [CI] | Δ NLL [CI] | Dev-stress (mean) | Decision |
+|---|---|---|---|---|---|
+| E0b (legacy generator) | 28.7% | | | 67% | reference |
+| **E1a-prior** (stroke model) | **1.7%** (5 / 0 / 0) | **−27.1 [−40.4, −14.2]** | **−2.26 [−3.64, −1.06]** | 90% | adopted |
+| E1a (+ calibrated ranges) | 4.2% (7.5 / 0 / 5) | +2.5 [−0.0, +5.8] | **+0.23 [+0.05, +0.43]** | 88% | **rejected** (DR-026) |
+| E1b (+ imperfection) | 2.5% (0 / 2.5 / 5) | −1.7 [−5.0, +1.7] | **−0.21 [−0.41, −0.04]** | 88% | adopted |
+| E1c (+ pen/marker) | **0.0%** (0 / 0 / 0) | −2.5 | ≈ −0.05 | **96.5%** | adopted |
+| E1d (+ hard cases, distractors) | 0.0% (0 / 0 / 0) | 0 | ≈ 0 | 95.7% | adopted (non-inferiority) |
 
 **What we built.** A parametric generator, `ogham_v2/geometry.py` + `pen.py`:
 - characters are trajectories in stem coordinates;
@@ -112,8 +123,13 @@ The shadow degradation improves most along the chain: 47% at E1a, 72% at E1b, 82
 1. **Correct geometry conventions (E1a-prior)** removed every letter-group error and shrank the synthetic→real gap from 31 to 5 points. This matches the report's claim that stroke-level synthesis is the core upgrade, and the baseline diagnosis that most errors were group errors.
 2. **Hand-drawn imperfection (E1b)** removed the last errors: vowel under-counts on the faint, loosely cropped pen-1 batch. The first attempt was too strong. Curved, non-parallel strokes converged and made counts ambiguous, which the detector exposed by decoding only 89.5% of renders correctly. The fix (DR-018) was a polyline-distance check in the validator plus softer bows.
 
-**What did not move it (yet)**
-- **Calibrating the ranges to 40 real images (E1a)** made no measurable difference on one seed. The broad priors already covered the real distribution. This fits the domain-randomisation view: cover the range rather than match it.
+**What did not move it, and what hurt**
+- **Calibrating the ranges to 40 real images (E1a) hurt.**
+  - Over 3 seeds, CER was +2.5 pt (not significant) and NLL was **+0.23, CI [+0.05, +0.43]**, which *is* significant.
+  - Fitting the generator's ranges to a small real sample narrowed them, and the probe became less well calibrated on real data.
+  - This is a direct, measured instance of the domain-randomisation principle: *cover* the real variation rather than *match* a small sample of it.
+  - The final table includes the prior-range version of the frozen pipeline (E2c-prior, DR-026) to test this on marker as well.
+- **The pen/marker ink model (E1c)** was adopted on non-inferiority after seed 0, but over 3 seeds it is the step that made results *stable*: CER 0 / 0 / 0, with dev-stress 87.9% → 96.5%.
 
 **Surprises**
 1. **Legacy data with autocontrast preprocessing (E0c, 10%) beat legacy data with canonical (E0b, 32.5%).**
