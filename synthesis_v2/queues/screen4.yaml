@@ -18,3 +18,4 @@
 - {name: alt-E2d-v2-s0, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 0 --probe alt --input canonical --batch 32"}
 - {name: alt-E2d-v2-s1, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 1 --probe alt --input canonical --batch 32"}
 - {name: alt-E2d-v2-s2, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 2 --probe alt --input canonical --batch 32"}
+- {name: E0b-s2-retry, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 2 --input canonical --batch 32"}

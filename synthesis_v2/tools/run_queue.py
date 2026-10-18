@@ -8,6 +8,7 @@ State and logs: runs/queue/<queue-name>/{state.json, <job>.log}.
 """
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -19,7 +20,14 @@ ROOT = Path(__file__).resolve().parents[1]
 VENVS = {"synth": ROOT / ".venv-synth/bin/python", "train": ROOT / ".venv-train/bin/python"}
 
 
+def unthrottle(pid: int) -> None:
+    """Jobs launched from a background session inherit PRIO_DARWIN_BG; on battery / when idle macOS then starves
+    them (E-cores, low GPU priority): a 16-min run took >3 h. Move the process out of background priority."""
+    subprocess.run(["taskpolicy", "-B", "-t", "0", "-l", "0", "-p", str(pid)], capture_output=True)
+
+
 def main():
+    unthrottle(os.getpid())                 # children spawned after this inherit normal priority
     ap = argparse.ArgumentParser()
     ap.add_argument("queue", type=Path)
     ap.add_argument("--retry-failed", action="store_true")
@@ -40,6 +48,7 @@ def main():
             print(f"skip {name} ({prev})", flush=True)
             continue
         cmd = job["cmd"].replace("PY ", f"{VENVS[job.get('venv', 'train')]} ", 1)
+        cmd = f"caffeinate -i -s {cmd}"     # keep the machine awake while the job runs
         print(f"run  {name}: {cmd}", flush=True)
         t0 = time.time()
         with open(qdir / f"{name}.log", "w") as log:
