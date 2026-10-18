@@ -99,17 +99,30 @@ def _lighting(img, lc, rng):
     return img
 
 
-def _capture(img, cc, rng):
+def _warp_matrix(cc, rng, w, h):
+    if not (rng.random() < cc.get("persp_p", 0) or cc.get("rotate")):
+        return None
+    src = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
+    j = cc.get("persp", 0) * min(h, w) if rng.random() < cc.get("persp_p", 0) else 0
+    dst = src + rng.uniform(-j, j, (4, 2)).astype(np.float32)
+    M = cv2.getPerspectiveTransform(src, dst)
+    if cc.get("rotate"):
+        R = cv2.getRotationMatrix2D((w / 2, h / 2), _u(rng, (-cc["rotate"], cc["rotate"])), 1.0)
+        M = np.vstack([R, [0, 0, 1]]) @ M
+    return M
+
+
+def _capture(img, cc, rng, cov=None):
     h, w = img.shape[:2]
-    if rng.random() < cc.get("persp_p", 0) or cc.get("rotate"):
-        src = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
-        j = cc.get("persp", 0) * min(h, w) if rng.random() < cc.get("persp_p", 0) else 0
-        dst = src + rng.uniform(-j, j, (4, 2)).astype(np.float32)
-        M = cv2.getPerspectiveTransform(src, dst)
-        if cc.get("rotate"):
-            R = cv2.getRotationMatrix2D((w / 2, h / 2), _u(rng, (-cc["rotate"], cc["rotate"])), 1.0)
-            M = np.vstack([R, [0, 0, 1]]) @ M
-        img = cv2.warpPerspective(img, M, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    M = _warp_matrix(cc, rng, w, h)
+    if M is not None:
+        # label guard (DR-023): only warp if (almost) all of the ink stays inside the frame
+        keep = True
+        if cov is not None and cov.sum() > 0:
+            cw = cv2.warpPerspective(cov, M, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+            keep = cw.sum() >= 0.97 * cov.sum()
+        if keep:
+            img = cv2.warpPerspective(img, M, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     if rng.random() < cc.get("blur_p", 0):
         img = cv2.GaussianBlur(img, (0, 0), _u(rng, cc["blur"]))
     if rng.random() < cc.get("motion_p", 0):
@@ -138,7 +151,7 @@ def _artefacts(img, cov, ac, rng):
     if rng.random() < ac.get("showthrough_p", 0):                 # faint mirrored ink from the back of the page
         ghost = cv2.GaussianBlur(cov[:, ::-1], (0, 0), _u(rng, (1, 3)))
         ghost = np.roll(ghost, (int(rng.integers(-h // 4, h // 4)), int(rng.integers(-w // 4, w // 4))), (0, 1))
-        out *= (1 - _u(rng, (0.05, 0.18)) * ghost)[..., None]
+        out *= (1 - _u(rng, ac.get("showthrough_strength", (0.04, 0.10))) * ghost)[..., None]
     if rng.random() < ac.get("edge_band_p", 0):                   # dark band at one crop edge (scanner lid / page edge)
         side = int(rng.integers(4))
         bw = max(2, int(_u(rng, (0.02, 0.08)) * (w if side < 2 else h)))
@@ -192,5 +205,5 @@ def apply(gray: np.ndarray, pen: dict, cfg: dict, rng) -> np.ndarray:
     if art:
         img = _artefacts(img, cov, art, rng)
     if ac.get("capture"):
-        img = _capture(img.astype(np.float32), ac["capture"], rng)
+        img = _capture(img.astype(np.float32), ac["capture"], rng, cov)
     return np.clip(img, 0, 255).astype(np.uint8)

@@ -137,7 +137,11 @@ def main():
     t0 = time.time()
     generate_split(cfg, out / "train", a.n_per_class, a.seed, a.workers)
     generate_split(cfg, out / "val", a.val_n, a.seed + 10_000, a.workers)
-    info = {"name": out.name, "generator": "v2", "config": cfg["name"], "seed": a.seed, "n_per_class": a.n_per_class,
+    import subprocess
+    sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    dirty = bool(subprocess.run(["git", "status", "--porcelain", "ogham_v2", "configs"], cwd=ROOT, capture_output=True, text=True).stdout.strip())
+    info = {"name": out.name, "generator": "v2", "config": cfg["name"], "git_sha": sha + ("+dirty" if dirty else ""),
+            "seed": a.seed, "n_per_class": a.n_per_class,
             "val_n_per_class": a.val_n, "val_seed": a.seed + 10_000, "created": datetime.now().isoformat(timespec="seconds"),
             "gen_minutes": round((time.time() - t0) / 60, 2), "resolved_config": cfg}
     (out / "dataset.json").write_text(json.dumps(info, indent=2))
