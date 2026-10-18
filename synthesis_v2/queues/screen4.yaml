@@ -1,0 +1,20 @@
+# Freeze phase (user decision 2026-10-18, DR-025): seeds for the final-table candidates + second-probe milestones.
+- {name: E2c-s1, venv: train, cmd: "PY train/train.py --data data/e2c_n850_s0 --exp E2c --parent E2b --seed 1 --input canonical --batch 32"}
+- {name: E2c-s2, venv: train, cmd: "PY train/train.py --data data/e2c_n850_s0 --exp E2c --parent E2b --seed 2 --input canonical --batch 32"}
+- {name: E2d-v2-s1, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 1 --input canonical --batch 32"}
+- {name: E2d-v2-s2, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 2 --input canonical --batch 32"}
+- {name: E3c-s1, venv: train, cmd: "PY train/train.py --data data/e3c_n850_s0 --exp E3c --parent E3a --seed 1 --input render --batch 32"}
+- {name: E3c-s2, venv: train, cmd: "PY train/train.py --data data/e3c_n850_s0 --exp E3c --parent E3a --seed 2 --input render --batch 32"}
+# second probe (plain CNN, DR-002) at the milestones: legacy reference, E1 winner, E2 candidates
+- {name: alt-E0b-s0, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 0 --probe alt --input canonical --batch 32"}
+- {name: alt-E0b-s1, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 1 --probe alt --input canonical --batch 32"}
+- {name: alt-E0b-s2, venv: train, cmd: "PY train/train.py --data data/legacy_n850_s0 --exp E0b --parent E0a --seed 2 --probe alt --input canonical --batch 32"}
+- {name: alt-E1d-s0, venv: train, cmd: "PY train/train.py --data data/e1d_n850_s0 --exp E1d --parent E1c --seed 0 --probe alt --input canonical --batch 32"}
+- {name: alt-E1d-s1, venv: train, cmd: "PY train/train.py --data data/e1d_n850_s0 --exp E1d --parent E1c --seed 1 --probe alt --input canonical --batch 32"}
+- {name: alt-E1d-s2, venv: train, cmd: "PY train/train.py --data data/e1d_n850_s0 --exp E1d --parent E1c --seed 2 --probe alt --input canonical --batch 32"}
+- {name: alt-E2c-s0, venv: train, cmd: "PY train/train.py --data data/e2c_n850_s0 --exp E2c --parent E2b --seed 0 --probe alt --input canonical --batch 32"}
+- {name: alt-E2c-s1, venv: train, cmd: "PY train/train.py --data data/e2c_n850_s0 --exp E2c --parent E2b --seed 1 --probe alt --input canonical --batch 32"}
+- {name: alt-E2c-s2, venv: train, cmd: "PY train/train.py --data data/e2c_n850_s0 --exp E2c --parent E2b --seed 2 --probe alt --input canonical --batch 32"}
+- {name: alt-E2d-v2-s0, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 0 --probe alt --input canonical --batch 32"}
+- {name: alt-E2d-v2-s1, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 1 --probe alt --input canonical --batch 32"}
+- {name: alt-E2d-v2-s2, venv: train, cmd: "PY train/train.py --data data/e2d_v2_n850_s0 --exp E2d-v2 --parent E2c --seed 2 --probe alt --input canonical --batch 32"}

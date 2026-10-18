@@ -299,3 +299,23 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   2. The detector track keeps E3c (render-then-detect) as its decoder-training recipe.
   3. **Recommendation for the teammate's detector:** add shading correction before binarisation, such as background division (divide by a large-σ blur) or adaptive/Sauvola thresholding. Test it on the dev-stress shadow set, a ready-made regression test. Our E2b lighting generator can produce unlimited shaded test images with exact labels.
 - **Status:** accepted (2026-10-18).
+
+## DR-025: Freeze the pipeline and run the final test now. Ablations, scaling and E4 are deferred until new real data exists
+- **Context:**
+  - Every pixel-path run since E1b scores 40/40 on dev, and every one since E2b scores 240/240 on dev-stress.
+  - With only the 80 existing real images, the remaining planned steps have no discriminating signal:
+    - leave-one-out ablations (Phase 4);
+    - dataset-size scaling (S1/S2);
+    - Optuna synthesis tuning (E4), whose objective (dev NLL) is now about 0.
+- **Options considered:**
+  - (a) freeze now and run the final test;
+  - (b) collect new real data first;
+  - (c) both;
+  - (d) run the plan anyway.
+- **Decision (user, 2026-10-18):** (a).
+  1. Finish the queued confirmation seeds and E2d-v2.
+  2. Add seeds for the final-table candidates (E2c, E2d-v2, E3c).
+  3. Run the second probe (plain CNN, DR-002) at the milestones.
+  4. Evaluate the frozen winners **once** on marker-40.
+- **Recorded as "not decidable with the current data"** (not run): Phase 4 ablations, S1/S2 scaling, and E4 Optuna. The code is ready (`train/tune.py`, the `tools/` scripts), and these steps resume once a harder real dev set is collected (collection protocol in the plan).
+- **Status:** accepted (2026-10-18).
