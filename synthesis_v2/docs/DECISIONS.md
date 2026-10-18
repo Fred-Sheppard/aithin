@@ -342,3 +342,10 @@ Every design choice in the synthesis-v2 investigation is recorded here.
   - Its remaining seeds and plain-CNN runs were removed from the queue, since they cannot change a decision.
   - This saves about 48 minutes.
 - **Status:** accepted (2026-10-18, before any marker-40 evaluation of E2c, E2c-prior or E2d-v2).
+
+**DR-026 follow-up (2026-10-19, after freezing):**
+- E2c-prior results:
+  - dev CER 0 / 0 / 0;
+  - dev-stress 100 / 100 / 99.6%;
+  - marker-40 **100% on all 3 seeds** (E2c: 98.3%).
+- The recommended configuration is therefore `configs/e2c_prior.yaml`. That follows from the pre-registered dev rule, and the held-out result agrees.

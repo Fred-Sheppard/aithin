@@ -235,7 +235,8 @@ These resume when a harder real dev set exists. The collection protocol is in th
 | E1b: + hand-drawn imperfection | 77.5 ± 3.5% | 22.5% | +15.0 [−0.0, +30.0] | stroke count |
 | **E1c: + ballpoint/marker ink model** | **100.0%** (40/40 on all 3 seeds) | **0.0%** | **+37.5 [+23.8, +51.2]** | none |
 | E1d: + hard cases, crop distractors | 99.2 ± 1.2% | 0.8% | +36.7 [+22.9, +50.0] | 1 error across 3 seeds |
-| **E2c: + paper, ink, lighting, capture (frozen pipeline)** | **98.3 ± 1.2%** | **1.7%** | **+35.8 [+22.1, +49.6]** | 2 errors across 3 seeds |
+| E2c: + paper, ink, lighting, capture (calibrated ranges) | 98.3 ± 1.2% | 1.7% | +35.8 [+22.1, +49.6] | 2 errors across 3 seeds |
+| **E2c-prior: the same pipeline with the broad prior ranges (recommended, DR-026)** | **100.0%** (40/40 on all 3 seeds) | **0.0%** | **+37.5 [+23.8, +51.2]** | none |
 | E3-ref: line detector + rules (no learning) | 97.5% | 2.5% | | split thick crossing stroke |
 
 **Conclusions**
@@ -249,13 +250,18 @@ These resume when a harder real dev set exists. The collection protocol is in th
    - Legacy models make wrong-group errors.
    - The stroke model removes them, leaving count errors on thick strokes.
    - The marker-width model removes those.
-4. **Calibrating the generator to 40 real images hurt on dev (NLL) and on marker (75.8% vs 87.5%).** Cover the real variation broadly rather than fitting a small sample (DR-026). The E2c-prior row shows whether this still matters inside the full pipeline.
+4. **Calibrating the generator to 40 real images hurt** on:
+   - dev NLL;
+   - marker at the E1a step: 75.8% vs 87.5%;
+   - marker in the full pipeline: E2c 98.3% vs E2c-prior 100%.
+
+   Cover the real variation broadly rather than fitting a small sample. The rule that chose the prior ranges was pre-registered on dev (DR-026); marker confirms it.
 5. **Appearance and capture randomisation (E2) didn't change clean accuracy** (98–100% either way), but they made the probe robust to shadows and degradations. Dev-stress went from 96% to 100%.
 6. **On these clean crops, a line detector with counting rules is as good as the learned probe** (97.5%). With the current detector, the learned detector-input path is limited by the detector's shading robustness (DR-024).
 7. **Preprocessing matters as much as the generator for the legacy pipeline.** With good synthetic data, the team's autocontrast branch and our canonical preprocessing are equivalent. Canonical additionally handles blank pages safely.
 
-**Recommended synthesis pipeline (frozen):** `configs/e2c.yaml`, generated with `ogham_v2.generate`:
-- parametric stroke model with label validator, using the broader prior ranges (or calibrated; see E2c-prior);
+**Recommended synthesis pipeline (frozen):** `configs/e2c_prior.yaml`, generated with `ogham_v2.generate`:
+- parametric stroke model with label validator, using the **broad prior ranges**;
 - hand-drawn imperfection;
 - 50/50 ballpoint/marker ink model;
 - hard cases and crop distractors;
@@ -267,4 +273,4 @@ These resume when a harder real dev set exists. The collection protocol is in th
 - The test set is 40 images from one session per batch. 95% CIs on single configurations are about ±10 points.
 - Dev and test share writers. A writer-disjoint test set is the next step.
 - All conclusions are for single-character crops.
-- *Still to come in this table:* E2c-prior (calibration inside the full pipeline), the second probe (plain CNN) at E0b, E1d and E2c, E3c seeds 1–2, and E0b seed 2.
+- *Still to come in this table:* the second probe (plain CNN) at E0b, E1d and E2c, E3c seeds 1–2, and E0b seed 2.

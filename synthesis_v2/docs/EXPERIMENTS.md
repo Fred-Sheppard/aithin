@@ -1280,10 +1280,11 @@ _(pending: queued at the head of screen2)_
 
 | Pipeline | Marker-40 accuracy | CER | Δ accuracy vs legacy generator E0b [95% CI] |
 |---|---|---|---|
-| Frozen pipeline **E2c** | **98.3 ± 1.2%** | 1.7% | +35.8 pt [+22.1, +49.6] |
+| Frozen pipeline **E2c** (calibrated ranges) | **98.3 ± 1.2%** | 1.7% | +35.8 pt [+22.1, +49.6] |
+| **E2c-prior** (prior ranges; recommended per DR-026) | **100%** (all 3 seeds) | 0% | +37.5 pt [+23.8, +51.2] |
 | **E1c** | **100%** (all 3 seeds) | 0% | |
 | Team's reported baseline | 42.5% | 57.5% | |
 
 Narrative and conclusions are in [REPORT_NOTES.md](REPORT_NOTES.md#final-results-held-out-marker-40-the-teams-wild-test-set).
 
-*Pending rows:* E2c-prior, the second probe (plain CNN) at E0b/E1d/E2c, E3c seeds 1–2, E0b seed 2. The table is re-run when they finish.
+*Pending rows:* the second probe (plain CNN) at E0b/E1d/E2c, E3c seeds 1–2, E0b seed 2. The table is re-run when they finish.

@@ -111,3 +111,14 @@ timestamp,git_sha,exp_id,parent,run_id,probe,input,seed,dataset,n_per_class,batc
 2026-10-18T23:31:22,b9f5c4a,E3a,E1d,hybrid-render-s0,hybrid,render,0,data/e3a_n850_s0,850,32,gpu,6000,4000,12.9,1.0,0.0003,test,40,0.0,1.0,1.0,1.0,1.0,0.9999,0.0001,0.0001,0.0,0.5283,B,0,0,0,0,0
 2026-10-18T23:31:27,b9f5c4a,E3b,E3a,hybrid-render-s0,hybrid,render,0,data/e3b_n850_s0,850,32,gpu,8000,6500,17.23,0.894,0.36,test,40,0.0,1.0,1.0,1.0,1.0,0.9437,0.0587,0.0563,-0.106,0.2825,A,0,0,0,0,0
 2026-10-18T23:31:32,b9f5c4a,E3c,E3a,hybrid-render-s0,hybrid,render,0,data/e3c_n850_s0,850,32,gpu,8000,7500,17.12,0.987,0.0564,test,40,0.0,1.0,1.0,1.0,1.0,0.9988,0.0012,0.0012,-0.013,0.2944,B,0,0,0,0,0
+2026-10-18T23:47:06,88442a4,E2c-prior,E2c,hybrid-canonical-s0,hybrid,canonical,0,data/e2c_prior_n850_s0,850,32,gpu,8000,6000,17.98,0.98,0.0845,dev,40,0.0,1.0,1.0,1.0,1.0,0.9998,0.0002,0.0002,-0.02,0.6203,M,0,0,0,0,0
+2026-10-19T00:05:34,88442a4,E2c-prior,E2c,hybrid-canonical-s1,hybrid,canonical,1,data/e2c_prior_n850_s0,850,32,gpu,8000,7000,18.32,0.987,0.0515,dev,40,0.0,1.0,1.0,1.0,1.0,0.9999,0.0001,0.0001,-0.013,0.6988,M,0,0,0,0,0
+2026-10-19T00:25:39,88442a4,E2c-prior,E2c,hybrid-canonical-s2,hybrid,canonical,2,data/e2c_prior_n850_s0,850,32,gpu,8000,8000,19.95,0.982,0.0765,dev,40,0.0,1.0,1.0,1.0,1.0,0.9999,0.0001,0.0001,-0.018,0.5989,M,0,0,0,0,0
+2026-10-19T00:28:22,88442a4,E2c,E2b,hybrid-canonical-s1,hybrid,canonical,1,data/e2c_n850_s0,850,32,gpu,8000,6000,19.22,0.992,0.0483,dev-stress,240,0.0,1.0,,,1.0,,0.0016,,-0.008,,,,,,,
+2026-10-19T00:28:23,88442a4,E2c,E2b,hybrid-canonical-s2,hybrid,canonical,2,data/e2c_n850_s0,850,32,gpu,8000,7500,17.4,0.989,0.034,dev-stress,240,0.0,1.0,,,1.0,,0.0004,,-0.011,,,,,,,
+2026-10-19T00:28:25,88442a4,E2c-prior,E2c,hybrid-canonical-s0,hybrid,canonical,0,data/e2c_prior_n850_s0,850,32,gpu,8000,6000,17.98,0.98,0.0845,dev-stress,240,0.0,1.0,,,1.0,,0.0007,,-0.02,,,,,,,
+2026-10-19T00:28:26,88442a4,E2c-prior,E2c,hybrid-canonical-s1,hybrid,canonical,1,data/e2c_prior_n850_s0,850,32,gpu,8000,7000,18.32,0.987,0.0515,dev-stress,240,0.0,1.0,,,1.0,,0.0005,,-0.013,,,,,,,
+2026-10-19T00:28:28,88442a4,E2c-prior,E2c,hybrid-canonical-s2,hybrid,canonical,2,data/e2c_prior_n850_s0,850,32,gpu,8000,8000,19.95,0.982,0.0765,dev-stress,240,0.0042,0.9958,,,1.0,,0.007,,-0.0138,,,,,,,
+2026-10-19T00:28:37,88442a4,E2c-prior,E2c,hybrid-canonical-s0,hybrid,canonical,0,data/e2c_prior_n850_s0,850,32,gpu,8000,6000,17.98,0.98,0.0845,test,40,0.0,1.0,1.0,1.0,1.0,0.9998,0.0002,0.0002,-0.02,0.6203,M,0,0,0,0,0
+2026-10-19T00:28:44,88442a4,E2c-prior,E2c,hybrid-canonical-s1,hybrid,canonical,1,data/e2c_prior_n850_s0,850,32,gpu,8000,7000,18.32,0.987,0.0515,test,40,0.0,1.0,1.0,1.0,1.0,0.9992,0.0008,0.0008,-0.013,0.6988,M,0,0,0,0,0
+2026-10-19T00:28:50,88442a4,E2c-prior,E2c,hybrid-canonical-s2,hybrid,canonical,2,data/e2c_prior_n850_s0,850,32,gpu,8000,8000,19.95,0.982,0.0765,test,40,0.0,1.0,1.0,1.0,1.0,0.9999,0.0001,0.0001,-0.018,0.5989,M,0,0,0,0,0

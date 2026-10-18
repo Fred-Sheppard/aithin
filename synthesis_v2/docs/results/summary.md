@@ -28,6 +28,7 @@
 | E2c | hybrid | canonical | 3 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 99.0% | F (0.43) | ADOPTED (non-inferiority) |
 | E2d | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 90.9% | H (0.11) | ALARM -> fixed (E2d-v2) |
 | E2d-v2 | hybrid | canonical | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 92.2% | A (0.10) |  |
+| E2c-prior | hybrid | canonical | 3 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 98.3% | M (0.60) |  |
 
 ## Test (marker-40): frozen winners only
 
@@ -55,3 +56,4 @@
 | E3a | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 100.0% | B (0.53) | NOT ADOPTED (guard) |
 | E3b | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 94.4% | 0.06 | 89.4% | A (0.28) | NON-INFERIOR (detector track) |
 | E3c | hybrid | render | 1 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 99.9% | 0.00 | 98.7% | B (0.29) | NON-INFERIOR (detector track) |
+| E2c-prior | hybrid | canonical | 3 | 0.0% | 100.0% | 100.0% | 1.00 | 100.0% | 100.0% | 0.00 | 98.3% | M (0.60) |  |
