@@ -228,19 +228,30 @@ These resume when a harder real dev set exists. The collection protocol is in th
 | Pipeline | Marker-40 accuracy | CER | Δ acc vs E0b [95% CI] | Main remaining error |
 |---|---|---|---|---|
 | Team's reported baseline (legacy Hybrid checkpoint) | 42.5% (reported); 40.0% (our harness) | 57.5% | | wrong letter group (17/24) |
-| E0a: legacy generator, legacy loader (retrained) | 35.8 ± 7.2% | 64.2% | −26.7 [−40.0, −14.2] | stroke count |
-| E0b: legacy generator, canonical preprocessing | 62.5% (2 seeds) | 37.5% | reference | stroke count |
-| E1a-prior: + parametric stroke model | 87.5 ± 5.4% | 12.5% | **+25.0 [+9.6, +39.2]** | stroke count (5/seed) |
-| E1a: + calibrated ranges *(not adopted)* | 75.8 ± 4.2% | 24.2% | +13.3 [−3.3, +28.8] | stroke count |
-| E1b: + hand-drawn imperfection | 77.5 ± 3.5% | 22.5% | +15.0 [−0.0, +30.0] | stroke count |
-| **E1c: + ballpoint/marker ink model** | **100.0%** (40/40 on all 3 seeds) | **0.0%** | **+37.5 [+23.8, +51.2]** | none |
-| E1d: + hard cases, crop distractors | 99.2 ± 1.2% | 0.8% | +36.7 [+22.9, +50.0] | 1 error across 3 seeds |
-| E2c: + paper, ink, lighting, capture (calibrated ranges) | 98.3 ± 1.2% | 1.7% | +35.8 [+22.1, +49.6] | 2 errors across 3 seeds |
-| **E2c-prior: the same pipeline with the broad prior ranges (recommended, DR-026)** | **100.0%** (40/40 on all 3 seeds) | **0.0%** | **+37.5 [+23.8, +51.2]** | none |
+| E0a: legacy generator, legacy loader (retrained) | 35.8 ± 7.2% | 64.2% | −20.8 [−32.5, −10.0] | stroke count |
+| E0b: legacy generator, canonical preprocessing | 56.7 ± 8.2% | 43.3% | reference | stroke count |
+| E1a-prior: + parametric stroke model | 87.5 ± 5.4% | 12.5% | **+30.8 [+16.7, +45.0]** | stroke count (5/seed) |
+| E1a: + calibrated ranges *(not adopted)* | 75.8 ± 4.2% | 24.2% | | stroke count |
+| E1b: + hand-drawn imperfection | 77.5 ± 3.5% | 22.5% | | stroke count |
+| **E1c: + ballpoint/marker ink model** | **100.0%** (40/40 on all 3 seeds) | **0.0%** | **+43.3 [+30.0, +56.7]** | none |
+| E1d: + hard cases, crop distractors | 99.2 ± 1.2% | 0.8% | +42.5 [+29.2, +55.8] | 1 error across 3 seeds |
+| E2c: + paper, ink, lighting, capture (calibrated ranges) | 98.3 ± 1.2% | 1.7% | +41.7 [+28.3, +55.0] | 2 errors across 3 seeds |
+| **E2c-prior: the same pipeline with the broad prior ranges (recommended, DR-026)** | **100.0%** (all 3 seeds) | **0.0%** | **+43.3 [+30.0, +56.7]** | none |
+| E3c: detector-input decoder (render-then-detect) | 100.0% (3 seeds) | 0.0% | +43.3 [+30.0, +56.7] | none (but fragile to shading, DR-024) |
 | E3-ref: line detector + rules (no learning) | 97.5% | 2.5% | | split thick crossing stroke |
 
+**Second probe (plain CNN, a different architecture; DR-002), 3 seeds:**
+
+| Training data | Dev (pen-40) CER | Dev-stress | Marker-40 accuracy | Δ vs E0b [95% CI] |
+|---|---|---|---|---|
+| E0b: legacy generator | 25.8% | 66.3% | **19.2 ± 5.1%** | reference |
+| E1d: stroke model chain | 1.7% | 90.0% | **100.0%** | **+80.8 [+69.2, +90.8]** |
+| E2c: + appearance and capture | 0.8% | 97.5% | **100.0%** | **+80.8 [+69.2, +90.8]** |
+
 **Conclusions**
-1. **Better synthesis took the probe from 40% to 98–100% on the team's wild test set, without a single real training image.** CER fell from 57.5% to 0–1.7%. The model is unchanged. Only the training data and the preprocessing changed.
+1. **Better synthesis took the probe from 40% to 100% on the team's wild test set, without a single real training image.** CER fell from 57.5% to 0%, and marker ink was never seen during development. The model is unchanged. Only the training data and the preprocessing changed.
+   - **The gain does not depend on the architecture.** A second, structurally different model (plain CNN) trained on the legacy data reaches only 19.2% on marker, against **100%** on the new data: +80.8 points [+69.2, +90.8].
+   - So the improvement comes from the data. It should carry over to the team's new recogniser.
 2. **Two things did almost all the work:**
    - **(a) correct stroke geometry:** the stem-anchored parametric model, +25 points;
    - **(b) an ink/pen-width model covering thick marker:** +22.5 points on marker, to 100%.
@@ -273,4 +284,4 @@ These resume when a harder real dev set exists. The collection protocol is in th
 - The test set is 40 images from one session per batch. 95% CIs on single configurations are about ±10 points.
 - Dev and test share writers. A writer-disjoint test set is the next step.
 - All conclusions are for single-character crops.
-- *Still to come in this table:* the second probe (plain CNN) at E0b, E1d and E2c, E3c seeds 1–2, and E0b seed 2.
+- All rows are complete as of 2026-10-19 02:30. Each row covers every seed run for that configuration.

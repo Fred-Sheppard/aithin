@@ -161,37 +161,37 @@ Canonical preprocessing applied to *both* the synthetic and the real images cuts
 
 ### Results
 <!-- results:E0b -->
-**Probe:** hybrid | **input:** canonical | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 2 | **steps used:** 7500 (best at 6000) | **train time:** 17.1 min/run
+**Probe:** hybrid | **input:** canonical | **dataset:** `data/legacy_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 7667 (best at 6000) | **train time:** 17.4 min/run
 
-| Metric (dev, pen-40) | E0b (n=2) | E0a (n=3) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E0b (n=3) | E0a (n=3) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 28.7% ± 3.7 | 41.7% ± 7.2 | -12.9 pt [-29.6, +5.8] |
-| Accuracy | 71.2% ± 3.7 | 58.3% ± 7.2 | +12.9 pt [-5.8, +29.6] |
-| Top-3 | 96.2% ± 1.3 | 83.3% ± 1.2 | +12.9 pt |
-| Macro-F1 | 0.670 ± 0.034 | 0.530 ± 0.084 | +0.140 |
-| Aicme acc | 92.5% ± 2.5 | 75.8% ± 2.4 | +16.7 pt |
-| Mean conf | 97.5% ± 0.4 | 92.2% ± 3.9 | +5.3 pt |
-| NLL | 2.299 ± 0.220 | 3.019 ± 0.244 | -0.720 [-2.311, +0.985] |
-| ECE | 0.277 ± 0.019 | 0.355 ± 0.042 | -0.078 |
-| Synthetic val acc | 99.1% ± 0.1 | 98.6% ± 0.1 | +0.4 pt |
-| Synth→real gap (val acc − dev acc) | 27.8% ± 3.6 | 40.3% ± 7.1 | -12.5 pt |
-| Dev-stress acc (supplementary, DR-022) | 67.3% (n=2) | 38.2% (n=3) | +29.1 pt |
+| CER | 27.5% ± 3.5 | 41.7% ± 7.2 | -14.2 pt [-29.2, +2.5] |
+| Accuracy | 72.5% ± 3.5 | 58.3% ± 7.2 | +14.2 pt [-2.5, +29.2] |
+| Top-3 | 96.7% ± 1.2 | 83.3% ± 1.2 | +13.3 pt |
+| Macro-F1 | 0.675 ± 0.028 | 0.530 ± 0.084 | +0.145 |
+| Aicme acc | 92.5% ± 2.0 | 75.8% ± 2.4 | +16.7 pt |
+| Mean conf | 97.6% ± 0.4 | 92.2% ± 3.9 | +5.4 pt |
+| NLL | 2.190 ± 0.236 | 3.019 ± 0.244 | -0.829 [-2.343, +0.789] |
+| ECE | 0.273 ± 0.016 | 0.355 ± 0.042 | -0.082 |
+| Synthetic val acc | 99.1% ± 0.1 | 98.6% ± 0.1 | +0.5 pt |
+| Synth→real gap (val acc − dev acc) | 26.6% ± 3.4 | 40.3% ± 7.1 | -13.7 pt |
+| Dev-stress acc (supplementary, DR-022) | 69.0% (n=3) | 38.2% (n=3) | +30.8 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E0b | 71% | 71% | 70% | 70% | 72% | 49% |
+| E0b | 72% | 72% | 71% | 72% | 73% | 52% |
 | E0a | 28% | 32% | 52% | 47% | 13% | 56% |
 
-**Blank-page control:** E (0.96), H (0.79)
+**Blank-page control:** E (0.96), H (0.79), A (0.59)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
-| E0b | 27.5% | 30.0% |
+| E0b | 23.3% | 31.7% |
 | E0a | 53.3% | 30.0% |
 
 | Error taxonomy (mean errors/seed) | group_side_BH | group_diag_across_MA | group_other | count_off_by_one | count_off_more |
 |---|---|---|---|---|---|
-| E0b | 2.5 | 0.0 | 0.5 | 8.5 | 0.0 |
+| E0b | 2.7 | 0.0 | 0.3 | 8.0 | 0.0 |
 | E0a | 0.0 | 5.3 | 4.3 | 7.0 | 0.0 |
 
 **Figures:** [curves](results/figures/E0b/learning_curves.png) · [confusion](results/figures/E0b/confusion_dev.png) · [taxonomy](results/figures/E0b/taxonomy_dev.png)
@@ -910,28 +910,28 @@ Every training sample goes from E1d render to proxy detector v1, then JSON, then
 
 ### Results
 <!-- results:E3c -->
-**Probe:** hybrid | **input:** render | **dataset:** `data/e3c_n850_s0` (850/class) | **seeds:** 1 | **steps used:** 8000 (best at 7500) | **train time:** 17.1 min/run
+**Probe:** hybrid | **input:** render | **dataset:** `data/e3c_n850_s0` (850/class) | **seeds:** 3 | **steps used:** 8000 (best at 7500) | **train time:** 18.0 min/run
 
-| Metric (dev, pen-40) | E3c (n=1) | E3a (n=1) | Δ vs parent [95% CI] |
+| Metric (dev, pen-40) | E3c (n=3) | E3a (n=1) | Δ vs parent [95% CI] |
 |---|---|---|---|
-| CER | 0.0% | 0.0% | -0.0 pt [-0.0, -0.0] |
-| Accuracy | 100.0% | 100.0% | +0.0 pt [+0.0, +0.0] |
-| Top-3 | 100.0% | 100.0% | +0.0 pt |
-| Macro-F1 | 1.000 | 1.000 | +0.000 |
-| Aicme acc | 100.0% | 100.0% | +0.0 pt |
-| Mean conf | 99.5% | 100.0% | -0.5 pt |
-| NLL | 0.006 | 0.000 | +0.005 [+0.001, +0.014] |
-| ECE | 0.005 | 0.000 | +0.005 |
-| Synthetic val acc | 98.7% | 100.0% | -1.3 pt |
-| Synth→real gap (val acc − dev acc) | -1.3% | 0.0% | -1.3 pt |
-| Dev-stress acc (supplementary, DR-022) | 85.0% (n=1) | 84.2% (n=1) | +0.8 pt |
+| CER | 0.0% ± 0.0 | 0.0% | -0.0 pt [-0.0, -0.0] |
+| Accuracy | 100.0% ± 0.0 | 100.0% | +0.0 pt [+0.0, +0.0] |
+| Top-3 | 100.0% ± 0.0 | 100.0% | +0.0 pt |
+| Macro-F1 | 1.000 ± 0.000 | 1.000 | +0.000 |
+| Aicme acc | 100.0% ± 0.0 | 100.0% | +0.0 pt |
+| Mean conf | 99.6% ± 0.1 | 100.0% | -0.4 pt |
+| NLL | 0.004 ± 0.001 | 0.000 | +0.004 [+0.001, +0.010] |
+| ECE | 0.004 ± 0.001 | 0.000 | +0.004 |
+| Synthetic val acc | 98.8% ± 0.1 | 100.0% | -1.2 pt |
+| Synth→real gap (val acc − dev acc) | -1.2% ± 0.1 | 0.0% | -1.2 pt |
+| Dev-stress acc (supplementary, DR-022) | 85.4% (n=3) | 84.2% (n=1) | +1.2 pt |
 
 | Dev-stress by degradation | blur | lowres | jpeg | rotate | contrast | shadow |
 |---|---|---|---|---|---|---|
-| E3c | 100% | 100% | 100% | 100% | 100% | 10% |
+| E3c | 100% | 100% | 100% | 100% | 100% | 12% |
 | E3a | 100% | 100% | 100% | 100% | 100% | 5% |
 
-**Blank-page control:** B (0.29)
+**Blank-page control:** B (0.29), B (0.32), H (0.26)
 
 | Per batch (dev CER) | pen-1 | pen-2 |
 |---|---|---|
@@ -1280,11 +1280,12 @@ _(pending: queued at the head of screen2)_
 
 | Pipeline | Marker-40 accuracy | CER | Δ accuracy vs legacy generator E0b [95% CI] |
 |---|---|---|---|
-| Frozen pipeline **E2c** (calibrated ranges) | **98.3 ± 1.2%** | 1.7% | +35.8 pt [+22.1, +49.6] |
-| **E2c-prior** (prior ranges; recommended per DR-026) | **100%** (all 3 seeds) | 0% | +37.5 pt [+23.8, +51.2] |
+| Frozen pipeline **E2c** (calibrated ranges) | **98.3 ± 1.2%** | 1.7% | +41.7 pt [+28.3, +55.0] |
+| **E2c-prior** (prior ranges; recommended per DR-026) | **100%** (all 3 seeds) | 0% | +43.3 pt [+30.0, +56.7] |
+| Second probe (plain CNN): E2c vs E0b | **100% vs 19.2%** | | +80.8 pt [+69.2, +90.8] |
 | **E1c** | **100%** (all 3 seeds) | 0% | |
 | Team's reported baseline | 42.5% | 57.5% | |
 
 Narrative and conclusions are in [REPORT_NOTES.md](REPORT_NOTES.md#final-results-held-out-marker-40-the-teams-wild-test-set).
 
-*Pending rows:* the second probe (plain CNN) at E0b/E1d/E2c, E3c seeds 1–2, E0b seed 2. The table is re-run when they finish.
+*All rows are complete as of 2026-10-19 02:30. E0b now has 3 seeds (56.7 ± 8.2%), so every Δ vs E0b is computed against the 3-seed reference.* The table is re-run when they finish.
