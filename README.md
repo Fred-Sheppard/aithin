@@ -10,7 +10,13 @@ Trained models are attached to the [models-v1 release](https://github.com/Fred-S
 
 ```bash
 pip install -r requirements.txt
-python model/evaluate.py --model models/original.h5
+python model/evaluate.py --model models/keras_synthesis.h5
 ```
 
 This prints letter, direction (stroke group) and stroke-count accuracy for each set and in total. `--out results.json` also writes every prediction.
+
+`keras_synthesis.h5` is the hybrid model trained on the `synthesis_v2` training set (see `synthesis_v2/README.md` to generate it). To train it yourself, from `model/`:
+
+```bash
+python -c "from hybrid_model import train_hybrid_model; train_hybrid_model('../models/keras_synthesis.h5', csv_path='../synthesis_v2/data/ogham_v2/train/labels.csv', image_dir='../synthesis_v2/data/ogham_v2/train/images')"
+```
