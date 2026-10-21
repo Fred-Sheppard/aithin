@@ -42,7 +42,7 @@ def main():
     a = ap.parse_args()
     detect = detectors.get(a.detector)
     if a.dataset:
-        items = [(p.stem, p.stem.split("_")[0], np.asarray(Image.open(p).convert("L"))) for p in sorted((a.dataset / "images").glob("*.png"))]
+        items = [(p.stem, p.stem.split("_")[0], np.asarray(Image.open(p).convert("L"))) for p in sorted(((a.dataset / "qa") if (a.dataset / "qa").exists() else (a.dataset / "images")).glob("*_*.png"))]
     else:
         items = [(it.id, it.letter, np.asarray(Image.open(it.path).convert("L"))) for it in real_data.split_items(a.real)]
     res, summ = score(items, detect)

@@ -74,7 +74,7 @@ def main():
     real, n_real = collect(real_items, detect)
     syn, n_syn = ({}, 0)
     if a.synthetic:
-        syn_items = [(p.stem.split("_")[0], np.asarray(Image.open(p).convert("L"))) for p in sorted((a.synthetic / "images").glob("*.png"))]
+        syn_items = [(p.stem.split("_")[0], np.asarray(Image.open(p).convert("L"))) for p in sorted(((a.synthetic / "qa") if (a.synthetic / "qa").exists() else (a.synthetic / "images")).glob("*_*.png"))]
         syn, n_syn = collect(syn_items, detect)
     summary = {"n_real_used": n_real, "n_synthetic_used": n_syn, "real": {}, "synthetic": {}}
     for name, src in (("real", real), ("synthetic", syn)):
