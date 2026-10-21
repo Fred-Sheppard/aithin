@@ -1,0 +1,7 @@
+.venv*/
+data/
+__pycache__/
+# local outputs of the experiments branch, if checked out here
+runs/
+*.h5
+*.keras
