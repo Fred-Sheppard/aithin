@@ -1,0 +1,112 @@
+# Default synthesis configuration. Lengths are fractions of the stem length; angles are in degrees.
+# To make a variant, create configs/<name>.yaml with `base: default` and only the keys you change.
+
+# --- Stroke geometry (ogham_v2/geometry.py): characters as trajectories in stem coordinates -------------
+geometry:
+  spacing: [0.08, 0.20]          # distance between neighbouring strokes along the stem
+  spacing_jitter: 0.20           # per-gap relative jitter
+  max_group_span: 0.75           # strokes of one letter occupy at most this much of the stem
+  group_pos: [0.15, 0.85]        # where the stroke group sits along the free part of the stem
+  length:                        # stroke length
+    side: [0.25, 0.70]           #   B group (right of stem) and H group (left of stem)
+    across: [0.30, 0.90]         #   vowels (cross the stem)
+    diagonal: [0.40, 1.00]       #   M group (cross the stem at a slant)
+  length_jitter: 0.15            # per-stroke relative jitter
+  angle_sd: 4                    # side/across strokes: deviation from perpendicular to the stem
+  angle_max: 8
+  angle_per_stroke: 3            # extra per-stroke angle jitter
+  diagonal_angle: [22, 60]       # M group slant ("\") from the stem-perpendicular
+  balance: [0.30, 0.70]          # fraction of a crossing stroke that lies left of the stem
+  balance_jitter: 0.08
+  tilt_sd: 5                     # whole-character rotation
+  tilt_max: 12
+
+# Hand-drawn imperfection, applied along each stroke (topology-preserving).
+imperfection:
+  curvature: 0.035               # quadratic bow, fraction of stroke length (+-)
+  stem_curvature: 0.02
+  wave: 0.008                    # low-frequency waviness
+  tremor: 0.003                  # high-frequency tremor
+  overshoot: [-0.02, 0.04]       # side strokes: <0 stops short of the stem, >0 crosses it slightly
+  p_hook: 0.15                   # start/end hook per stroke
+  p_stem_gap: 0.15               # pen-lift gap in the stem (away from stroke anchors)
+
+# Deliberately hard (but still unambiguous) samples.
+hard:
+  p: 0.25
+  kinds: [near_touching, short_strokes, steep_tilt, uneven_spacing]
+
+# Crop distractors (not part of the label): the stem running past the crop edge, partial strokes of a
+# neighbouring letter at that edge, and stray marks.
+distractors:
+  p_stem_extension: 0.25
+  p_neighbour: 0.5
+  p_stray: 0.3
+  max_stray: 2
+
+# Label-preserving constraints: every sampled character must pass these or it is resampled.
+validator:
+  max_overshoot: 0.05            # side strokes may cross the stem by at most this much
+  min_side_len: 0.12
+  side_max_angle: 20
+  min_half: 0.06                 # crossing strokes: minimum extent on each side of the stem
+  min_half_frac: 0.20
+  across_max_angle: 12           # vowel strokes stay within 12 deg of perpendicular ...
+  diag_min_angle: 22             # ... and M-group strokes at least 22 deg, so the two groups never overlap
+  diag_max_angle: 65
+  min_spacing: 0.04              # minimum gap between neighbouring strokes (stem lengths) ...
+  min_spacing_w: 1.7             # ... and at least 1.7 x the pen width
+  # strokes must also stay >= max(0.035, 1.6 x pen width) apart along their whole length (built in)
+
+# --- Pen and ink (ogham_v2/pen.py) ------------------------------------------------------------------------
+pen:
+  mode: mixture
+  p_marker: 0.5                  # 50/50 ballpoint vs marker
+  ballpoint: {width: [0.008, 0.030], taper: [0.0, 0.5], intensity: [0.55, 1.0], width_wobble: 0.10}
+  marker:    {width: [0.030, 0.070], taper: [0.0, 0.2], intensity: [0.85, 1.0], width_wobble: 0.05}
+
+render:
+  stem_px: [170, 230]            # native resolution: stem length in pixels
+  margin: [0.05, 0.35]           # crop margin, fraction of the character size
+  aspect: [0.85, 1.9]            # canvas height / width
+  supersample: 4                 # anti-aliasing factor for the rasteriser
+
+# --- Appearance and capture (ogham_v2/appearance.py) ----------------------------------------------------
+appearance:
+  paper:
+    base: [228, 255]             # paper brightness
+    tint: 4                      # per-channel colour tint (sd)
+    lowfreq: 6                   # low-frequency tone variation
+    grain: 5                     # grain noise (sd)
+    fibre_p: 0.3                 # paper fibres
+    ruled_p: 0.08                # ruled lines ...
+    grid_p_given_ruled: 0.3      # ... which are a squared grid this often
+    texture_p: 0.5               # blend in a photo from ogham_v2/textures/*.png (no effect if none are present)
+  ink:
+    ballpoint: {blue: 0.45, purple: 0.15, black: 0.3, grey: 0.1}
+    marker: {black: 0.85, grey: 0.15}
+    bleed_p: 0.3
+    lowink_p: 0.2
+  lighting:
+    gradient: 0.25
+    shadow_p: 0.3                # soft shadow band (hand / phone)
+    shadow_strength: [0.05, 0.35]
+    vignette: 0.3
+    wb: 0.025                    # white-balance shift (sd per channel)
+    gamma: [0.8, 1.25]
+  capture:
+    persp_p: 0.5                 # perspective warp (skipped if it would push ink out of frame)
+    persp: 0.04
+    rotate: 6
+    blur_p: 0.5
+    blur: [0.3, 1.6]             # Gaussian blur sigma (px)
+    motion_p: 0.15
+    rescale_p: 0.3               # downscale -> upscale
+    rescale: [0.35, 0.8]
+    noise: 6                     # sensor noise (sd, max)
+    jpeg_p: 0.5
+    jpeg: [30, 95]               # JPEG quality
+
+# --- Output -----------------------------------------------------------------------------------------------
+cache_modes: [canonical]         # preprocessed 128x128 caches to write (canonical and/or autocontrast)
+qa_per_class: 10                 # renders per letter saved to qa/ for visual checks
