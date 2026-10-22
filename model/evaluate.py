@@ -1,4 +1,5 @@
-"""Score a trained Ogham model on the held-out sets in data/eval (each a labels.csv plus images/)."""
+"""Score a trained Ogham model (ConvNeXt .pt or Keras .h5) on the held-out sets in data/eval
+(each a labels.csv plus images/)."""
 import argparse
 import json
 from collections import Counter
@@ -7,21 +8,28 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from ogham_data import LETTER_TO_INDEX, LETTERS
+
 MODEL_DIR = Path(__file__).resolve().parent
-LETTER_TABLE = [
-    ["B", "L", "F", "S", "N"],
-    ["H", "D", "T", "C", "Q"],
-    ["M", "G", "NG", "Z", "R"],
-    ["A", "O", "U", "E", "I"],
-]
-LETTERS = [letter for row in LETTER_TABLE for letter in row]
-LETTER_TO_INDEX = {letter: i for i, letter in enumerate(LETTERS)}
 
 
 def load_set(set_dir):
     df = pd.read_csv(set_dir / "labels.csv", dtype=str)
     images = {p.stem: p for p in (set_dir / "images").iterdir()}
     return [images[n] for n in df["img_no"]], list(df["img_letter"])
+
+
+def convnext_probs(model_path, paths, letters, workers):
+    # Each backend's framework is imported only when used, so the Keras model runs without torch
+    from torch.utils.data import DataLoader
+    from ogham_convnext import OghamDataset, get_device, load_model, predict_batches
+
+    device = get_device()
+    model, _ = load_model(model_path, device)
+    dataset = OghamDataset(paths, letters, model.mean, model.std)
+    loader = DataLoader(dataset, batch_size=32, shuffle=False, num_workers=workers)
+    probs, _, _ = predict_batches(model, loader, device, desc="evaluate")
+    return probs.numpy()
 
 
 def keras_probs(model_path, paths):
@@ -52,10 +60,11 @@ def metrics(true, pred):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", required=True, help="Trained model (.h5)")
+    parser.add_argument("--model", required=True, help="ConvNeXt checkpoint (.pt) or Keras model (.h5)")
     parser.add_argument("--data", default="data/eval", help="Directory of evaluation sets")
     parser.add_argument("--sets", nargs="+", default=["whiteboard", "tattoos", "pen", "marker"])
     parser.add_argument("--out", help="Write metrics and per-image predictions as JSON")
+    parser.add_argument("--workers", type=int, default=4, help="Data loader workers (ConvNeXt only)")
     args = parser.parse_args()
 
     names, paths, letters = [], [], []
@@ -65,7 +74,10 @@ def main():
         paths += p
         letters += l
 
-    probs = keras_probs(args.model, paths)
+    if args.model.endswith(".pt"):
+        probs = convnext_probs(args.model, paths, letters, args.workers)
+    else:
+        probs = keras_probs(args.model, paths)
     names = np.array(names)
     true = np.array([LETTER_TO_INDEX[l] for l in letters])
     pred, confidence = probs.argmax(1), probs.max(1)

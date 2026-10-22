@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import os
 import json
-from hybrid_model import predict_image
+from ogham_convnext import REPO_ROOT, predict_image
 
 pygame.init()
 
@@ -44,8 +44,7 @@ def save_drawing():
     return temp_path
 
 def main():
-    model_path = "best_ogham_hybrid_model.h5"
-    label_path = "model/label_to_letter.json"
+    model_path = sys.argv[1] if len(sys.argv) > 1 else str(REPO_ROOT / "models" / "convnext_adapted.pt")
     
     drawing = False
     last_pos = None
@@ -81,7 +80,7 @@ def main():
                     if is_mouse_over_button(mouse_pos, predict_button):
                         image_path = save_drawing()
                         try:
-                            result = predict_image(model_path, image_path, label_path)
+                            result = predict_image(model_path, image_path)
                             prediction = result['predicted']
                             confidence = result['confidence']
                             top_predictions = result['top_predictions']
