@@ -1,0 +1,11 @@
+model,preprocessing,synthetic_validation_correct,synthetic_validation_total,synthetic_validation_accuracy,real_pages_correct,real_pages_total,real_pages_accuracy
+hybrid,nearest_full_baseline,3369,3400,0.990882,31,60,0.516667
+hybrid,lanczos_full,3365,3400,0.989706,,,
+hybrid,crop80_lanczos,3361,3400,0.988529,,,
+hybrid,crop68_lanczos,3334,3400,0.980588,,,
+hybrid,autocontrast_nearest,3369,3400,0.990882,35,60,0.583333
+augmented,nearest_full_baseline,3139,3400,0.923235,8,60,0.133333
+augmented,lanczos_full,2580,3400,0.758824,,,
+augmented,crop80_lanczos,2314,3400,0.680588,,,
+augmented,crop68_lanczos,1615,3400,0.475000,,,
+augmented,autocontrast_nearest,3144,3400,0.924706,43,60,0.716667

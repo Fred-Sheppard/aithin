@@ -1,0 +1,9 @@
+Other preprocessing methods tested
+
+- Autocontrast (selected method): Stretched the grayscale intensity range while ignoring 1% of the darkest and lightest pixels. It improved results for the augmented model on the handwritten evaluation images, though effects varied by model and sample group.
+- Full-image Lanczos resize: Resized the whole image using a smoother alternative to nearest-neighbour interpolation.
+- Centered crop with Lanczos resize: Cropped the centre to make the character larger, then resized it with Lanczos.
+- CLAHE: Adjusted contrast locally across small regions of the image.
+- Otsu thresholding: Used one global threshold to convert the grayscale image into foreground and background pixels.
+- Adaptive Gaussian thresholding: Calculated thresholds from local image regions to account for uneven backgrounds.
+- Sauvola thresholding: Used local thresholds, adapting them to local brightness and contrast.

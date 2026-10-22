@@ -1,0 +1,121 @@
+source_pdf,page,sample_type,reference_label,model,full_page_prediction,full_page_confidence,full_page_top3,tight_crop_prediction,tight_crop_confidence,tight_crop_top3
+Ogham Marker copy.pdf,1,marker,N,hybrid,F,0.75094,F:0.751;S:0.249;L:0.000,L,0.59429,L:0.594;B:0.405;F:0.001
+Ogham Marker copy.pdf,2,marker,S,hybrid,I,0.99746,I:0.997;N:0.001;R:0.001,N,0.99484,N:0.995;S:0.005;I:0.000
+Ogham Marker copy.pdf,3,marker,F,hybrid,S,0.92471,S:0.925;F:0.042;U:0.032,F,0.89945,F:0.899;S:0.100;L:0.000
+Ogham Marker copy.pdf,4,marker,L,hybrid,A,0.77039,A:0.770;B:0.225;H:0.005,B,0.99442,B:0.994;A:0.005;H:0.001
+Ogham Marker copy.pdf,5,marker,B,hybrid,B,0.59508,B:0.595;H:0.290;A:0.114,H,0.53528,H:0.535;B:0.365;A:0.098
+Ogham Marker copy.pdf,6,marker,Q,hybrid,C,0.82571,C:0.826;E:0.154;Q:0.019,C,0.93405,C:0.934;Q:0.050;S:0.009
+Ogham Marker copy.pdf,7,marker,C,hybrid,C,0.65795,C:0.658;U:0.169;E:0.164,C,0.99968,C:1.000;E:0.000;Q:0.000
+Ogham Marker copy.pdf,8,marker,T,hybrid,U,0.55519,U:0.555;O:0.445;T:0.000,A,0.93373,A:0.934;D:0.045;O:0.022
+Ogham Marker copy.pdf,9,marker,D,hybrid,A,0.74817,A:0.748;O:0.239;D:0.012,A,0.99850,A:0.999;H:0.001;B:0.001
+Ogham Marker copy.pdf,10,marker,H,hybrid,A,0.99977,A:1.000;H:0.000;B:0.000,B,0.70444,B:0.704;H:0.151;A:0.144
+Ogham Marker copy.pdf,11,marker,R,hybrid,R,0.99999,R:1.000;Z:0.000;I:0.000,R,0.99998,R:1.000;Z:0.000;I:0.000
+Ogham Marker copy.pdf,12,marker,Z,hybrid,R,0.95730,R:0.957;Z:0.043;I:0.000,Z,0.65974,Z:0.660;R:0.340;NG:0.000
+Ogham Marker copy.pdf,13,marker,NG,hybrid,NG,0.99679,NG:0.997;Z:0.003;E:0.000,NG,0.71446,NG:0.714;G:0.286;Z:0.000
+Ogham Marker copy.pdf,14,marker,G,hybrid,H,0.91370,H:0.914;A:0.054;B:0.032,H,0.67734,H:0.677;B:0.225;A:0.094
+Ogham Marker copy.pdf,15,marker,M,hybrid,B,0.83512,B:0.835;A:0.115;H:0.050,H,0.62861,H:0.629;B:0.261;A:0.107
+Ogham Marker copy.pdf,16,marker,I,hybrid,I,1.00000,I:1.000;E:0.000;R:0.000,I,1.00000,I:1.000;E:0.000;R:0.000
+Ogham Marker copy.pdf,17,marker,E,hybrid,E,0.99998,E:1.000;I:0.000;U:0.000,E,0.99693,E:0.997;I:0.003;U:0.000
+Ogham Marker copy.pdf,18,marker,U,hybrid,U,0.98352,U:0.984;E:0.016;NG:0.000,U,0.99987,U:1.000;E:0.000;NG:0.000
+Ogham Marker copy.pdf,19,marker,O,hybrid,U,0.99987,U:1.000;O:0.000;E:0.000,U,0.99999,U:1.000;O:0.000;E:0.000
+Ogham Marker copy.pdf,20,marker,A,hybrid,A,0.86686,A:0.867;O:0.133;D:0.000,A,0.76153,A:0.762;O:0.237;D:0.002
+Ogham Pen/N.pdf,1,pen,N,hybrid,S,0.99993,S:1.000;N:0.000;E:0.000,S,0.99974,S:1.000;N:0.000;F:0.000
+Ogham Pen/Scanned Document 2.pdf,1,pen,NG,hybrid,U,0.99979,U:1.000;E:0.000;NG:0.000,NG,0.99993,NG:1.000;Z:0.000;G:0.000
+Ogham Pen/Scanned Document 3.pdf,1,pen,G,hybrid,O,0.99995,O:1.000;A:0.000;D:0.000,D,0.39700,D:0.397;O:0.266;G:0.182
+Ogham Pen/Scanned Document 4.pdf,1,pen,M,hybrid,A,0.56394,A:0.564;B:0.367;M:0.069,M,0.99996,M:1.000;A:0.000;H:0.000
+Ogham Pen/Scanned Document 4.pdf,2,pen,I,hybrid,E,0.99998,E:1.000;I:0.000;U:0.000,I,0.78393,I:0.784;E:0.216;R:0.000
+Ogham Pen/Scanned Document 4.pdf,3,pen,E,hybrid,E,0.99996,E:1.000;U:0.000;I:0.000,E,0.99989,E:1.000;I:0.000;U:0.000
+Ogham Pen/Scanned Document 4.pdf,4,pen,U,hybrid,U,0.99990,U:1.000;E:0.000;NG:0.000,U,0.99401,U:0.994;E:0.006;NG:0.000
+Ogham Pen/Scanned Document 4.pdf,5,pen,O,hybrid,O,0.99933,O:0.999;U:0.001;T:0.000,U,0.97382,U:0.974;O:0.026;E:0.000
+Ogham Pen/Scanned Document 4.pdf,6,pen,A,hybrid,A,0.89449,A:0.894;O:0.105;D:0.000,A,0.99122,A:0.991;O:0.009;D:0.000
+Ogham Pen/Scanned Document.pdf,1,pen,S,hybrid,S,0.99701,S:0.997;F:0.003;U:0.000,E,0.86473,E:0.865;S:0.095;C:0.026
+Ogham Pen/Scanned Document.pdf,2,pen,F,hybrid,F,0.96977,F:0.970;S:0.030;L:0.000,S,0.75447,S:0.754;F:0.231;U:0.014
+Ogham Pen/Scanned Document.pdf,3,pen,L,hybrid,L,0.99988,L:1.000;F:0.000;O:0.000,L,0.99933,L:0.999;F:0.001;O:0.000
+Ogham Pen/Scanned Document.pdf,4,pen,B,hybrid,B,0.99905,B:0.999;A:0.001;L:0.000,B,0.99971,B:1.000;A:0.000;L:0.000
+Ogham Pen/Scanned Document.pdf,5,pen,Q,hybrid,Q,0.99974,Q:1.000;C:0.000;I:0.000,C,0.72959,C:0.730;Q:0.247;N:0.013
+Ogham Pen/Scanned Document.pdf,6,pen,C,hybrid,C,0.76807,C:0.768;Q:0.232;E:0.000,Q,0.94991,Q:0.950;N:0.049;C:0.001
+Ogham Pen/Scanned Document.pdf,7,pen,T,hybrid,T,0.99829,T:0.998;C:0.002;U:0.000,T,0.96633,T:0.966;F:0.016;C:0.013
+Ogham Pen/Scanned Document.pdf,8,pen,D,hybrid,D,0.99951,D:1.000;T:0.000;H:0.000,D,0.99949,D:0.999;T:0.001;H:0.000
+Ogham Pen/Scanned Document.pdf,9,pen,H,hybrid,H,0.99370,H:0.994;D:0.006;A:0.000,H,0.84380,H:0.844;A:0.153;D:0.002
+Ogham Pen/Scanned Document.pdf,10,pen,R,hybrid,R,0.99763,R:0.998;Z:0.002;I:0.000,Z,0.99124,Z:0.991;R:0.009;NG:0.000
+Ogham Pen/Scanned Document.pdf,11,pen,Z,hybrid,Z,0.99440,Z:0.994;R:0.006;E:0.000,Z,0.99953,Z:1.000;R:0.000;NG:0.000
+Ogham marker/Scanned Document.pdf,1,marker,N,hybrid,N,0.99881,N:0.999;I:0.001;R:0.000,N,0.99968,N:1.000;I:0.000;R:0.000
+Ogham marker/Scanned Document.pdf,2,marker,S,hybrid,N,0.99999,N:1.000;I:0.000;S:0.000,N,0.69980,N:0.700;S:0.300;E:0.000
+Ogham marker/Scanned Document.pdf,3,marker,F,hybrid,E,0.99764,E:0.998;U:0.002;S:0.000,S,0.97655,S:0.977;E:0.021;N:0.001
+Ogham marker/Scanned Document.pdf,4,marker,L,hybrid,F,0.98780,F:0.988;L:0.012;O:0.000,L,0.87666,L:0.877;F:0.123;O:0.000
+Ogham marker/Scanned Document.pdf,5,marker,B,hybrid,A,0.99990,A:1.000;O:0.000;D:0.000,A,0.86960,A:0.870;B:0.127;L:0.003
+Ogham marker/Scanned Document.pdf,6,marker,Q,hybrid,Q,0.86873,Q:0.869;I:0.131;R:0.000,I,0.84591,I:0.846;N:0.140;R:0.013
+Ogham marker/Scanned Document.pdf,7,marker,C,hybrid,E,0.99205,E:0.992;U:0.008;C:0.000,U,0.95795,U:0.958;O:0.041;F:0.001
+Ogham marker/Scanned Document.pdf,8,marker,T,hybrid,C,0.91111,C:0.911;T:0.089;Q:0.000,U,0.99698,U:0.997;E:0.003;NG:0.000
+Ogham marker/Scanned Document.pdf,9,marker,D,hybrid,D,0.99990,D:1.000;T:0.000;H:0.000,O,0.71490,O:0.715;D:0.211;A:0.074
+Ogham marker/Scanned Document.pdf,10,marker,H,hybrid,H,0.86649,H:0.866;D:0.133;A:0.000,A,0.99997,A:1.000;O:0.000;D:0.000
+Ogham marker/Scanned Document.pdf,11,marker,R,hybrid,O,0.98830,O:0.988;A:0.010;D:0.001,A,0.99256,A:0.993;B:0.007;H:0.000
+Ogham marker/Scanned Document.pdf,12,marker,Z,hybrid,O,0.86491,O:0.865;A:0.108;D:0.027,A,0.88665,A:0.887;B:0.110;H:0.003
+Ogham marker/Scanned Document.pdf,13,marker,NG,hybrid,U,0.99943,U:0.999;E:0.001;NG:0.000,O,0.99992,O:1.000;U:0.000;A:0.000
+Ogham marker/Scanned Document.pdf,14,marker,G,hybrid,U,0.99994,U:1.000;O:0.000;E:0.000,A,0.99900,A:0.999;O:0.001;D:0.000
+Ogham marker/Scanned Document.pdf,15,marker,M,hybrid,O,0.96124,O:0.961;A:0.038;D:0.001,A,0.99849,A:0.998;H:0.001;B:0.000
+Ogham marker/Scanned Document.pdf,16,marker,I,hybrid,I,1.00000,I:1.000;E:0.000;R:0.000,I,0.99891,I:0.999;E:0.001;R:0.000
+Ogham marker/Scanned Document.pdf,17,marker,E,hybrid,E,0.94061,E:0.941;I:0.059;U:0.000,E,0.99762,E:0.998;I:0.002;U:0.000
+Ogham marker/Scanned Document.pdf,18,marker,U,hybrid,U,0.99992,U:1.000;E:0.000;O:0.000,U,0.99996,U:1.000;E:0.000;O:0.000
+Ogham marker/Scanned Document.pdf,19,marker,O,hybrid,U,0.99996,U:1.000;O:0.000;E:0.000,O,0.99837,O:0.998;U:0.002;T:0.000
+Ogham marker/Scanned Document.pdf,20,marker,A,hybrid,A,0.97509,A:0.975;O:0.024;D:0.001,A,0.99997,A:1.000;O:0.000;D:0.000
+Ogham Marker copy.pdf,1,marker,N,augmented,B,0.60818,B:0.608;L:0.384;A:0.005,B,0.88455,B:0.885;A:0.089;L:0.014
+Ogham Marker copy.pdf,2,marker,S,augmented,S,0.84865,S:0.849;F:0.148;N:0.003,L,0.96562,L:0.966;F:0.034;B:0.000
+Ogham Marker copy.pdf,3,marker,F,augmented,L,0.95542,L:0.955;B:0.023;F:0.019,B,0.90899,B:0.909;A:0.077;L:0.010
+Ogham Marker copy.pdf,4,marker,L,augmented,B,0.87183,B:0.872;A:0.082;L:0.020,B,0.87191,B:0.872;A:0.081;L:0.020
+Ogham Marker copy.pdf,5,marker,B,augmented,B,0.87159,B:0.872;A:0.080;L:0.020,B,0.87156,B:0.872;A:0.080;L:0.020
+Ogham Marker copy.pdf,6,marker,Q,augmented,T,0.94490,T:0.945;C:0.054;D:0.000,A,0.67213,A:0.672;H:0.175;D:0.111
+Ogham Marker copy.pdf,7,marker,C,augmented,T,0.99727,T:0.997;C:0.002;D:0.000,D,0.93476,D:0.935;T:0.028;O:0.018
+Ogham Marker copy.pdf,8,marker,T,augmented,A,0.92954,A:0.930;O:0.026;H:0.023,B,0.83355,B:0.834;A:0.116;H:0.025
+Ogham Marker copy.pdf,9,marker,D,augmented,A,0.93653,A:0.937;H:0.033;B:0.017,B,0.86164,B:0.862;A:0.088;H:0.022
+Ogham Marker copy.pdf,10,marker,H,augmented,B,0.84284,B:0.843;A:0.103;H:0.027,B,0.86013,B:0.860;A:0.087;H:0.023
+Ogham Marker copy.pdf,11,marker,R,augmented,O,0.90766,O:0.908;G:0.061;A:0.028,B,0.50410,B:0.504;A:0.342;H:0.108
+Ogham Marker copy.pdf,12,marker,Z,augmented,O,0.95720,O:0.957;G:0.027;U:0.013,A,0.65908,A:0.659;H:0.297;B:0.026
+Ogham Marker copy.pdf,13,marker,NG,augmented,A,0.97841,A:0.978;B:0.015;H:0.003,B,0.65024,B:0.650;A:0.199;H:0.117
+Ogham Marker copy.pdf,14,marker,G,augmented,B,0.87449,B:0.874;A:0.081;H:0.019,B,0.87396,B:0.874;A:0.080;H:0.019
+Ogham Marker copy.pdf,15,marker,M,augmented,B,0.85489,B:0.855;A:0.092;H:0.025,B,0.85071,B:0.851;A:0.095;H:0.026
+Ogham Marker copy.pdf,16,marker,I,augmented,E,0.98999,E:0.990;I:0.010;U:0.000,I,0.55534,I:0.555;E:0.444;N:0.000
+Ogham Marker copy.pdf,17,marker,E,augmented,E,0.82418,E:0.824;U:0.176;I:0.000,U,0.99385,U:0.994;E:0.003;O:0.003
+Ogham Marker copy.pdf,18,marker,U,augmented,U,0.86188,U:0.862;O:0.137;E:0.001,A,0.96615,A:0.966;O:0.034;L:0.000
+Ogham Marker copy.pdf,19,marker,O,augmented,O,0.99494,O:0.995;U:0.005;A:0.000,O,0.99607,O:0.996;U:0.004;A:0.000
+Ogham Marker copy.pdf,20,marker,A,augmented,A,0.99665,A:0.997;O:0.003;B:0.000,A,0.99717,A:0.997;O:0.002;B:0.001
+Ogham Pen/N.pdf,1,pen,N,augmented,A,0.85276,A:0.853;B:0.127;O:0.011,A,0.96703,A:0.967;B:0.023;O:0.007
+Ogham Pen/Scanned Document 2.pdf,1,pen,NG,augmented,B,0.87572,B:0.876;A:0.079;L:0.019,B,0.87226,B:0.872;A:0.080;L:0.020
+Ogham Pen/Scanned Document 3.pdf,1,pen,G,augmented,B,0.87331,B:0.873;A:0.081;L:0.018,B,0.86760,B:0.868;A:0.084;H:0.020
+Ogham Pen/Scanned Document 4.pdf,1,pen,M,augmented,B,0.87747,B:0.877;A:0.077;L:0.019,B,0.88005,B:0.880;A:0.076;H:0.018
+Ogham Pen/Scanned Document 4.pdf,2,pen,I,augmented,O,0.50271,O:0.503;U:0.477;F:0.014,E,0.82875,E:0.829;C:0.143;Q:0.012
+Ogham Pen/Scanned Document 4.pdf,3,pen,E,augmented,O,0.95483,O:0.955;U:0.045;T:0.000,E,0.99779,E:0.998;I:0.002;U:0.000
+Ogham Pen/Scanned Document 4.pdf,4,pen,U,augmented,A,0.91344,A:0.913;O:0.084;B:0.001,O,0.72393,O:0.724;U:0.275;T:0.000
+Ogham Pen/Scanned Document 4.pdf,5,pen,O,augmented,B,0.88606,B:0.886;A:0.090;L:0.012,A,0.91979,A:0.920;O:0.078;L:0.001
+Ogham Pen/Scanned Document 4.pdf,6,pen,A,augmented,B,0.88967,B:0.890;A:0.075;L:0.017,B,0.89109,B:0.891;A:0.074;L:0.018
+Ogham Pen/Scanned Document.pdf,1,pen,S,augmented,L,0.89697,L:0.897;F:0.103;S:0.000,F,0.62249,F:0.622;U:0.232;O:0.102
+Ogham Pen/Scanned Document.pdf,2,pen,F,augmented,L,0.91617,L:0.916;F:0.080;B:0.002,F,0.77168,F:0.772;L:0.196;S:0.018
+Ogham Pen/Scanned Document.pdf,3,pen,L,augmented,B,0.50800,B:0.508;L:0.250;A:0.224,L,0.92444,L:0.924;F:0.046;O:0.017
+Ogham Pen/Scanned Document.pdf,4,pen,B,augmented,A,0.93492,A:0.935;B:0.055;O:0.007,A,0.91474,A:0.915;B:0.071;H:0.007
+Ogham Pen/Scanned Document.pdf,5,pen,Q,augmented,T,0.92832,T:0.928;D:0.068;O:0.003,L,0.70641,L:0.706;F:0.250;S:0.014
+Ogham Pen/Scanned Document.pdf,6,pen,C,augmented,S,0.47441,S:0.474;C:0.227;N:0.175,S,0.81043,S:0.810;N:0.097;F:0.040
+Ogham Pen/Scanned Document.pdf,7,pen,T,augmented,A,0.38086,A:0.381;O:0.255;D:0.137,A,0.82991,A:0.830;O:0.122;D:0.015
+Ogham Pen/Scanned Document.pdf,8,pen,D,augmented,A,0.43395,A:0.434;O:0.430;D:0.116,D,0.86293,D:0.863;O:0.058;T:0.038
+Ogham Pen/Scanned Document.pdf,9,pen,H,augmented,A,0.96950,A:0.970;O:0.014;H:0.011,A,0.98905,A:0.989;B:0.005;O:0.004
+Ogham Pen/Scanned Document.pdf,10,pen,R,augmented,B,0.87576,B:0.876;A:0.078;L:0.019,B,0.87487,B:0.875;A:0.078;L:0.019
+Ogham Pen/Scanned Document.pdf,11,pen,Z,augmented,B,0.87588,B:0.876;A:0.079;L:0.019,B,0.87374,B:0.874;A:0.079;L:0.020
+Ogham marker/Scanned Document.pdf,1,marker,N,augmented,F,0.95589,F:0.956;S:0.044;L:0.000,F,0.99319,F:0.993;L:0.004;S:0.003
+Ogham marker/Scanned Document.pdf,2,marker,S,augmented,F,0.99705,F:0.997;L:0.002;S:0.001,L,0.98671,L:0.987;F:0.011;B:0.002
+Ogham marker/Scanned Document.pdf,3,marker,F,augmented,F,0.99652,F:0.997;L:0.002;S:0.001,L,0.95406,L:0.954;F:0.023;A:0.009
+Ogham marker/Scanned Document.pdf,4,marker,L,augmented,B,0.97641,B:0.976;L:0.022;A:0.001,B,0.95994,B:0.960;A:0.022;L:0.017
+Ogham marker/Scanned Document.pdf,5,marker,B,augmented,B,0.95879,B:0.959;A:0.032;L:0.007,B,0.94268,B:0.943;A:0.044;L:0.009
+Ogham marker/Scanned Document.pdf,6,marker,Q,augmented,D,0.91777,D:0.918;T:0.037;O:0.034,A,0.76280,A:0.763;O:0.214;D:0.017
+Ogham marker/Scanned Document.pdf,7,marker,C,augmented,B,0.86826,B:0.868;A:0.084;L:0.020,B,0.86760,B:0.868;A:0.083;L:0.020
+Ogham marker/Scanned Document.pdf,8,marker,T,augmented,A,0.96035,A:0.960;B:0.017;H:0.016,B,0.51553,B:0.516;A:0.391;H:0.061
+Ogham marker/Scanned Document.pdf,9,marker,D,augmented,B,0.87071,B:0.871;A:0.081;H:0.019,B,0.87199,B:0.872;A:0.080;L:0.020
+Ogham marker/Scanned Document.pdf,10,marker,H,augmented,B,0.81518,B:0.815;A:0.123;H:0.034,B,0.85547,B:0.855;A:0.093;H:0.023
+Ogham marker/Scanned Document.pdf,11,marker,R,augmented,B,0.87197,B:0.872;A:0.081;L:0.020,B,0.87417,B:0.874;A:0.079;L:0.020
+Ogham marker/Scanned Document.pdf,12,marker,Z,augmented,B,0.86860,B:0.869;A:0.082;H:0.020,B,0.87229,B:0.872;A:0.080;L:0.020
+Ogham marker/Scanned Document.pdf,13,marker,NG,augmented,B,0.81491,B:0.815;A:0.140;H:0.021,B,0.86869,B:0.869;A:0.084;H:0.019
+Ogham marker/Scanned Document.pdf,14,marker,G,augmented,B,0.86470,B:0.865;A:0.089;H:0.019,B,0.86884,B:0.869;A:0.083;H:0.020
+Ogham marker/Scanned Document.pdf,15,marker,M,augmented,B,0.86839,B:0.868;A:0.086;H:0.019,B,0.87099,B:0.871;A:0.081;L:0.019
+Ogham marker/Scanned Document.pdf,16,marker,I,augmented,B,0.86930,B:0.869;A:0.083;L:0.020,B,0.87284,B:0.873;A:0.080;L:0.020
+Ogham marker/Scanned Document.pdf,17,marker,E,augmented,B,0.87252,B:0.873;A:0.080;L:0.020,B,0.87076,B:0.871;A:0.081;L:0.020
+Ogham marker/Scanned Document.pdf,18,marker,U,augmented,B,0.87428,B:0.874;A:0.080;L:0.019,B,0.87457,B:0.875;A:0.079;L:0.019
+Ogham marker/Scanned Document.pdf,19,marker,O,augmented,B,0.87055,B:0.871;A:0.081;L:0.019,B,0.87243,B:0.872;A:0.080;L:0.019
+Ogham marker/Scanned Document.pdf,20,marker,A,augmented,B,0.87274,B:0.873;A:0.079;L:0.019,B,0.87307,B:0.873;A:0.079;L:0.020
